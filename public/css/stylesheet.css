@@ -1,0 +1,349 @@
+html,
+body {
+    color: #222;
+    font-family: 'News Cycle', 'Arial Narrow Bold', sans-serif;
+    font-size: 18px;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+
+h1 {
+    font-size: 4em;
+}
+
+h2 {
+    font-size: 3em;
+}
+
+h3 {
+    font-size: 2em;
+}
+
+h4 {
+    font-size: 1.25em;
+}
+
+h5 {
+    font-size: 0.75em;
+}
+
+h6 {
+    font-size: 0.5em;
+}
+
+label {
+    font-family: 'Merriweather';
+}
+
+hr {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+canvas {
+    width: 100%;
+}
+
+.navbar-brand {
+    font-family: 'Merriweather';
+    text-transform: unset;
+}
+
+/*
+* Tabs
+*/
+.tabs {
+    font-size: 0;
+    padding: 0;
+}
+
+.tabs > li {
+    display: inline-block;
+    font-size: 18px;
+    list-style-type: none;
+}
+
+.tabs > li > a.tab {
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px 15px;
+    height: 100%;
+}
+
+.tabs > li.active > a.tab {
+    color: #777777;
+}
+
+.tab-content > .tab-pane {
+    padding: 10px 15px;
+}
+
+/*
+* Cards
+*/
+.cards {
+    position: relative;
+}
+
+.cards > .card {
+    background-color: white;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    color: #777777;
+    display: inline-block;
+    font-family: 'Merriweather';
+    position: relative;
+    text-decoration: none;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.cards > .card:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+.cards > .card > .card-title {
+    font-size: 1.75em;
+    font-weight: bold;
+    padding: 15px 20px 0 20px;
+}
+
+.cards > .card > .card-by {
+    font-size: 0.75em;
+    font-weight: bold;
+    padding: 0 20px;
+}
+
+.cards > .card > .card-content {
+    font-family: 'News Cycle', 'Arial Narrow Bold', sans-serif;
+    font-weight: bold;
+    padding: 0 20px;
+    margin: 20px 0;
+}
+
+.cards > .card > .card-footer {
+    background-color: #eeeeee;
+    border-top: 1px solid #cccccc;
+}
+
+.cards > .card > .card-footer > .tabs {
+    border-bottom: 1px solid #cccccc;
+    margin: 0;
+}
+
+/*
+* Custom: Full Container
+*/
+.container-full {
+    position: relative;
+}
+
+.container-full .row {
+    margin: 0;
+    width: 100%;
+}
+
+/*
+* Custom: Sidebar
+*/
+.sidebar {
+    margin-top: 0;
+}
+
+.sidebar .nav > li.active > a {
+    background-color: white;
+}
+
+/*
+* Custom: Masthead
+*/
+.masthead {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.masthead > .masthead-container {
+    background-color: rgba(25, 40, 35, 0.5);
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+
+.masthead > .masthead-container:not(.inversed) * {
+    color: white;
+}
+
+.masthead > .masthead-container > .masthead-block {
+    display: table-cell;
+    vertical-align: middle;
+    box-sizing: border-box;
+}
+
+/*
+* Custom: Banner
+*/
+.banner {
+    background-color: rgb(83, 183, 139);
+    box-shadow: inset 0 -2px 2px rgba(25, 40, 35, 0.25);
+    color: white;
+    font-family: 'Merriweather';
+    font-size: 2.5em;
+    padding: 5rem 10rem;
+}
+
+/*
+* Blocks
+*/
+.block {
+    display: table;
+    position: relative;
+    width: 100%;
+}
+
+.block > .image {
+    display: table-cell;
+    text-align: left;
+    width: 50px;
+}
+
+.block > .image > img {
+    height: 40px;
+    width: 40px;
+}
+
+.block > .content {
+    display: table-cell;
+    font-family: 'News Cycle', 'Arial Narrow Bold', sans-serif;
+    font-weight: bold;
+    vertical-align: top;
+}
+
+/*
+* Custom: Comment Blocks
+*/
+.block.comment {
+    border-top: 1px solid #cccccc;
+    padding: 10px 0;
+}
+
+.block.comment:last-child {
+    padding-bottom: 0;
+}
+
+.block.comment > .content > div:first-child {
+    font-weight: bold;
+}
+
+.block.comment > .content > div:last-child {
+    font-size: 12px;
+}
+
+/*
+* Custom: Utilities
+*/
+.round {
+    border-radius: 50%;
+}
+
+.no-padding {
+    padding: 0 !important;
+}
+
+.no-margin {
+    margin: 0 !important;
+}
+
+.no-resize {
+    resize: none;
+}
+
+.shadow {
+    box-shadow: 0 2px 2px rgba(25, 40, 35, 0.5);
+}
+
+.text-shadow {
+    text-shadow: 0 2px 2px rgba(25, 40, 35, 0.5);
+}
+
+.fg-white {
+    color: white;
+}
+
+#carousel-header {
+    overflow: hidden;
+    max-height: 500px;
+}
+
+#masthead {
+    background-image: url(../img/How-to-Help-in-the-Wake-of-Typhoon-Lando-red-cross.jpg);
+    background-position: center;
+    background-size: cover;
+}
+
+#page-wrapper {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+#admin-page-wrapper {
+    background-color: #eee;
+    margin-top: 60px;
+}
+
+#main-container {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+@media screen and (min-width: 768px) {
+    #page-wrapper {
+        margin-left: 249px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    h1 {
+        font-size: 2.25em;
+    }
+
+    h2 {
+        font-size: 1.75em;
+    }
+
+    h3 {
+        font-size: 1.25em;
+    }
+
+    h4 {
+        font-size: 1em;
+    }
+
+    h5 {
+        font-size: 0.75em;
+    }
+
+    h6 {
+        font-size: 0.5em;
+    }
+
+    .navbar-brand {
+        font-size: 0.75em;
+    }
+
+    .banner {
+        padding: 2rem 5rem;
+    }
+
+    #admin-container {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    #main-container {
+        padding-top: 2.5rem;
+        padding-bottom: 2.5rem;
+    }
+}
