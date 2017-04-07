@@ -52,7 +52,7 @@
                 <hr>
                 @include('partials.flash')
                 <div class="form-group text-right">
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#add-news-modal"><span class="fa fa-plus"></span> Add</button>
+                    <button id="add-news-button" class="btn btn-primary"><span class="fa fa-plus"></span> Add</button>
                 </div>
                 <table class="table table-striped table-bordered">
                     <thead>

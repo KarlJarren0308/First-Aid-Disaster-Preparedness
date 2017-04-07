@@ -30,9 +30,19 @@ $(document).ready(function() {
         }, 1000);
     });
 
+    $('#captcha-modal').on('hidden.bs.modal', function () {
+        grecaptcha.reset();
+    });
+
     $('#comment-form').submit(function() {
+        $('#captcha-modal').modal('show');
+
+        return false;
+    });
+
+    $('#captcha-form').submit(function() {
         $.ajax({
-            url: '/news/comment',
+            url: '/news/comment/captcha',
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -40,8 +50,27 @@ $(document).ready(function() {
             data: $(this).serialize(),
             dataType: 'json',
             success: function(response) {
+                grecaptcha.reset();
+                
+                $('#captcha-modal').modal('hide');
+
                 if(response['status'] === 'Success') {
-                    $('#comment-form input[name="comment"]').val('').focus();
+                    $.ajax({
+                        url: '/news/comment',
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: $('#comment-form').serialize(),
+                        dataType: 'json',
+                        success: function(response) {
+                            if(response['status'] === 'Success') {
+                                $('#comment-form input[name="comment"]').val('').focus();
+                            }
+                        }
+                    });
+
+                    return false;
                 }
             }
         });

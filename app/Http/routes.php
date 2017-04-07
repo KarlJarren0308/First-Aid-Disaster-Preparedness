@@ -38,5 +38,6 @@ Route::group(['as' => 'news.'], function() {
 
     Route::post('news', ['as' => 'index', 'uses' => 'NewsController@index']);
     Route::post('news/comment', ['as' => 'comment', 'uses' => 'NewsController@postComment']);
+    Route::post('news/comment/captcha', ['as' => 'captcha', 'uses' => 'NewsController@postCommentCaptcha']);
     Route::post('news/comments', ['as' => 'comments', 'uses' => 'NewsController@comments']);
 });

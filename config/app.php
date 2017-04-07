@@ -156,6 +156,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+        * Third-party Providers
+        */
+        Anhskohbo\NoCaptcha\NoCaptchaServiceProvider::class,
     ],
 
     /*
@@ -202,6 +206,10 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        /*
+        * Third-party Facades
+        */
+        'NoCaptcha' => Anhskohbo\NoCaptcha\Facades\NoCaptcha::class
     ],
 
 ];

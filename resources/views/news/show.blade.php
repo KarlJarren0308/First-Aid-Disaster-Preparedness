@@ -97,5 +97,23 @@
             </div>
         </div>
     </div>
+    <div id="captcha-modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><span class="fa fa-hand-paper-o"></span> reCAPTCH</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="captcha-form" data-form="captcha-form">
+                        {!! app('captcha')->display(); !!}
+                        <div class="form-group text-right">
+                            <input type="submit" class="btn btn-primary" value="Submit">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="/js/news/show.js"></script>
 @stop

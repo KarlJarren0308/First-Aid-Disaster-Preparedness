@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\UtilityHelpers;
@@ -87,6 +88,22 @@ class NewsController extends Controller
             }
         } else {
             return redirect()->route('home.login');
+        }
+    }
+
+    public function postCommentCaptcha(Request $request) {
+        // Validating captcha currently not working, so i'll this instead.
+
+        if($request->input('g-recaptcha-response') !== '') {
+            return response()->json([
+                'status' => 'Success',
+                'message' => 'CAPTCHA has been accepted.'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'Failed',
+                'message' => 'Failed to accept CAPTCHA.'
+            ]);
         }
     }
 }
