@@ -79,7 +79,7 @@ class HomeController extends Controller
                     $full_name = $first_name . ' ' . $last_name;
                 }
 
-                Mail::send('emails.registration', [
+                Mail::send('emails.account_verification', [
                     'username' => $username,
                     'first_name' => $first_name,
                     'verification_code' => $verification_code
