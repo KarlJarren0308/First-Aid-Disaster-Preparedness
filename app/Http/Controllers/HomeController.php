@@ -47,21 +47,23 @@ class HomeController extends Controller
 
     public function postRegister(RegisterRequest $request)
     {
-        $userID = $this->insertRecord('users', [
-            'first_name' => $request->input('firstName'),
-            'middle_name' => $request->input('middleName'),
-            'last_name' => $request->input('lastName')
+        $accountID = $this->insertRecord('accounts', [
+            'username' => $request->input('username'),
+            'email_address' => $request->input('emailAddress'),
+            'password' => bcrypt($request->input('password'))
         ]);
 
-        if($userID) {
-            $accountID = $this->insertRecord('accounts', [
-                'username' => $request->input('username'),
-                'email_address' => $request->input('emailAddress'),
-                'password' => bcrypt($request->input('password')),
-                'user_id' => $userID
+        if($accountID) {
+            $userID = $this->insertRecord('users', [
+                'id' => $accountID,
+                'first_name' => $request->input('firstName'),
+                'middle_name' => $request->input('middleName'),
+                'last_name' => $request->input('lastName'),
+                'gender' => $request->input('gender'),
+                'birth_date' => $request->input('birthDate')
             ]);
 
-            if($accountID) {
+            if($userID) {
                 $this->setFlash('Success', 'Registration Successful.');
 
                 return redirect()->route('home.login');
