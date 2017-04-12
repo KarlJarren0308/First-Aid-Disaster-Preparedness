@@ -35,6 +35,11 @@
             box-sizing: border-box;
         }
 
+        .block > .header,
+        .block > .content {
+            word-wrap: break-word;
+        }
+
         .block > .header {
             display: block;
             border-bottom: 1px solid #ddd;
