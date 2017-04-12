@@ -19,7 +19,8 @@ class AccountsUsersSeeder extends Seeder
             'email_address' => 'pata.tim@gmail.com',
             'password' => bcrypt('admin'),
             'type' => 'administrator',
-            'image' => 'karlmacz.png'
+            'image' => 'karlmacz.png',
+            'is_verified' => true
         ]);
 
         UsersModel::insert([
