@@ -43,4 +43,10 @@ trait UtilityHelpers
     {
         return DB::table($table)->where('id', $id)->delete();
     }
+
+    public function generateVerificationCode($text) {
+        $salt = substr(md5($text), mt_rand(0, 27), 5);
+
+        return sha1($salt . $text);
+    }
 }
