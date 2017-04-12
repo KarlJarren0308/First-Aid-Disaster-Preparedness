@@ -24,13 +24,14 @@ class RegisterRequest extends Request
     public function rules()
     {
         return [
-            'username' => 'bail|required|unique:accounts,username',
-            'password' => 'bail|required|min:4|confirmed',
-            'password_confirmation' => 'bail|required|min:4',
+            'username' => 'required|unique:accounts,username',
+            'password' => 'required|min:4|confirmed',
+            'password_confirmation' => 'required|min:4',
             'firstName' => 'required',
             'lastName' => 'required',
-            'emailAddress' => 'bail|required|email|unique:accounts,email_address',
-            'birthDate' => 'bail|required|date'
+            'emailAddress' => 'required|email|unique:accounts,email_address',
+            'gender' => 'required',
+            'birthDate' => 'required|date'
         ];
     }
 
