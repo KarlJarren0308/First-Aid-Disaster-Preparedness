@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'system@fadp.com', 'name' => 'F.A.D.P. System'],
 
     /*
     |--------------------------------------------------------------------------
