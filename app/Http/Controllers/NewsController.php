@@ -7,9 +7,11 @@ use Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\UtilityHelpers;
+
+use Snipe\BanBuilder\CensorWords;
+
 use App\NewsModel;
 use App\CommentsModel;
-use Snipe\BanBuilder\CensorWords;
 
 class NewsController extends Controller
 {
