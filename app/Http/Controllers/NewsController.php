@@ -31,10 +31,10 @@ class NewsController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function show($year, $month, $day, $headline)
     {
         try {
-            $news = $this->getNews($id);
+            $news = NewsModel::where('created_at', 'like', ($year . '-' . $month . '-' . $day) . '%')->where('headline', str_replace('_', ' ', $headline))->first();
 
             return view('news.show', [
                 'news' => $news
