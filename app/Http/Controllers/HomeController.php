@@ -9,6 +9,8 @@ use App\Http\Requests;
 use App\Http\Controllers\UtilityHelpers;
 use App\Http\Requests\RegisterRequest;
 
+use App\AccountsModel;
+
 class HomeController extends Controller
 {
     use UtilityHelpers;
@@ -147,6 +149,36 @@ class HomeController extends Controller
         Auth::logout();
 
         return redirect()->route('home.index');
+    }
+
+    public function verifyAccount($verification_code) {
+        $account = AccountsModel::where('verification_code', $verification_code)->first();
+
+        if($account) {
+            if($account->is_verified == false) {
+                $query = AccountsModel::where('id', $account->id)->update([
+                    'is_verified' => true
+                ]);
+
+                if($query) {
+                    $this->setFlash('Success', 'Account has been verified. You may now log in your account.');
+
+                    return redirect()->route('home.login');
+                } else {
+                    $this->setFlash('Failed', 'Oops! Failed to verify account.');
+
+                    return redirect()->route('home.login');
+                }
+            } else {
+                $this->setFlash('Failed', 'Oops! Account has already been verified.');
+
+                return redirect()->route('home.login');
+            }
+        } else {
+            $this->setFlash('Failed', 'Oops! Verification code doesn\'t exist.');
+
+            return redirect()->route('home.login');
+        }
     }
 
     public function passwordReset()
