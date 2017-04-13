@@ -133,7 +133,7 @@ canvas {
 }
 
 /*
-* Custom: Full Container
+* Full Container
 */
 .container-full {
     position: relative;
@@ -145,7 +145,7 @@ canvas {
 }
 
 /*
-* Custom: Sidebar
+* Sidebar
 */
 .sidebar {
     margin-top: 0;
@@ -156,7 +156,7 @@ canvas {
 }
 
 /*
-* Custom: Masthead
+* Masthead
 */
 .masthead {
     position: relative;
@@ -183,7 +183,7 @@ canvas {
 }
 
 /*
-* Custom: Banner
+* Banner
 */
 .banner {
     background-color: rgb(83, 183, 139);
@@ -222,7 +222,7 @@ canvas {
 }
 
 /*
-* Custom: Comment Blocks
+* Comment Blocks
 */
 .block.comment {
     border-top: 1px solid #cccccc;
@@ -242,7 +242,7 @@ canvas {
 }
 
 /*
-* Custom: Utilities
+* Utilities
 */
 .round {
     border-radius: 50%;
