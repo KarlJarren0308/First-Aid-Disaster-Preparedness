@@ -30,7 +30,7 @@ class AdminController extends Controller
         if(Auth::check()) {
             if(Auth::user()->type === 'administrator') {
                 try {
-                    $news = $this->getNews();
+                    $news = NewsModel::all();
 
                     return view('admin.news', [
                         'news' => $news
