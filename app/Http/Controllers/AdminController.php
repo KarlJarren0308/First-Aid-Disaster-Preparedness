@@ -7,6 +7,9 @@ use App\Http\Requests;
 use App\Http\Controllers\UtilityHelpers;
 
 use Auth;
+use Mail;
+
+use App\NewsModel;
 
 class AdminController extends Controller
 {
