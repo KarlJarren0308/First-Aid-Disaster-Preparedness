@@ -25,7 +25,7 @@
             <ul class="nav navbar-nav pull-right">
                 @if(Auth::check())
                     @if(Auth::user()->type === 'administrator')
-                        <li><a href="{{ route('home.dashboard') }}">Go to Admin Page</a></li>
+                        <li><a href="{{ route('admin.dashboard') }}">Go to Admin Page</a></li>
                     @endif
                     <li>
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->userInfo->first_name . ' ' . Auth::user()->userInfo->last_name }} <span class="caret"></span></a>
