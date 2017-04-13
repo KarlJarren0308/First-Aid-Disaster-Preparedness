@@ -16,16 +16,6 @@ trait UtilityHelpers
         session()->flash('flash_message', $message);
     }
 
-    public function getAccounts($id = null)
-    {
-        return ($id==null ? AccountsModel::all() : AccountsModel::findOrFail($id));
-    }
-
-    public function getNews($id = null)
-    {
-        return ($id==null ? NewsModel::all() : NewsModel::findOrFail($id));
-    }
-
     public function insertRecord($table, $record)
     {
         $record['created_at'] = date('Y-m-d H:i:s');
