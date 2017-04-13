@@ -28,25 +28,24 @@
             <div class="col-sm-6 col-sm-offset-3">
                 <div class="panel panel-primary shadow">
                     <div class="panel-heading">
-                        <h3 class="fg-white text-center no-margin">Password Reset</h3>
+                        <h3 class="fg-white text-center no-margin">Change Password</h3>
                     </div>
                     <div class="panel-body">
                         @include('partials.flash')
-                        <form data-form="change-password-form" action="{{ route('home.change_password') }}" method="POST" autocomplete="off">
-                            {{ csrf_field() }}]
-                            <input type="hidden" name="accountID" value="{{ $account_id }}">
+                        <form data-form="change-password-form" action="{{ route('home.change_password', ['password_reset_code' => $password_reset_code]) }}" method="POST" autocomplete="off">
+                            {{ csrf_field() }}
                             <div class="form-group{{ ($errors->has('password') ? ' has-error' : '') }}">
-                                <label for="">Password:</label>
-                                <input type="password" class="form-control" name="password" value="{{ old('password') }}">
+                                <label for="">New Password:</label>
+                                <input type="password" class="form-control" name="password" value="{{ old('password') }}" autofocus>
                                 {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
                             </div>
                             <div class="form-group{{ ($errors->has('password_confirmation') ? ' has-error' : '') }}">
-                                <label for="">Confirm Password:</label>
+                                <label for="">Confirm New Password:</label>
                                 <input type="password" class="form-control" name="password_confirmation" value="{{ old('password_confirmation') }}">
                                 {!! $errors->first('password_confirmation', '<span class="help-block">:message</span>') !!}
                             </div>
                             <div class="form-group text-right">
-                                <input type="submit" class="btn btn-primary" value="Register">
+                                <input type="submit" class="btn btn-primary" value="Save Changes">
                             </div>
                         </form>
                     </div>

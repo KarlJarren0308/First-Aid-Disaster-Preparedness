@@ -40,7 +40,7 @@
                                 {!! $errors->first('emailAddress', '<span class="help-block">:message</span>') !!}
                             </div>
                             <div class="form-group text-right">
-                                <input type="submit" class="btn btn-primary" value="Register">
+                                <input type="submit" class="btn btn-primary" value="Reset Password">
                             </div>
                         </form>
                     </div>

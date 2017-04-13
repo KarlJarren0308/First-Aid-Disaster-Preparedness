@@ -245,4 +245,48 @@ class HomeController extends Controller
             }
         }
     }
+
+    public function changePassword($password_reset_code) {
+        $account = AccountsModel::where('password_reset_code', $password_reset_code)->first();
+
+        if($account) {
+            return view('home.change_password', [
+                'password_reset_code' => $password_reset_code
+            ]);
+        } else {
+            $this->setFlash('Failed', 'Oops! Invalid password reset code.');
+
+            return redirect()->route('home.password_reset');
+        }
+    }
+
+    public function postChangePassword($password_reset_code, Request $request) {
+        $result = Validator::make($request->all(), [
+            'password' => 'required|min:4|confirmed',
+            'password_confirmation' => 'required|min:4'
+        ]);
+
+        if($result->fails()) {
+            return redirect()->route('home.change_password', [
+                'password_reset_code' => $password_reset_code
+            ])->withErrors($result)->withInput();
+        } else {
+            $query = AccountsModel::where('password_reset_code', $password_reset_code)->update([
+                'password' => bcrypt($request->input('password')),
+                'password_reset_code' => null
+            ]);
+
+            if($query) {
+                $this->setFlash('Success', 'Password has been changed. You may now log in your account.');
+
+                return redirect()->route('home.login');
+            } else {
+                $this->setFlash('Failed', 'Oops! Failed to change password.');
+
+                return redirect()->route('home.change_password', [
+                    'password_reset_code' => $password_reset_code
+                ]);
+            }
+        }
+    }
 }
