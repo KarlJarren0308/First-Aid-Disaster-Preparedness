@@ -201,7 +201,7 @@ class HomeController extends Controller
 
     public function postPasswordReset(Request $request) {
         $result = Validator::make($request->all(), [
-            'emailAddress' => 'required|email'
+            'emailAddress' => 'required|email|exists:accounts,email_address'
         ]);
 
         if($result->fails()) {
