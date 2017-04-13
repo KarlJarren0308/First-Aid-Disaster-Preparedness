@@ -227,7 +227,7 @@ class HomeController extends Controller
                         'first_name' => $account->userInfo->first_name,
                         'password_reset_code' => $password_reset_code
                     ], function($message) use ($account, $full_name) {
-                        $message->to($account->email_address, $full_name)->subject('F.A.D.P. Account Verification');
+                        $message->to($account->email_address, $full_name)->subject('F.A.D.P. Password Reset');
                     });
 
                     $this->setFlash('Success', 'A change password link has been sent to your e-mail address.');
