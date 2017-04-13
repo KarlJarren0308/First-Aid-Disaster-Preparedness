@@ -20,6 +20,7 @@ Route::group(['as' => 'home.'], function() {
     Route::get('password_reset', ['as' => 'password_reset', 'uses' => 'HomeController@passwordReset']);
     Route::get('login', ['as' => 'login', 'uses' => 'HomeController@login']);
     Route::get('logout', ['as' => 'logout', 'uses' => 'HomeController@logout']);
+    Route::get('verify_account/{verification_code}', ['as' => 'verify_account', 'uses' => 'HomeController@verifyAccount']);
 
     Route::group(['middleware' => 'auth'], function() {
         Route::get('admin/dashboard', ['as' => 'dashboard', 'uses' => 'HomeController@dashboard']);
