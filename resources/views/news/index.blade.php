@@ -43,7 +43,7 @@
                 <div class="cards">
                     @if(count($news) > 0)
                         @foreach($news as $news_item)
-                            <a href="{{ route('news.show', 1) }}" class="card">
+                            <a href="{{ route('news.show', ['year' => date('Y', strtotime($news_item->created_at)), 'month' => date('m', strtotime($news_item->created_at)), 'day' => date('d', strtotime($news_item->created_at)), 'headline' => str_replace(' ', '_', $news_item->headline)]) }}" class="card">
                                 <div class="card-title">{{ $news_item->headline }}</div>
                                 <div class="card-by">Posted by {{ $news_item->username }}</div>
                                 <div class="card-content">{!! nl2br(substr($news_item->content, 0, 1000) . (strlen($news_item->content) > 1000 ? '...' : '')) !!}</div>
