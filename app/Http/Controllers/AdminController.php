@@ -15,7 +15,7 @@ class AdminController extends Controller
     {
         if (Auth::check()) {
             if(Auth::user()->type === 'administrator') {
-                return view('home.dashboard');
+                return view('admin.dashboard');
             } else {
                 return redirect()->route('news.index');
             }
@@ -31,7 +31,7 @@ class AdminController extends Controller
                 try {
                     $news = $this->getNews();
 
-                    return view('home.news', [
+                    return view('admin.news', [
                         'news' => $news
                     ]);
                 } catch(Exception $ex) {
@@ -64,11 +64,11 @@ class AdminController extends Controller
                 if($newsID) {
                     $this->setFlash('Success', 'News has been added.');
 
-                    return redirect()->route('home.news');
+                    return redirect()->route('admin.news');
                 } else {
                     $this->setFlash('Failed', 'Oops! Failed to add news.');
 
-                    return redirect()->route('home.news');
+                    return redirect()->route('admin.news');
                 }
 
                 break;
