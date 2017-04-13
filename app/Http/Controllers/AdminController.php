@@ -13,7 +13,7 @@ class AdminController extends Controller
 
     public function dashboard()
     {
-        if (Auth::check()) {
+        if(Auth::check()) {
             if(Auth::user()->type === 'administrator') {
                 return view('admin.dashboard');
             } else {
@@ -26,7 +26,7 @@ class AdminController extends Controller
 
     public function news()
     {
-        if (Auth::check()) {
+        if(Auth::check()) {
             if(Auth::user()->type === 'administrator') {
                 try {
                     $news = $this->getNews();

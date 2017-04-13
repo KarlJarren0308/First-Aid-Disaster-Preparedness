@@ -37,7 +37,7 @@ class HomeController extends Controller
 
     public function register()
     {
-        if (Auth::check()) {
+        if(Auth::check()) {
             if(Auth::user()->type === 'administrator') {
                 return redirect()->route('admin.dashboard');
             } else {
@@ -106,7 +106,7 @@ class HomeController extends Controller
 
     public function login()
     {
-        if (Auth::check()) {
+        if(Auth::check()) {
             if(Auth::user()->type === 'administrator') {
                 return redirect()->route('admin.dashboard');
             } else {

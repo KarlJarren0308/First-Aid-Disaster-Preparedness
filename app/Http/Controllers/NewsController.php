@@ -65,7 +65,7 @@ class NewsController extends Controller
     }
 
     public function postComment(Request $request) {
-        if (Auth::check()) {
+        if(Auth::check()) {
             $censor = new CensorWords();
             $username = Auth::user()->username;
             $newsID = $request->input('newsID');
