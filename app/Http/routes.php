@@ -44,7 +44,7 @@ Route::group(['as' => 'admin.'], function() {
 
 Route::group(['as' => 'news.'], function() {
     Route::get('news', ['as' => 'index', 'uses' => 'NewsController@index']);
-    Route::get('news/{id}', ['as' => 'show', 'uses' => 'NewsController@show']);
+    Route::get('news/{year}/{month}/{day}/{headline}', ['as' => 'show', 'uses' => 'NewsController@show']);
 
     Route::post('news', ['as' => 'index', 'uses' => 'NewsController@index']);
     Route::post('news/comment', ['as' => 'comment', 'uses' => 'NewsController@postComment']);
