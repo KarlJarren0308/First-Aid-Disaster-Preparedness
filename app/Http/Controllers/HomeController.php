@@ -126,7 +126,7 @@ class HomeController extends Controller
         ];
 
         if(Auth::attempt($credentials)) {
-            if(Auth::user()->is_verified === true) {
+            if(Auth::user()->is_verified == true) {
                 return redirect()->route('home.dashboard');
             } else {
                 Auth::logout();
