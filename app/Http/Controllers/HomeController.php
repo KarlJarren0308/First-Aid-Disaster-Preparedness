@@ -39,7 +39,7 @@ class HomeController extends Controller
     {
         if (Auth::check()) {
             if(Auth::user()->type === 'administrator') {
-                return redirect()->route('home.dashboard');
+                return redirect()->route('admin.dashboard');
             } else {
                 return redirect()->route('news.index');
             }
@@ -108,7 +108,7 @@ class HomeController extends Controller
     {
         if (Auth::check()) {
             if(Auth::user()->type === 'administrator') {
-                return redirect()->route('home.dashboard');
+                return redirect()->route('admin.dashboard');
             } else {
                 return redirect()->route('news.index');
             }
@@ -129,7 +129,11 @@ class HomeController extends Controller
 
         if(Auth::attempt($credentials)) {
             if(Auth::user()->is_verified == true) {
-                return redirect()->route('home.dashboard');
+                if(Auth::user()->type === 'administrator') {
+                    return redirect()->route('admin.dashboard');
+                } else {
+                    return redirect()->route('news.index');
+                }
             } else {
                 Auth::logout();
 

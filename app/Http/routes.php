@@ -23,14 +23,20 @@ Route::group(['as' => 'home.'], function() {
     Route::get('verify_account/{verification_code}', ['as' => 'verify_account', 'uses' => 'HomeController@verifyAccount']);
 
     Route::group(['middleware' => 'auth'], function() {
-        Route::get('admin/dashboard', ['as' => 'dashboard', 'uses' => 'HomeController@dashboard']);
-        Route::get('admin/news', ['as' => 'news', 'uses' => 'HomeController@news']);
         Route::get('profile', ['as' => 'profile', 'uses' => 'HomeController@profile']);
     });
 
     Route::post('login', ['as' => 'login', 'uses' => 'HomeController@postLogin']);
     Route::post('register', ['as' => 'register', 'uses' => 'HomeController@postRegister']);
-    Route::post('admin/news', ['as' => 'news', 'uses' => 'HomeController@postNews']);
+});
+
+Route::group(['as' => 'admin.'], function() {
+    Route::group(['middleware' => 'auth'], function() {
+        Route::get('admin/dashboard', ['as' => 'dashboard', 'uses' => 'AdminController@dashboard']);
+        Route::get('admin/news', ['as' => 'news', 'uses' => 'AdminController@news']);
+
+        Route::post('admin/news', ['as' => 'news', 'uses' => 'AdminController@postNews']);
+    });
 });
 
 Route::group(['as' => 'news.'], function() {
