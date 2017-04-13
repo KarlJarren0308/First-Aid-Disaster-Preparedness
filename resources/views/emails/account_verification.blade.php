@@ -10,7 +10,7 @@
         <h2 class="no-margin">Welcome {{ $first_name }},</h2>
         <div>
             <p>Thank you for joining the First-aid & Disaster Preparedness.</p>
-            <p>Click the link below to sign in and activate your account.<br><a href="{{ url('/verify_account/' . $verification_code) }}">{{ url('/verify_account/' . $verification_code) }}</a></p>
+            <p>Click the link below to verify your account.<br><a href="{{ url('/verify_account/' . $verification_code) }}">{{ url('/verify_account/' . $verification_code) }}</a></p>
         </div>
     </div>
 </div>

@@ -21,6 +21,7 @@ class CreateAccountsTable extends Migration
             $table->string('image', 255);
             $table->string('verification_code')->nullable();
             $table->boolean('is_verified')->default(false);
+            $table->string('password_reset_code')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

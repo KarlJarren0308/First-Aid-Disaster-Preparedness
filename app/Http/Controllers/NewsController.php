@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\UtilityHelpers;
-
 use Snipe\BanBuilder\CensorWords;
+
+use Auth;
 
 use App\NewsModel;
 use App\CommentsModel;
@@ -46,10 +45,10 @@ class NewsController extends Controller
     }
 
     public function comments(Request $request) {
-        $newsID = $request->input('newsID') ? $request->input('newsID') : '';
+        $news_id = $request->input('newsID') ? $request->input('newsID') : '';
 
-        if($newsID !== '') {
-            $comments = CommentsModel::where('news_id', $newsID)->orderBy('created_at', 'desc')->with('newsInfo')->with('accountInfo')->get();
+        if($news_id !== '') {
+            $comments = CommentsModel::where('news_id', $news_id)->orderBy('created_at', 'desc')->with('newsInfo')->with('accountInfo')->get();
 
             return response()->json([
                 'status' => 'Success',
@@ -68,16 +67,16 @@ class NewsController extends Controller
         if(Auth::check()) {
             $censor = new CensorWords();
             $username = Auth::user()->username;
-            $newsID = $request->input('newsID');
+            $news_id = $request->input('newsID');
             $comment = $request->input('comment') ? $censor->censorString(trim($request->input('comment')))['clean'] : '';
 
-            $commentID = $this->insertRecord('comments', [
+            $comment_id = $this->insertRecord('comments', [
                 'comment' => $comment,
-                'news_id' => $newsID,
+                'news_id' => $news_id,
                 'username' => $username
             ]);
 
-            if($commentID) {
+            if($comment_id) {
                 return response()->json([
                     'status' => 'Success',
                     'message' => 'Comment has been added.'
@@ -94,7 +93,7 @@ class NewsController extends Controller
     }
 
     public function postCommentCaptcha(Request $request) {
-        // Validating captcha currently not working, so i'll this instead.
+        // Validating captcha currently not working, so i'll use this instead.
 
         if($request->input('g-recaptcha-response') !== '') {
             return response()->json([

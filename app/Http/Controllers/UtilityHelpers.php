@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+
 use App\AccountsModel;
 use App\NewsModel;
 use App\UsersModel;
@@ -44,7 +45,7 @@ trait UtilityHelpers
         return DB::table($table)->where('id', $id)->delete();
     }
 
-    public function generateVerificationCode($text) {
+    public function generateCode($text) {
         $salt = substr(md5($text), mt_rand(0, 27), 5);
 
         return sha1($salt . $text);

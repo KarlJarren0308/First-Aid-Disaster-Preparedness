@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use Mail;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\UtilityHelpers;
 use App\Http\Requests\RegisterRequest;
+
+use Auth;
+use Mail;
+use Validator;
 
 use App\AccountsModel;
 
@@ -55,18 +57,18 @@ class HomeController extends Controller
         $first_name = $request->input('firstName');
         $middle_name = $request->input('middleName');
         $last_name = $request->input('lastName');
-        $verification_code = $this->generateVerificationCode($username);
+        $verification_code = $this->generateCode($username);
 
-        $accountID = $this->insertRecord('accounts', [
+        $account_id = $this->insertRecord('accounts', [
             'username' => $username,
             'email_address' => $email_address,
             'password' => bcrypt($request->input('password')),
             'verification_code' => $verification_code
         ]);
 
-        if($accountID) {
-            $userID = $this->insertRecord('users', [
-                'id' => $accountID,
+        if($account_id) {
+            $user_id = $this->insertRecord('users', [
+                'id' => $account_id,
                 'first_name' => $first_name,
                 'middle_name' => $middle_name,
                 'last_name' => $last_name,
@@ -74,7 +76,7 @@ class HomeController extends Controller
                 'birth_date' => $request->input('birthDate')
             ]);
 
-            if($userID) {
+            if($user_id) {
                 if(strlen($middle_name) > 1) {
                     $full_name = $first_name . ' ' . substr($middle_name, 0, 1) . '. ' . $last_name;
                 } else {
@@ -82,7 +84,6 @@ class HomeController extends Controller
                 }
 
                 Mail::send('emails.account_verification', [
-                    'username' => $username,
                     'first_name' => $first_name,
                     'verification_code' => $verification_code
                 ], function($message) use ($email_address, $full_name) {
@@ -187,6 +188,61 @@ class HomeController extends Controller
 
     public function passwordReset()
     {
-        return view('home.password_reset');
+        if(Auth::check()) {
+            if(Auth::user()->type === 'administrator') {
+                return redirect()->route('admin.dashboard');
+            } else {
+                return redirect()->route('news.index');
+            }
+        } else {
+            return view('home.password_reset');
+        }
+    }
+
+    public function postPasswordReset(Request $request) {
+        $result = Validator::make($request->all(), [
+            'emailAddress' => 'required|email'
+        ]);
+
+        if($result->fails()) {
+            return redirect()->route('home.password_reset')->withErrors($result)->withInput();
+        } else {
+            $account = AccountsModel::where('email_address', $request->input('emailAddress'))->first();
+
+            if($account) {
+                if(strlen($account->userInfo->middle_name) > 1) {
+                    $full_name = $account->userInfo->first_name . ' ' . substr($account->userInfo->middle_name, 0, 1) . '. ' . $account->userInfo->last_name;
+                } else {
+                    $full_name = $account->userInfo->first_name . ' ' . $account->userInfo->last_name;
+                }
+
+                $password_reset_code = $this->generateCode($account->username);
+
+                $query = AccountsModel::where('id', $account->id)->update([
+                    'password_reset_code' => $password_reset_code
+                ]);
+
+                if($query) {
+                    Mail::send('emails.password_reset', [
+                        'first_name' => $account->userInfo->first_name,
+                        'password_reset_code' => $password_reset_code
+                    ], function($message) use ($account, $full_name) {
+                        $message->to($account->email_address, $full_name)->subject('F.A.D.P. Account Verification');
+                    });
+
+                    $this->setFlash('Success', 'A change password link has been sent to your e-mail address.');
+
+                    return redirect()->route('home.password_reset');
+                } else {
+                    $this->setFlash('Failed', 'Oops! Failed to send change password link to your e-mail address.');
+
+                    return redirect()->route('home.password_reset');
+                }
+            } else {
+                $this->setFlash('Failed', 'Oops! E-mail address not registered.');
+
+                return redirect()->route('home.password_reset');
+            }
+        }
     }
 }

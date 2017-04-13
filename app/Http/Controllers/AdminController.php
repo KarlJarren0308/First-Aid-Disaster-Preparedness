@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\UtilityHelpers;
+
+use Auth;
 
 class AdminController extends Controller
 {
@@ -55,13 +56,13 @@ class AdminController extends Controller
                 $headline = trim($request->input('headline'));
                 $content = trim($request->input('content'));
 
-                $newsID = $this->insertRecord('news', [
+                $news_id = $this->insertRecord('news', [
                     'headline' => $headline,
                     'content' => $content,
                     'username' => $username
                 ]);
 
-                if($newsID) {
+                if($news_id) {
                     $this->setFlash('Success', 'News has been added.');
 
                     return redirect()->route('admin.news');

@@ -16,10 +16,10 @@ Route::group(['as' => 'home.'], function() {
     Route::get('donate', ['as' => 'donate', 'uses' => 'HomeController@donate']);
     Route::get('help', ['as' => 'help', 'uses' => 'HomeController@help']);
     Route::get('about', ['as' => 'about', 'uses' => 'HomeController@about']);
+    Route::get('logout', ['as' => 'logout', 'uses' => 'HomeController@logout']);
     Route::get('register', ['as' => 'register', 'uses' => 'HomeController@register']);
     Route::get('password_reset', ['as' => 'password_reset', 'uses' => 'HomeController@passwordReset']);
     Route::get('login', ['as' => 'login', 'uses' => 'HomeController@login']);
-    Route::get('logout', ['as' => 'logout', 'uses' => 'HomeController@logout']);
     Route::get('verify_account/{verification_code}', ['as' => 'verify_account', 'uses' => 'HomeController@verifyAccount']);
 
     Route::group(['middleware' => 'auth'], function() {
@@ -28,6 +28,7 @@ Route::group(['as' => 'home.'], function() {
 
     Route::post('login', ['as' => 'login', 'uses' => 'HomeController@postLogin']);
     Route::post('register', ['as' => 'register', 'uses' => 'HomeController@postRegister']);
+    Route::post('password_reset', ['as' => 'password_reset', 'uses' => 'HomeController@postPasswordReset']);
 });
 
 Route::group(['as' => 'admin.'], function() {

@@ -37,21 +37,21 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group{{ ($errors->has('username') ? ' has-error' : '') }}">
-                                        <label for="">Username: *</label>
+                                        <label for="">Username:</label>
                                         <input type="text" class="form-control" name="username" value="{{ old('username') }}" autofocus>
                                         {!! $errors->first('username', '<span class="help-block">:message</span>') !!}
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group{{ ($errors->has('password') ? ' has-error' : '') }}">
-                                        <label for="">Password: *</label>
+                                        <label for="">Password:</label>
                                         <input type="password" class="form-control" name="password" value="{{ old('password') }}">
                                         {!! $errors->first('password', '<span class="help-block">:message</span>') !!}
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group{{ ($errors->has('password_confirmation') ? ' has-error' : '') }}">
-                                        <label for="">Confirm Password: *</label>
+                                        <label for="">Confirm Password:</label>
                                         <input type="password" class="form-control" name="password_confirmation" value="{{ old('password_confirmation') }}">
                                         {!! $errors->first('password_confirmation', '<span class="help-block">:message</span>') !!}
                                     </div>
@@ -63,7 +63,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group{{ ($errors->has('firstName') ? ' has-error' : '') }}">
-                                        <label for="">First Name: *</label>
+                                        <label for="">First Name:</label>
                                         <input type="text" class="form-control" name="firstName" value="{{ old('firstName') }}">
                                         {!! $errors->first('firstName', '<span class="help-block">:message</span>') !!}
                                     </div>
@@ -76,7 +76,7 @@
                                 </div>
                                 <div class="col-sm-12">
                                     <div class="form-group{{ ($errors->has('lastName') ? ' has-error' : '') }}">
-                                        <label for="">Last Name: *</label>
+                                        <label for="">Last Name:</label>
                                         <input type="text" class="form-control" name="lastName" value="{{ old('lastName') }}">
                                         {!! $errors->first('lastName', '<span class="help-block">:message</span>') !!}
                                     </div>
@@ -88,14 +88,14 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group{{ ($errors->has('emailAddress') ? ' has-error' : '') }}">
-                                        <label for="">E-mail Address: *</label>
+                                        <label for="">E-mail Address:</label>
                                         <input type="email" class="form-control" name="emailAddress" value="{{ old('emailAddress') }}">
                                         {!! $errors->first('emailAddress', '<span class="help-block">:message</span>') !!}
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group{{ ($errors->has('gender') ? ' has-error' : '') }}">
-                                        <label for="">Gender: *</label>
+                                        <label for="">Gender:</label>
                                         <select name="gender" class="form-control">
                                             <option value="" selected disabled>Select an option...</option>
                                             <option value="Male" @if(old('gender') === 'Male') selected @endif>Male</option>
@@ -106,7 +106,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group{{ ($errors->has('birthDate') ? ' has-error' : '') }}">
-                                        <label for="">Birth Date: *</label>
+                                        <label for="">Birth Date:</label>
                                         <input type="date" class="form-control" name="birthDate" value="{{ old('birthDate') }}">
                                         {!! $errors->first('birthDate', '<span class="help-block">:message</span>') !!}
                                     </div>
