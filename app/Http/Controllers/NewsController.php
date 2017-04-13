@@ -44,7 +44,7 @@ class NewsController extends Controller
         }
     }
 
-    public function comments(Request $request) {
+    public function postComments(Request $request) {
         $news_id = $request->input('newsID') ? $request->input('newsID') : '';
 
         if($news_id !== '') {
