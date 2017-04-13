@@ -52,20 +52,38 @@ class AdminController extends Controller
 
         switch($action) {
             case 'Add':
-                $username = Auth::user()->username;
+                $account = Auth::user();
                 $headline = trim($request->input('headline'));
                 $content = trim($request->input('content'));
 
                 $news_id = $this->insertRecord('news', [
                     'headline' => $headline,
                     'content' => $content,
-                    'username' => $username
+                    'username' => $account->username
                 ]);
 
                 if($news_id) {
-                    $this->setFlash('Success', 'News has been added.');
+                    $news = NewsModel::where('id', $news_id)->first();
 
-                    return redirect()->route('admin.news');
+                    if($news) {
+                        Mail::send('emails.news', [
+                            'first_name' => $account->userInfo->first_name,
+                            'year' => date('Y', strtotime($news->created_at)),
+                            'month' => date('m', strtotime($news->created_at)),
+                            'day' => date('d', strtotime($news->created_at)),
+                            'headline' => str_replace(' ', '_', $news->headline);
+                        ], function($message) use ($account, $full_name) {
+                            $message->to($account->email_address, $full_name)->subject('F.A.D.P. News Alert');
+                        });
+
+                        $this->setFlash('Success', 'News has been added.');
+
+                        return redirect()->route('admin.news');
+                    } else {
+                        $this->setFlash('Failed', 'Oops! News was not added.');
+
+                        return redirect()->route('admin.news');
+                    }
                 } else {
                     $this->setFlash('Failed', 'Oops! Failed to add news.');
 
