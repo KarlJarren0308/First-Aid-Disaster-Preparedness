@@ -74,35 +74,39 @@ class AdminController extends Controller
         if($result->fails()) {
             return redirect()->route('admin.news.add')->withErrors($result)->withInput();
         } else {
-            $account = Auth::user();
+            $authAccount = Auth::user();
             $headline = trim($request->input('headline'));
             $content = trim($request->input('content'));
 
             $news_id = $this->insertRecord('news', [
                 'headline' => $headline,
                 'content' => $content,
-                'username' => $account->username
+                'username' => $authAccount->username
             ]);
 
             if($news_id) {
                 $news = NewsModel::where('id', $news_id)->first();
 
                 if($news) {
-                    if(strlen($account->middle_name) > 1) {
-                        $full_name = $account->first_name . ' ' . substr($account->middle_name, 0, 1) . '. ' . $account->last_name;
+                    if(strlen($authAccount->middle_name) > 1) {
+                        $full_name = $authAccount->first_name . ' ' . substr($authAccount->middle_name, 0, 1) . '. ' . $authAccount->last_name;
                     } else {
-                        $full_name = $account->first_name . ' ' . $account->last_name;
+                        $full_name = $authAccount->first_name . ' ' . $authAccount->last_name;
                     }
 
-                    Mail::send('emails.news', [
-                        'first_name' => $account->userInfo->first_name,
-                        'year' => date('Y', strtotime($news->created_at)),
-                        'month' => date('m', strtotime($news->created_at)),
-                        'day' => date('d', strtotime($news->created_at)),
-                        'headline' => str_replace(' ', '_', $news->headline)
-                    ], function($message) use ($account, $full_name) {
-                        $message->to($account->email_address, $full_name)->subject('F.A.D.P. News Alert');
-                    });
+                    $accounts = AccountsModel::all();
+
+                    foreach($accounts as $account) {
+                        Mail::send('emails.news', [
+                            'first_name' => $account->userInfo->first_name,
+                            'year' => date('Y', strtotime($news->created_at)),
+                            'month' => date('m', strtotime($news->created_at)),
+                            'day' => date('d', strtotime($news->created_at)),
+                            'headline' => str_replace(' ', '_', $news->headline)
+                        ], function($message) use ($account, $full_name) {
+                            $message->to($account->email_address, $full_name)->subject('F.A.D.P. News Alert');
+                        });
+                    }
 
                     $this->setFlash('Success', 'News has been added.');
 
