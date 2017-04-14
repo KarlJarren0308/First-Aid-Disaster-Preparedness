@@ -42,6 +42,7 @@ Route::group(['as' => 'admin.'], function() {
 
         Route::post('admin/news/add', ['as' => 'news.add', 'uses' => 'AdminController@postAddNews']);
         Route::post('admin/news/edit/{id}', ['as' => 'news.edit', 'uses' => 'AdminController@postEditNews']);
+        Route::post('admin/news/delete', ['as' => 'news.delete', 'uses' => 'AdminController@postDeleteNews']);
     });
 });
 
