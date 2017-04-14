@@ -37,8 +37,9 @@ Route::group(['as' => 'admin.'], function() {
     Route::group(['middleware' => 'auth'], function() {
         Route::get('admin/dashboard', ['as' => 'dashboard', 'uses' => 'AdminController@dashboard']);
         Route::get('admin/news', ['as' => 'news', 'uses' => 'AdminController@news']);
+        Route::get('admin/news/add', ['as' => 'news.add', 'uses' => 'AdminController@addNews']);
 
-        Route::post('admin/news', ['as' => 'news', 'uses' => 'AdminController@postNews']);
+        Route::post('admin/news/add', ['as' => 'news.add', 'uses' => 'AdminController@postAddNews']);
     });
 });
 
