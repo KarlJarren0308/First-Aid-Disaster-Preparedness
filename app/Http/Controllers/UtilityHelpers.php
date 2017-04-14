@@ -27,7 +27,7 @@ trait UtilityHelpers
     {
         $record['updated_at'] = date('Y-m-d H:i:s');
 
-        return DB::table($table)->where('id', id)->update($recordToUpdate);
+        return DB::table($table)->where('id', $id)->update($recordToUpdate);
     }
 
     public function deleteRecord($table, $id)
