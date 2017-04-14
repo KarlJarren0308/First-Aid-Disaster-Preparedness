@@ -38,8 +38,10 @@ Route::group(['as' => 'admin.'], function() {
         Route::get('admin/dashboard', ['as' => 'dashboard', 'uses' => 'AdminController@dashboard']);
         Route::get('admin/news', ['as' => 'news', 'uses' => 'AdminController@news']);
         Route::get('admin/news/add', ['as' => 'news.add', 'uses' => 'AdminController@addNews']);
+        Route::get('admin/news/edit/{id}', ['as' => 'news.edit', 'uses' => 'AdminController@editNews']);
 
         Route::post('admin/news/add', ['as' => 'news.add', 'uses' => 'AdminController@postAddNews']);
+        Route::post('admin/news/edit/{id}', ['as' => 'news.edit', 'uses' => 'AdminController@postEditNews']);
     });
 });
 

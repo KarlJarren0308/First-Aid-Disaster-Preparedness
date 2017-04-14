@@ -48,43 +48,37 @@
                 </button>
             </div>
             <div id="admin-container">
-                <h3 class="no-margin"><span class="fa fa-newspaper-o"></span> Manage News</h3>
+                <h3 class="no-margin"><span class="fa fa-newspaper-o"></span> Edit News</h3>
                 <hr>
-                @include('partials.flash')
-                <div class="form-group text-right">
-                    <a href="{{ route('admin.news.add') }}" class="btn btn-primary"><span class="fa fa-plus"></span> Add</a>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="cards">
+                            <a href="{{ route('admin.news') }}" class="card">
+                                <div class="card-content">
+                                    <span class="fa fa-arrow-left"></span> Go Back
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        @include('partials.flash')
+                        <form data-form="edit-news-form" action="{{ route('admin.news.edit', ['id' => $id]) }}" method="POST" autocomplete="off">
+                            {{ csrf_field() }}
+                            <div class="form-group">
+                                <label for="">Headline:</label>
+                                <input type="text" class="form-control" maxlength="255" value="{{ $headline }}" readonly>
+                            </div>
+                            <div class="form-group{{ ($errors->has('content') ? ' has-error' : '') }}">
+                                <label for="">Content:</label>
+                                <textarea rows="10" maxlength="10000" class="form-control no-resize" name="content" autofocus>{{ (old('content') ? old('content') : $content) }}</textarea>
+                                {!! $errors->first('content', '<span class="help-block">:message</span>') !!}
+                            </div>
+                            <div class="form-group text-right">
+                                <button type="submit" class="btn btn-primary"><span class="fa fa-pencil"></span> Edit</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Headline</th>
-                            <th>Posted By</th>
-                            <th>Date & Time Posted</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($news as $news_item)
-                            <tr>
-                                <td>{{ $news_item->id }}</td>
-                                <td>{{ $news_item->headline }}</td>
-                                <td>
-                                    @if(strlen($news_item->accountInfo->userinfo->middle_name) > 1)
-                                        {{ $news_item->accountInfo->userinfo->first_name . ' ' . substr($news_item->accountInfo->userinfo->middle_name, 0, 1) . '. ' . $news_item->accountInfo->userinfo->last_name }}
-                                    @else
-                                        {{ $news_item->accountInfo->userinfo->first_name . ' ' . $news_item->accountInfo->userinfo->last_name }}
-                                    @endif
-                                </td>
-                                <td>{{ date('F d, Y (h:iA)', strtotime($news_item->created_at)) }}</td>
-                                <td class="text-center">
-                                    <a href="{{ route('admin.news.edit', ['id' => $news_item->id]) }}" class="btn btn-success btn-sm"><span class="fa fa-pencil"></span> Edit</a>
-                                    <button class="btn btn-danger btn-sm"><span class="fa fa-trash"></span> Delete</button>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
             </div>
         </div>
     </div>

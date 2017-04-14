@@ -9,6 +9,7 @@ use App\Http\Requests\ManageNewsRequest;
 
 use Auth;
 use Mail;
+use Validator;
 
 use App\NewsModel;
 
@@ -63,44 +64,103 @@ class AdminController extends Controller
         }
     }
 
-    public function postAddNews(ManageNewsRequest $request)
+    public function postAddNews(Request $request)
     {
-        $account = Auth::user();
-        $headline = trim($request->input('headline'));
-        $content = trim($request->input('content'));
-
-        $news_id = $this->insertRecord('news', [
-            'headline' => $headline,
-            'content' => $content,
-            'username' => $account->username
+        $result = Validator::make($request->all(), [
+            'headline' => 'required|unique:news,headline',
+            'content' => 'required'
         ]);
 
-        if($news_id) {
-            $news = NewsModel::where('id', $news_id)->first();
+        if($result->fails()) {
+            return redirect()->route('admin.news.add')->withErrors($result)->withInput();
+        } else {
+            $account = Auth::user();
+            $headline = trim($request->input('headline'));
+            $content = trim($request->input('content'));
 
-            if($news) {
-                Mail::send('emails.news', [
-                    'first_name' => $account->userInfo->first_name,
-                    'year' => date('Y', strtotime($news->created_at)),
-                    'month' => date('m', strtotime($news->created_at)),
-                    'day' => date('d', strtotime($news->created_at)),
-                    'headline' => str_replace(' ', '_', $news->headline)
-                ], function($message) use ($account, $full_name) {
-                    $message->to($account->email_address, $full_name)->subject('F.A.D.P. News Alert');
-                });
+            $news_id = $this->insertRecord('news', [
+                'headline' => $headline,
+                'content' => $content,
+                'username' => $account->username
+            ]);
 
-                $this->setFlash('Success', 'News has been added.');
+            if($news_id) {
+                $news = NewsModel::where('id', $news_id)->first();
 
-                return redirect()->route('admin.news');
+                if($news) {
+                    Mail::send('emails.news', [
+                        'first_name' => $account->userInfo->first_name,
+                        'year' => date('Y', strtotime($news->created_at)),
+                        'month' => date('m', strtotime($news->created_at)),
+                        'day' => date('d', strtotime($news->created_at)),
+                        'headline' => str_replace(' ', '_', $news->headline)
+                    ], function($message) use ($account, $full_name) {
+                        $message->to($account->email_address, $full_name)->subject('F.A.D.P. News Alert');
+                    });
+
+                    $this->setFlash('Success', 'News has been added.');
+
+                    return redirect()->route('admin.news');
+                } else {
+                    $this->setFlash('Failed', 'Oops! News was not added.');
+
+                    return redirect()->route('admin.news');
+                }
             } else {
-                $this->setFlash('Failed', 'Oops! News was not added.');
+                $this->setFlash('Failed', 'Oops! Failed to add news.');
 
                 return redirect()->route('admin.news');
             }
-        } else {
-            $this->setFlash('Failed', 'Oops! Failed to add news.');
+        }
+    }
 
-            return redirect()->route('admin.news');
+    public function editNews($id)
+    {
+        if(Auth::check()) {
+            if(Auth::user()->type === 'administrator') {
+                $news = NewsModel::where('id', $id)->first();
+
+                if($news) {
+                    return view('admin.news_edit', [
+                        'id' => $news->id,
+                        'headline' => $news->headline,
+                        'content' => $news->content
+                    ]);
+                } else {
+                    return redirect()->route('admin.news');
+                }
+            } else {
+                return redirect()->route('news.index');
+            }
+        } else {
+            return redirect()->route('home.login');
+        }
+    }
+
+    public function postEditNews($id, Request $request)
+    {
+        $result = Validator::make($request->all(), [
+            'content' => 'required'
+        ]);
+
+        if($result->fails()) {
+            return redirect()->route('admin.news.edit')->withErrors($result)->withInput();
+        } else {
+            $content = trim($request->input('content'));
+
+            $query = $this->updateRecord('news', $id, [
+                'content' => $content
+            ]);
+
+            if($query) {
+                $this->setFlash('Success', 'News has been updated.');
+
+                return redirect()->route('admin.news');
+            } else {
+                $this->setFlash('Failed', 'No changes has been made.');
+
+                return redirect()->route('admin.news');
+            }
         }
     }
 }
