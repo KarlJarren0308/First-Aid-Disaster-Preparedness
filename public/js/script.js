@@ -1,3 +1,19 @@
+function sDataButton(dataButton) {
+    return $('[data-button="' + dataButton + '"]');
+}
+
+function sDataForm(dataForm) {
+    return $('[data-form="' + dataForm + '"]');
+}
+
+function onDataButtonClick(dataButton, func) {
+    $('body').on('click', '[data-button="' + dataButton + '"]', func);
+}
+
+function onDataFormSubmit(dataForm, func) {
+    $('body').on('submit', '[data-form="' + dataForm + '"]', func);
+}
+
 function ajaxError(xhr, textStatus, errorThrown) {
     console.log(xhr.responseText);
 }
