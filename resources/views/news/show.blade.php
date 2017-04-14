@@ -115,4 +115,5 @@
             </div>
         </div>
     </div>
+    <script src="{{ url('/js/news/show.js') }}"></script>
 @stop
