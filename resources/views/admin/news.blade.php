@@ -48,11 +48,11 @@
                 </button>
             </div>
             <div id="admin-container">
-                <h3 class="no-margin"><span class="fa fa-newspaper-o"></span> News</h3>
+                <h3 class="no-margin"><span class="fa fa-newspaper-o"></span> Manage News</h3>
                 <hr>
                 @include('partials.flash')
                 <div class="form-group text-right">
-                    <button id="add-news-button" class="btn btn-primary"><span class="fa fa-plus"></span> Add</button>
+                    <a href="{{ route('admin.news.add') }}" class="btn btn-primary"><span class="fa fa-plus"></span> Add</a>
                 </div>
                 <table class="table table-striped table-bordered">
                     <thead>
@@ -88,32 +88,4 @@
             </div>
         </div>
     </div>
-    <div id="add-news-modal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"><span class="fa fa-plus"></span> Add News</h4>
-                </div>
-                <div class="modal-body">
-                    <form data-form="add-news-form" action="{{ route('admin.news') }}" method="POST" autocomplete="off">
-                        {{ csrf_field() }}
-                        <input type="hidden" name="action" value="Add">
-                        <div class="form-group">
-                            <label for="">Headline:</label>
-                            <input type="text" class="form-control modal-focus" name="headline" maxlength="255">
-                        </div>
-                        <div class="form-group">
-                            <label for="">Content:</label>
-                            <textarea rows="3" maxlength="10000" class="form-control no-resize" name="content"></textarea>
-                        </div>
-                        <div class="form-group text-right">
-                            <input type="submit" class="btn btn-primary" value="Add">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="/js/home/news.js"></script>
 @stop
