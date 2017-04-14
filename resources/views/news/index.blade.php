@@ -69,5 +69,4 @@
             </div>
         </div>
     </div>
-    <script src="/js/news/index.js"></script>
 @stop
