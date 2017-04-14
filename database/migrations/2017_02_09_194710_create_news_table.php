@@ -14,7 +14,7 @@ class CreateNewsTable extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('headline');
+            $table->string('headline')->unique();
             $table->string('content', 10000);
             $table->string('username');
             $table->foreign('username')->references('username')->on('accounts');
