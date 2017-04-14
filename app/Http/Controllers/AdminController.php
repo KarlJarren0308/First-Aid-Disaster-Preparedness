@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\UtilityHelpers;
+use App\Http\Requests\ManageNewsRequest;
 
 use Auth;
 use Mail;
@@ -49,53 +50,57 @@ class AdminController extends Controller
         }
     }
 
-    public function postNews(Request $request)
+    public function addNews()
     {
-        $action = $request->input('action');
+        if(Auth::check()) {
+            if(Auth::user()->type === 'administrator') {
+                return view('admin.news_add');
+            } else {
+                return redirect()->route('news.index');
+            }
+        } else {
+            return redirect()->route('home.login');
+        }
+    }
 
-        switch($action) {
-            case 'Add':
-                $account = Auth::user();
-                $headline = trim($request->input('headline'));
-                $content = trim($request->input('content'));
+    public function postAddNews(ManageNewsRequest $request)
+    {
+        $account = Auth::user();
+        $headline = trim($request->input('headline'));
+        $content = trim($request->input('content'));
 
-                $news_id = $this->insertRecord('news', [
-                    'headline' => $headline,
-                    'content' => $content,
-                    'username' => $account->username
-                ]);
+        $news_id = $this->insertRecord('news', [
+            'headline' => $headline,
+            'content' => $content,
+            'username' => $account->username
+        ]);
 
-                if($news_id) {
-                    $news = NewsModel::where('id', $news_id)->first();
+        if($news_id) {
+            $news = NewsModel::where('id', $news_id)->first();
 
-                    if($news) {
-                        Mail::send('emails.news', [
-                            'first_name' => $account->userInfo->first_name,
-                            'year' => date('Y', strtotime($news->created_at)),
-                            'month' => date('m', strtotime($news->created_at)),
-                            'day' => date('d', strtotime($news->created_at)),
-                            'headline' => str_replace(' ', '_', $news->headline);
-                        ], function($message) use ($account, $full_name) {
-                            $message->to($account->email_address, $full_name)->subject('F.A.D.P. News Alert');
-                        });
+            if($news) {
+                Mail::send('emails.news', [
+                    'first_name' => $account->userInfo->first_name,
+                    'year' => date('Y', strtotime($news->created_at)),
+                    'month' => date('m', strtotime($news->created_at)),
+                    'day' => date('d', strtotime($news->created_at)),
+                    'headline' => str_replace(' ', '_', $news->headline)
+                ], function($message) use ($account, $full_name) {
+                    $message->to($account->email_address, $full_name)->subject('F.A.D.P. News Alert');
+                });
 
-                        $this->setFlash('Success', 'News has been added.');
+                $this->setFlash('Success', 'News has been added.');
 
-                        return redirect()->route('admin.news');
-                    } else {
-                        $this->setFlash('Failed', 'Oops! News was not added.');
+                return redirect()->route('admin.news');
+            } else {
+                $this->setFlash('Failed', 'Oops! News was not added.');
 
-                        return redirect()->route('admin.news');
-                    }
-                } else {
-                    $this->setFlash('Failed', 'Oops! Failed to add news.');
+                return redirect()->route('admin.news');
+            }
+        } else {
+            $this->setFlash('Failed', 'Oops! Failed to add news.');
 
-                    return redirect()->route('admin.news');
-                }
-
-                break;
-            default:
-                break;
+            return redirect()->route('admin.news');
         }
     }
 }
