@@ -11,6 +11,7 @@ use Auth;
 use Mail;
 use Validator;
 
+use App\CommentsModel;
 use App\NewsModel;
 
 class AdminController extends Controller
@@ -181,14 +182,22 @@ class AdminController extends Controller
         $query = NewsModel::where('id', $news_id)->first();
 
         if($query) {
-            $query = $this->deleteRecord('news', $news_id);
+            $query = CommentsModel::where('news_id', $news_id)->delete();
 
             if($query) {
-                $this->setFlash('Success', 'News has been deleted.');
+                $query = $this->deleteRecord('news', $news_id);
 
-                return redirect()->route('admin.news');
+                if($query) {
+                    $this->setFlash('Success', 'News has been deleted.');
+
+                    return redirect()->route('admin.news');
+                } else {
+                    $this->setFlash('Failed', 'Oops! News was not deleted.');
+
+                    return redirect()->route('admin.news');
+                }
             } else {
-                $this->setFlash('Failed', 'Oops! News doesn\'t exist.');
+                $this->setFlash('Failed', 'Oops! Failed to delete news.');
 
                 return redirect()->route('admin.news');
             }
