@@ -30,7 +30,7 @@
             </ul>
         </div>
     </div>
-    <div id="admin-page-wrapper" class="container-full">
+    <div id="admin-page-wrapper">
         <div class="sidebar">
             <div id="sidebar-collapse" class="sidebar-nav navbar-collapse">
                 <ul class="nav">

@@ -30,7 +30,7 @@
             </ul>
         </div>
     </div>
-    <div id="admin-page-wrapper" class="container-full">
+    <div id="admin-page-wrapper">
         <div class="sidebar">
             <div id="sidebar-collapse" class="sidebar-nav navbar-collapse">
                 <ul class="nav">
@@ -54,12 +54,12 @@
                 <div class="form-group text-right">
                     <a href="{{ route('admin.news.add') }}" class="btn btn-primary"><span class="fa fa-plus"></span> Add</a>
                 </div>
-                <table class="table table-striped table-bordered">
+                <table class="table table-striped table-bordered table-responsive">
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Headline</th>
-                            <th>Posted By</th>
+                            <th class="hidden-xs">Posted By</th>
                             <th>Date & Time Posted</th>
                             <th>Action</th>
                         </tr>
@@ -69,14 +69,17 @@
                             <tr>
                                 <td>{{ $news_item->id }}</td>
                                 <td>{{ $news_item->headline }}</td>
-                                <td>
+                                <td class="hidden-xs">
                                     @if(strlen($news_item->accountInfo->userinfo->middle_name) > 1)
                                         {{ $news_item->accountInfo->userinfo->first_name . ' ' . substr($news_item->accountInfo->userinfo->middle_name, 0, 1) . '. ' . $news_item->accountInfo->userinfo->last_name }}
                                     @else
                                         {{ $news_item->accountInfo->userinfo->first_name . ' ' . $news_item->accountInfo->userinfo->last_name }}
                                     @endif
                                 </td>
-                                <td>{{ date('F d, Y (h:iA)', strtotime($news_item->created_at)) }}</td>
+                                <td>
+                                    <span class="visible-xs">{{ date('M. d, Y (h:iA)', strtotime($news_item->created_at)) }}</span>
+                                    <span class="hidden-xs">{{ date('F d, Y (h:iA)', strtotime($news_item->created_at)) }}</span>
+                                </td>
                                 <td class="text-center">
                                     <a href="{{ route('admin.news.edit', ['id' => $news_item->id]) }}" class="btn btn-success btn-sm"><span class="fa fa-pencil"></span> Edit</a>
                                     <button data-button="delete-news-button" data-var-id="{{ $news_item->id }}" class="btn btn-danger btn-sm"><span class="fa fa-trash"></span> Delete</button>

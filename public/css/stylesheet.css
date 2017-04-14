@@ -284,18 +284,29 @@ canvas {
 }
 
 #page-wrapper {
+    overflow-y: scroll;
+    position: relative;
     padding-top: 1rem;
     padding-bottom: 1rem;
+    min-height: auto !important;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 #admin-page-wrapper {
     background-color: #eee;
-    margin-top: 60px;
+    padding-top: 60px;
+    height: 100%;
 }
 
 #main-container {
-    padding-top: 4rem;
-    padding-bottom: 4rem;
+    padding-top: 2em;
+    padding-bottom: 2em;
+}
+
+#main-container.for-news {
+    padding-top: 85px;
+    padding-bottom: 25px;
 }
 
 @media screen and (min-width: 768px) {

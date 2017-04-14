@@ -37,8 +37,17 @@
             </ul>
         </div>
     </div>
-    <div id="main-container" class="container">
+    <div id="main-container" class="container for-news">
         <div class="row">
+            <div class="col-sm-4">
+                <form data-form="search-form" action="{{ route('news.index') }}" method="POST" autocomplete="off">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="">Search For:</label>
+                        <input id="search-field" type="text" class="form-control" name="search" required autofocus>
+                    </div>
+                </form>
+            </div>
             <div class="col-sm-8">
                 <div class="cards">
                     @if(count($news) > 0)
@@ -57,15 +66,6 @@
                         </div>
                     @endif
                 </div>
-            </div>
-            <div class="col-sm-4">
-                <form data-form="search-form" action="{{ route('news.index') }}" method="POST" autocomplete="off">
-                    {{ csrf_field() }}
-                    <div class="form-group">
-                        <label for="">Search For:</label>
-                        <input id="search-field" type="text" class="form-control" name="search" required autofocus>
-                    </div>
-                </form>
             </div>
         </div>
     </div>

@@ -41,8 +41,17 @@
             </ul>
         </div>
     </div>
-    <div id="main-container" class="container">
+    <div id="main-container" class="container for-news">
         <div class="row">
+            <div class="col-sm-4">
+                <form data-form="search-form" action="{{ route('news.index') }}" method="POST" autocomplete="off">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        <label for="">Search For:</label>
+                        <input id="search-field" type="text" class="form-control" name="search" required>
+                    </div>
+                </form>
+            </div>
             <div class="col-sm-8">
                 <div class="cards">
                     <a href="{{ route('news.index') }}" class="card">
@@ -70,7 +79,7 @@
                                                 <form id="comment-form" data-form="comment-form" autocomplete="off">
                                                     <input type="hidden" name="newsID" value="{{ $news->id }}">
                                                     <div class="form-group no-margin">
-                                                        <input type="text" class="form-control" name="comment" maxlength="2000" placeholder="Write a comment..." required>
+                                                        <input type="text" class="form-control" name="comment" maxlength="2000" placeholder="Write a comment..." required autofocus>
                                                     </div>
                                                 </form>
                                             </div>
@@ -85,15 +94,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-4">
-                <form data-form="search-form" action="{{ route('news.index') }}" method="POST" autocomplete="off">
-                    {{ csrf_field() }}
-                    <div class="form-group">
-                        <label for="">Search For:</label>
-                        <input id="search-field" type="text" class="form-control" name="search" required autofocus>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
