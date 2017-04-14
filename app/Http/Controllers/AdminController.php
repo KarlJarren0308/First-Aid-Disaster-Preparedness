@@ -11,6 +11,7 @@ use Auth;
 use Mail;
 use Validator;
 
+use App\AccountsModel;
 use App\CommentsModel;
 use App\NewsModel;
 
@@ -182,9 +183,21 @@ class AdminController extends Controller
         $query = NewsModel::where('id', $news_id)->first();
 
         if($query) {
-            $query = CommentsModel::where('news_id', $news_id)->delete();
+            $flag = false;
 
-            if($query) {
+            $commentsCount = CommentsModel::where('news_id', $news_id)->count();
+
+            if($commentsCount > 0) {
+                $query = CommentsModel::where('news_id', $news_id)->delete();
+
+                if($query) {
+                    $flag = true;
+                }
+            } else {
+                $flag = true;
+            }
+
+            if($flag) {
                 $query = $this->deleteRecord('news', $news_id);
 
                 if($query) {
