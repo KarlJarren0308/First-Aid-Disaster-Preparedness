@@ -88,6 +88,12 @@ class AdminController extends Controller
                 $news = NewsModel::where('id', $news_id)->first();
 
                 if($news) {
+                    if(strlen($account->middle_name) > 1) {
+                        $full_name = $account->first_name . ' ' . substr($account->middle_name, 0, 1) . '. ' . $account->last_name;
+                    } else {
+                        $full_name = $account->first_name . ' ' . $account->last_name;
+                    }
+
                     Mail::send('emails.news', [
                         'first_name' => $account->userInfo->first_name,
                         'year' => date('Y', strtotime($news->created_at)),
@@ -161,6 +167,31 @@ class AdminController extends Controller
 
                 return redirect()->route('admin.news');
             }
+        }
+    }
+
+    public function postDeleteNews(Request $request)
+    {
+        $news_id = $request->input('newsID');
+
+        $query = NewsModel::where('id', $news_id)->first();
+
+        if($query) {
+            $query = $this->deleteRecord('news', $news_id);
+
+            if($query) {
+                $this->setFlash('Success', 'News has been deleted.');
+
+                return redirect()->route('admin.news');
+            } else {
+                $this->setFlash('Failed', 'Oops! News doesn\'t exist.');
+
+                return redirect()->route('admin.news');
+            }
+        } else {
+            $this->setFlash('Failed', 'Oops! News doesn\'t exist.');
+
+            return redirect()->route('admin.news');
         }
     }
 }
