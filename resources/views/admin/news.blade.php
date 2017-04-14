@@ -79,7 +79,7 @@
                                 <td>{{ date('F d, Y (h:iA)', strtotime($news_item->created_at)) }}</td>
                                 <td class="text-center">
                                     <a href="{{ route('admin.news.edit', ['id' => $news_item->id]) }}" class="btn btn-success btn-sm"><span class="fa fa-pencil"></span> Edit</a>
-                                    <button class="btn btn-danger btn-sm"><span class="fa fa-trash"></span> Delete</button>
+                                    <button data-button="delete-news-button" data-var-id="{{ $news_item->id }}" class="btn btn-danger btn-sm"><span class="fa fa-trash"></span> Delete</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -88,4 +88,27 @@
             </div>
         </div>
     </div>
+    <div id="delete-news-modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><span class="fa fa-newspaper-o"></span> Delete News</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this news?</p>
+                    <form data-form="delete-news-form" action="{{ route('admin.news.delete') }}" method="POST" autocomplete="off">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="newsID" value="">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="text-right">
+                        <button class="yes-button btn btn-primary">Yes</button>
+                        <button class="no-button btn btn-default">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url('/js/admin/news.js') }}"></script>
 @stop
