@@ -89,6 +89,26 @@ class AdminController extends Controller
         }
     }
 
+    public function users() {
+        if(Auth::check()) {
+            if(Auth::user()->type === 'administrator') {
+                try {
+                    $accounts = AccountsModel::all();
+
+                    return view('admin.users', [
+                        'accounts' => $accounts
+                    ]);
+                } catch(Exception $ex) {
+                    return view('errors.404');
+                }
+            } else {
+                return redirect()->route('news.index');
+            }
+        } else {
+            return redirect()->route('home.login');
+        }
+    }
+
     public function postAddNews(Request $request)
     {
         $result = Validator::make($request->all(), [
