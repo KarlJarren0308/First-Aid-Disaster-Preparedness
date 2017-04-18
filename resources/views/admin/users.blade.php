@@ -77,10 +77,12 @@
                                     <span>{{ date('F d, Y (h:iA)', strtotime($account->created_at)) }}</span>
                                 </td>
                                 <td class="text-center">
-                                    @if($account->is_banned)
-                                        <button data-button="undo-ban-users-button" data-var-id="{{ $account->id }}" class="btn btn-danger btn-sm"><span class="fa fa-reload"></span> Undo Ban</button>
-                                    @else
-                                        <button data-button="ban-users-button" data-var-id="{{ $account->id }}" class="btn btn-danger btn-sm"><span class="fa fa-ban"></span> Ban</button>
+                                    @if($account->type === 'user')
+                                        @if($account->is_banned)
+                                            <button data-button="undo-ban-users-button" data-var-id="{{ $account->id }}" class="btn btn-danger btn-sm"><span class="fa fa-reload"></span> Undo Ban</button>
+                                        @else
+                                            <button data-button="ban-users-button" data-var-id="{{ $account->id }}" class="btn btn-danger btn-sm"><span class="fa fa-ban"></span> Ban</button>
+                                        @endif
                                     @endif
                                 </td>
                             </tr>
