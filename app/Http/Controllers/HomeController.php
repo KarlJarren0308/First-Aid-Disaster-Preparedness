@@ -50,6 +50,83 @@ class HomeController extends Controller
         }
     }
 
+    public function login()
+    {
+        if(Auth::check()) {
+            if(Auth::user()->type === 'administrator') {
+                return redirect()->route('admin.dashboard');
+            } else {
+                return redirect()->route('news.index');
+            }
+        } else {
+            return view('home.login');
+        }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return redirect()->route('home.index');
+    }
+
+    public function verifyAccount($verification_code) {
+        $account = AccountsModel::where('verification_code', $verification_code)->first();
+
+        if($account) {
+            if($account->is_verified == false) {
+                $query = AccountsModel::where('id', $account->id)->update([
+                    'is_verified' => true
+                ]);
+
+                if($query) {
+                    $this->setFlash('Success', 'Account has been verified. You may now log in your account.');
+
+                    return redirect()->route('home.login');
+                } else {
+                    $this->setFlash('Failed', 'Oops! Failed to verify account.');
+
+                    return redirect()->route('home.login');
+                }
+            } else {
+                $this->setFlash('Failed', 'Oops! Account has already been verified.');
+
+                return redirect()->route('home.login');
+            }
+        } else {
+            $this->setFlash('Failed', 'Oops! Verification code doesn\'t exist.');
+
+            return redirect()->route('home.login');
+        }
+    }
+
+    public function passwordReset()
+    {
+        if(Auth::check()) {
+            if(Auth::user()->type === 'administrator') {
+                return redirect()->route('admin.dashboard');
+            } else {
+                return redirect()->route('news.index');
+            }
+        } else {
+            return view('home.password_reset');
+        }
+    }
+
+    public function changePassword($password_reset_code) {
+        $account = AccountsModel::where('password_reset_code', $password_reset_code)->first();
+
+        if($account) {
+            return view('home.change_password', [
+                'password_reset_code' => $password_reset_code
+            ]);
+        } else {
+            $this->setFlash('Failed', 'Oops! Invalid password reset code.');
+
+            return redirect()->route('home.password_reset');
+        }
+    }
+
     public function postRegister(RegisterRequest $request)
     {
         $username = $request->input('username');
@@ -105,19 +182,6 @@ class HomeController extends Controller
         }
     }
 
-    public function login()
-    {
-        if(Auth::check()) {
-            if(Auth::user()->type === 'administrator') {
-                return redirect()->route('admin.dashboard');
-            } else {
-                return redirect()->route('news.index');
-            }
-        } else {
-            return view('home.login');
-        }
-    }
-
     public function postLogin(Request $request)
     {
         $username = $request->input('username');
@@ -146,56 +210,6 @@ class HomeController extends Controller
             $this->setFlash('Failed', 'Invalid username and/or password.');
 
             return redirect()->back();
-        }
-    }
-
-    public function logout()
-    {
-        Auth::logout();
-
-        return redirect()->route('home.index');
-    }
-
-    public function verifyAccount($verification_code) {
-        $account = AccountsModel::where('verification_code', $verification_code)->first();
-
-        if($account) {
-            if($account->is_verified == false) {
-                $query = AccountsModel::where('id', $account->id)->update([
-                    'is_verified' => true
-                ]);
-
-                if($query) {
-                    $this->setFlash('Success', 'Account has been verified. You may now log in your account.');
-
-                    return redirect()->route('home.login');
-                } else {
-                    $this->setFlash('Failed', 'Oops! Failed to verify account.');
-
-                    return redirect()->route('home.login');
-                }
-            } else {
-                $this->setFlash('Failed', 'Oops! Account has already been verified.');
-
-                return redirect()->route('home.login');
-            }
-        } else {
-            $this->setFlash('Failed', 'Oops! Verification code doesn\'t exist.');
-
-            return redirect()->route('home.login');
-        }
-    }
-
-    public function passwordReset()
-    {
-        if(Auth::check()) {
-            if(Auth::user()->type === 'administrator') {
-                return redirect()->route('admin.dashboard');
-            } else {
-                return redirect()->route('news.index');
-            }
-        } else {
-            return view('home.password_reset');
         }
     }
 
@@ -243,20 +257,6 @@ class HomeController extends Controller
 
                 return redirect()->route('home.password_reset');
             }
-        }
-    }
-
-    public function changePassword($password_reset_code) {
-        $account = AccountsModel::where('password_reset_code', $password_reset_code)->first();
-
-        if($account) {
-            return view('home.change_password', [
-                'password_reset_code' => $password_reset_code
-            ]);
-        } else {
-            $this->setFlash('Failed', 'Oops! Invalid password reset code.');
-
-            return redirect()->route('home.password_reset');
         }
     }
 
