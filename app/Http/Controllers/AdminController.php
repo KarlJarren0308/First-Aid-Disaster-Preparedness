@@ -66,6 +66,29 @@ class AdminController extends Controller
         }
     }
 
+    public function editNews($id)
+    {
+        if(Auth::check()) {
+            if(Auth::user()->type === 'administrator') {
+                $news = NewsModel::where('id', $id)->first();
+
+                if($news) {
+                    return view('admin.news_edit', [
+                        'id' => $news->id,
+                        'headline' => $news->headline,
+                        'content' => $news->content
+                    ]);
+                } else {
+                    return redirect()->route('admin.news');
+                }
+            } else {
+                return redirect()->route('news.index');
+            }
+        } else {
+            return redirect()->route('home.login');
+        }
+    }
+
     public function postAddNews(Request $request)
     {
         $result = Validator::make($request->all(), [
@@ -123,29 +146,6 @@ class AdminController extends Controller
 
                 return redirect()->route('admin.news');
             }
-        }
-    }
-
-    public function editNews($id)
-    {
-        if(Auth::check()) {
-            if(Auth::user()->type === 'administrator') {
-                $news = NewsModel::where('id', $id)->first();
-
-                if($news) {
-                    return view('admin.news_edit', [
-                        'id' => $news->id,
-                        'headline' => $news->headline,
-                        'content' => $news->content
-                    ]);
-                } else {
-                    return redirect()->route('admin.news');
-                }
-            } else {
-                return redirect()->route('news.index');
-            }
-        } else {
-            return redirect()->route('home.login');
         }
     }
 
