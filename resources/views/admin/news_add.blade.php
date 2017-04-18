@@ -39,7 +39,6 @@
                     <li><a href="{{ route('admin.users') }}"><span class="fa fa-users"></span> Manage Users</a></li>
                 </ul>
             </div>
-            <!-- /.sidebar-collapse -->
         </div>
         <div id="page-wrapper">
             <div class="visible-xs-block clearfix text-right">
