@@ -240,4 +240,37 @@ class AdminController extends Controller
             return redirect()->route('admin.news');
         }
     }
+
+    public function postDeleteUsers(Request $request)
+    {
+        $account_id = $request->input('accountID');
+
+        $query = AccountsModel::where('id', $account_id)->first();
+
+        if($query) {
+            $query = $this->deleteRecord('users', $account_id);
+
+            if($query) {
+                $query = $this->deleteRecord('accounts', $account_id);
+
+                if($query) {
+                    $this->setFlash('Success', 'User has been deleted.');
+
+                    return redirect()->route('admin.news');
+                } else {
+                    $this->setFlash('Failed', 'Oops! User was not deleted.');
+
+                    return redirect()->route('admin.users');
+                }
+            } else {
+                $this->setFlash('Failed', 'Oops! Failed to delete user.');
+
+                return redirect()->route('admin.users');
+            }
+        } else {
+            $this->setFlash('Failed', 'Oops! User doesn\'t exist.');
+
+            return redirect()->route('admin.users');
+        }
+    }
 }
