@@ -79,7 +79,7 @@
                                 <td class="text-center">
                                     @if($account->type === 'user')
                                         @if($account->is_banned)
-                                            <button data-button="undo-ban-users-button" data-var-id="{{ $account->id }}" class="btn btn-danger btn-sm"><span class="fa fa-reload"></span> Undo Ban</button>
+                                            <button data-button="unban-users-button" data-var-id="{{ $account->id }}" class="btn btn-danger btn-sm"><span class="fa fa-reload"></span> Unban</button>
                                         @else
                                             <button data-button="ban-users-button" data-var-id="{{ $account->id }}" class="btn btn-danger btn-sm"><span class="fa fa-ban"></span> Ban</button>
                                         @endif
@@ -89,6 +89,31 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+        </div>
+    </div>
+    <div id="unban-users-modal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><span class="fa fa-newspaper-o"></span> Delete User</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to unban this user? Unbanned users will be able to do the following:</p>
+                    <ul>
+                        <li>Comment on news.</li>
+                    </ul>
+                    <form data-form="unban-users-form" action="{{ route('admin.users.unban') }}" method="POST" autocomplete="off">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="accountID" value="">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="text-right">
+                        <button class="yes-button btn btn-primary">Yes</button>
+                        <button class="no-button btn btn-default">No</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
