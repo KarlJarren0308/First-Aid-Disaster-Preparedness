@@ -241,29 +241,23 @@ class AdminController extends Controller
         }
     }
 
-    public function postDeleteUsers(Request $request)
+    public function postBanUsers(Request $request)
     {
         $account_id = $request->input('accountID');
 
         $query = AccountsModel::where('id', $account_id)->first();
 
         if($query) {
-            $query = $this->deleteRecord('users', $account_id);
+            $query = $this->updateRecord('accounts', $account_id, [
+                'is_banned' => true
+            ]);
 
             if($query) {
-                $query = $this->deleteRecord('accounts', $account_id);
+                $this->setFlash('Success', 'User has been banned.');
 
-                if($query) {
-                    $this->setFlash('Success', 'User has been deleted.');
-
-                    return redirect()->route('admin.news');
-                } else {
-                    $this->setFlash('Failed', 'Oops! User was not deleted.');
-
-                    return redirect()->route('admin.users');
-                }
+                return redirect()->route('admin.news');
             } else {
-                $this->setFlash('Failed', 'Oops! Failed to delete user.');
+                $this->setFlash('Failed', 'Oops! User was not banned.');
 
                 return redirect()->route('admin.users');
             }
