@@ -255,9 +255,36 @@ class AdminController extends Controller
             if($query) {
                 $this->setFlash('Success', 'User has been banned.');
 
-                return redirect()->route('admin.news');
+                return redirect()->route('admin.users');
             } else {
                 $this->setFlash('Failed', 'Oops! User was not banned.');
+
+                return redirect()->route('admin.users');
+            }
+        } else {
+            $this->setFlash('Failed', 'Oops! User doesn\'t exist.');
+
+            return redirect()->route('admin.users');
+        }
+    }
+
+    public function postUnbanUsers(Request $request)
+    {
+        $account_id = $request->input('accountID');
+
+        $query = AccountsModel::where('id', $account_id)->first();
+
+        if($query) {
+            $query = $this->updateRecord('accounts', $account_id, [
+                'is_banned' => false
+            ]);
+
+            if($query) {
+                $this->setFlash('Success', 'User\'s ban has been removed.');
+
+                return redirect()->route('admin.users');
+            } else {
+                $this->setFlash('Failed', 'Oops! User\'s ban was not removed.');
 
                 return redirect()->route('admin.users');
             }
