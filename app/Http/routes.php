@@ -39,10 +39,16 @@ Route::group(['as' => 'admin.'], function() {
         Route::get('admin/news', ['as' => 'news', 'uses' => 'AdminController@news']);
         Route::get('admin/news/add', ['as' => 'news.add', 'uses' => 'AdminController@addNews']);
         Route::get('admin/news/edit/{id}', ['as' => 'news.edit', 'uses' => 'AdminController@editNews']);
+        Route::get('admin/users', ['as' => 'users', 'uses' => 'AdminController@users']);
+        Route::get('admin/users/add', ['as' => 'users.add', 'uses' => 'AdminController@addUsers']);
+        Route::get('admin/users/edit/{id}', ['as' => 'users.edit', 'uses' => 'AdminController@editUsers']);
 
         Route::post('admin/news/add', ['as' => 'news.add', 'uses' => 'AdminController@postAddNews']);
         Route::post('admin/news/edit/{id}', ['as' => 'news.edit', 'uses' => 'AdminController@postEditNews']);
         Route::post('admin/news/delete', ['as' => 'news.delete', 'uses' => 'AdminController@postDeleteNews']);
+        Route::post('admin/users/add', ['as' => 'users.add', 'uses' => 'AdminController@postAddUsers']);
+        Route::post('admin/users/edit/{id}', ['as' => 'users.edit', 'uses' => 'AdminController@postEditUsers']);
+        Route::post('admin/users/delete', ['as' => 'users.delete', 'uses' => 'AdminController@postDeleteUsers']);
     });
 });
 
