@@ -45,6 +45,17 @@ canvas {
     width: 100%;
 }
 
+/*
+* Form Control
+*/
+.form-control {
+    color: #222;
+    font-weight: bold;
+}
+
+/*
+* Navbar
+*/
 .navbar-brand {
     font-family: 'Merriweather';
     text-transform: unset;
