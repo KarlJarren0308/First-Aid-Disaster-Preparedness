@@ -20,7 +20,8 @@ class AccountsUsersSeeder extends Seeder
             'password' => bcrypt('admin'),
             'type' => 'administrator',
             'image' => 'karlmacz.png',
-            'is_verified' => true
+            'is_verified' => true,
+            'is_banned' => false
         ]);
 
         UsersModel::insert([
