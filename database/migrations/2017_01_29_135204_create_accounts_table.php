@@ -18,7 +18,7 @@ class CreateAccountsTable extends Migration
             $table->string('email_address')->unique();
             $table->string('password');
             $table->string('type')->default('user');
-            $table->string('image', 255);
+            $table->string('image', 255)->nullable();
             $table->boolean('is_verified')->default(false);
             $table->string('verification_code')->nullable();
             $table->string('password_reset_code')->nullable();
