@@ -23,7 +23,7 @@
             </ul>
         </div>
     </div>
-    <div id="main-container" class="container">
+    <div id="main-container" class="container for-all">
         <div class="row">
             <div class="col-sm-6 col-sm-offset-3">
                 <div class="panel panel-primary shadow">

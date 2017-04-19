@@ -37,6 +37,7 @@
             </ul>
         </div>
     </div>
-    <div id="main-container" class="container">
+    <div id="main-container" class="container for-all">
+        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi incidunt ad magni impedit ratione voluptatum, at ex quidem! Fugit saepe eius, reprehenderit autem consequatur incidunt, necessitatibus doloremque rem itaque quod?</div>
     </div>
 @stop
