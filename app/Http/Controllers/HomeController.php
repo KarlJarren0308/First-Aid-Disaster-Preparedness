@@ -37,6 +37,17 @@ class HomeController extends Controller
         return view('home.about');
     }
 
+    public function profile() {
+        if(Auth::check()) {
+            $username = Auth::user()->username;
+            $account = AccountsModel::where('username', $username)->first();
+
+            return view('home.profile');
+        } else {
+            return redirect()->route('home.login');
+        }
+    }
+
     public function register()
     {
         if(Auth::check()) {
