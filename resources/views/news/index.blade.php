@@ -37,7 +37,7 @@
             </ul>
         </div>
     </div>
-    <div id="main-container" class="container for-news">
+    <div id="main-container" class="container for-all">
         <div class="row">
             <div class="col-sm-4">
                 <form data-form="search-form" action="{{ route('news.index') }}" method="POST" autocomplete="off">
