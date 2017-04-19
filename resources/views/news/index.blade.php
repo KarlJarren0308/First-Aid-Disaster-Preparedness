@@ -44,7 +44,7 @@
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="">Search For:</label>
-                        <input id="search-field" type="text" class="form-control" name="search" required autofocus>
+                        <input id="search-field" type="text" class="form-control" name="search" autofocus>
                     </div>
                 </form>
             </div>
