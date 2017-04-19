@@ -76,7 +76,7 @@
                                                 <div class="content">Oops! You have been banned from commenting. Please contact the administrator.</div>
                                             @else
                                                 <div class="image">
-                                                    <img src="/uploads/{{ Auth::user()->image }}" class="round">
+                                                    <img src="/uploads/{{ (Auth::user()->image !== null ? Auth::user()->image : 'fadp_anonymous.png') }}" class="round">
                                                 </div>
                                                 <div class="content">
                                                     <form id="comment-form" data-form="comment-form" autocomplete="off">
