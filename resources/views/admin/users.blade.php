@@ -79,7 +79,7 @@
                                 <td class="text-center">
                                     @if($account->type === 'user')
                                         @if($account->is_banned)
-                                            <button data-button="unban-users-button" data-var-id="{{ $account->id }}" class="btn btn-danger btn-sm"><span class="fa fa-reload"></span> Unban</button>
+                                            <button data-button="unban-users-button" data-var-id="{{ $account->id }}" class="btn btn-danger btn-sm"><span class="fa fa-refresh"></span> Unban</button>
                                         @else
                                             <button data-button="ban-users-button" data-var-id="{{ $account->id }}" class="btn btn-danger btn-sm"><span class="fa fa-ban"></span> Ban</button>
                                         @endif
