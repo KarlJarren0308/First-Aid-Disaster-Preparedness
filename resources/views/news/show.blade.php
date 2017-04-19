@@ -72,17 +72,21 @@
                                 <div class="tab-pane active" id="comment">
                                     <div class="block" style="margin-bottom: 10px;">
                                         @if(Auth::check())
-                                            <div class="image">
-                                                <img src="/uploads/{{ Auth::user()->image }}" class="round">
-                                            </div>
-                                            <div class="content">
-                                                <form id="comment-form" data-form="comment-form" autocomplete="off">
-                                                    <input type="hidden" name="newsID" value="{{ $news->id }}">
-                                                    <div class="form-group no-margin">
-                                                        <input type="text" class="form-control" name="comment" maxlength="2000" placeholder="Write a comment..." required autofocus>
-                                                    </div>
-                                                </form>
-                                            </div>
+                                            @if(Auth::user()->is_banned)
+                                                <div class="content">Oops! You have been banned from commenting. Please contact the administrator.</div>
+                                            @else
+                                                <div class="image">
+                                                    <img src="/uploads/{{ Auth::user()->image }}" class="round">
+                                                </div>
+                                                <div class="content">
+                                                    <form id="comment-form" data-form="comment-form" autocomplete="off">
+                                                        <input type="hidden" name="newsID" value="{{ $news->id }}">
+                                                        <div class="form-group no-margin">
+                                                            <input type="text" class="form-control" name="comment" maxlength="2000" placeholder="Write a comment..." required autofocus>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            @endif
                                         @else
                                             <div class="content">Oops! Only users who have logged in are allowed to leave a comment on this news.</div>
                                         @endif
