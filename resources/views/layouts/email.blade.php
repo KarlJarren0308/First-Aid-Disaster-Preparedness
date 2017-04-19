@@ -4,29 +4,26 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-@yield('meta')
     <title>First-aid & Disaster Preparedness</title>
     <style>
         @import url('https://fonts.googleapis.com/css?family=Merriweather');
         @import url('https://fonts.googleapis.com/css?family=Roboto');
-    </style>
-    <style>
-        html,
-        body {
+
+        #body {
+            background-color: #e74944;
+            color: #222;
+            font-family: 'Roboto', 'Helvetica', sans-serif;
+            font-size: 20px;
             padding: 0;
             margin: 0;
         }
 
-        body {
-            background-color: #f8f8f8;
-            color: #222;
-            font-family: 'Roboto', 'Helvetica', sans-serif;
-            font-size: 20px;
-        }
-
         .block {
             background-color: white;
-            border: 1px solid #ddd;
+            border-top: 1px solid #bbb;
+            border-bottom: 3px solid #bbb;
+            border-left: 1px solid #bbb;
+            border-right: 1px solid #bbb;
             border-radius: 4px;
             display: inline-block;
             padding: 25px;
@@ -42,7 +39,7 @@
 
         .block > .header {
             display: block;
-            border-bottom: 1px solid #ddd;
+            border-bottom: 1px solid #bbb;
             padding-bottom: 10px;
         }
 
@@ -76,6 +73,8 @@
     </style>
 </head>
 <body>
-@yield('content')
+    <div id="body">
+    @yield('content')
+    </div>
 </body>
 </html>
