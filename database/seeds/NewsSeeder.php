@@ -20,7 +20,8 @@ class NewsSeeder extends Seeder
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero eaque deleniti, cupiditate culpa velit, libero autem qui, inventore atque quis incidunt placeat. Aut modi, quidem placeat beatae velit sunt ut.
 
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas corrupti illum quaerat ducimus commodi reiciendis doloribus aliquid officiis dolorum soluta unde numquam neque odio cum a, adipisci consectetur minima magnam?',
-            'username' => 'admin'
+            'username' => 'admin',
+            'created_at' => date('Y-m-d')
         ]);
     }
 }
