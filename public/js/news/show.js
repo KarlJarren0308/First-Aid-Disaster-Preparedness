@@ -14,11 +14,19 @@ $(document).ready(function() {
                 },
                 dataType: 'json',
                 success: function(response) {
+                    var img = '';
+
                     if(commentsLength !== response['data'].length) {
                         $('#comments-block').html('');
 
                         for(var i = 0; i < response['data'].length; i++) {
-                            $('#comments-block').append('<div class="comment block"><div class="image"><img src="/uploads/' + response['data'][i]['account_info']['image'] + '" class="round"></div><div class="content"><div>' + response['data'][i]['comment'] + '</div><div>' + moment(response['data'][i]['created_at']).fromNow() + '</div></div></div>');
+                            if(response['data'][i]['account_info']['image'] === null) {
+                                img = 'fadp_anonymous.png';
+                            } else {
+                                img = response['data'][i]['account_info']['image'];
+                            }
+
+                            $('#comments-block').append('<div class="comment block"><div class="image"><img src="/uploads/' + img + '" class="round"></div><div class="content"><div>' + response['data'][i]['comment'] + '</div><div>' + moment(response['data'][i]['created_at']).fromNow() + '</div></div></div>');
                         }
 
                         commentsLength = response['data'].length;
