@@ -142,7 +142,7 @@ class AdminController extends Controller
                     $accounts = AccountsModel::all();
 
                     foreach($accounts as $account) {
-                        Mail::send('emails.news', [
+                        Mail::queue('emails.news', [
                             'first_name' => $account->userInfo->first_name,
                             'year' => date('Y', strtotime($news->created_at)),
                             'month' => date('m', strtotime($news->created_at)),
