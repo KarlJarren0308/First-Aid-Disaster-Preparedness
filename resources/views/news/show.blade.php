@@ -61,7 +61,7 @@
                     </a>
                     <div id="news-block" class="card" data-var-id="{{ $news->id }}">
                         <div class="card-title">{{ $news->headline }}</div>
-                        <div class="card-by">Posted by {{ $news->username }}</div>
+                        <div class="card-by">Posted by {{ $news->username }}  {{ $news_item->elapsedCreatedAt() }}</div>
                         <div class="card-content">{!! nl2br($news->content) !!}</div>
                         <div class="card-footer">
                             <ul class="tabs">
