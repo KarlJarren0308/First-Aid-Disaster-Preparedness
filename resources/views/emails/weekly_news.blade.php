@@ -16,7 +16,7 @@
                             <a href="">
                                 <div class="header">
                                     <div class="title">{{ $news_item->headline }}</div>
-                                    <div class="mini-title">{{ date('F d, Y', $news_item->created_at) }}</div>
+                                    <div class="mini-title">Posted by {{ $news_item->username }} {{ $news_item->elapsedCreatedAt() }}</div>
                                 </div>
                             </a>
                         </li>
