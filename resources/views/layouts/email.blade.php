@@ -93,8 +93,7 @@
         }
 
         .list > li > a > .header > .mini-title {
-            font-size: 15px;
-            font-weight: bold;
+            font-size: 12px;
         }
 
         .no-padding {
