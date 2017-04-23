@@ -24,4 +24,14 @@ class AccountsModel extends Model implements
     {
         return $this->hasOne('App\UsersModel', 'id', 'id');
     }
+
+    public function elapsedCreatedAt()
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->diffForHumans();
+    }
+
+    public function elapsedUpdatedAt()
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $this->updated_at)->diffForHumans();
+    }
 }
