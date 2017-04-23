@@ -57,6 +57,46 @@
             padding: 25px;
         }
 
+        .list {
+            border-top: 1px solid #bbb;
+            border-bottom: 3px solid #bbb;
+            border-left: 1px solid #bbb;
+            border-right: 1px solid #bbb;
+            padding: 0;
+            margin-bottom: 0;
+        }
+
+        .list > li {
+            list-style-type: none;
+        }
+
+        .list > li:nth-child(odd) {
+            background-color: white;
+        }
+
+        .list > li:nth-child(even) {
+            background-color: #eee;
+        }
+
+        .list > li > a {
+            color: #222;
+            display: inline-block;
+            text-decoration: none;
+            padding: 10px 15px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .list > li > a > .header > .title {
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .list > li > a > .header > .mini-title {
+            font-size: 15px;
+            font-weight: bold;
+        }
+
         .no-padding {
             padding-top: 0;
             padding-bottom: 0;
