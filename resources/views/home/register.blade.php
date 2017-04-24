@@ -37,10 +37,10 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="text-center form-group{{ ($errors->has('image') ? ' has-error' : '') }}">
-                                        <input id="image" type="file" class="file-upload" name="image" value="{{ old('image') }}">
-                                        <label class="file-uploader" for="image">
+                                        <input id="image" type="file" class="image-upload" name="image" value="{{ old('image') }}">
+                                        <label class="image-uploader" for="image">
                                             <span class="fa fa-plus"></span>
-                                            <img class="file-upload-preview" src="#">
+                                            <img class="image-upload-preview" src="#">
                                         </label>
                                         <div class="label-mark">Set your Profile Picture</div>
                                         {!! $errors->first('image', '<span class="help-block">:message</span>') !!}
