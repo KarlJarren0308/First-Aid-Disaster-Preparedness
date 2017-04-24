@@ -145,12 +145,20 @@ class HomeController extends Controller
         $first_name = $request->input('firstName');
         $middle_name = $request->input('middleName');
         $last_name = $request->input('lastName');
+        $image = $request->hasFile('image') ? $request->file('image') : null;
         $verification_code = $this->generateCode($username);
+
+        if($image !== null) {
+            $imageName = $username .  '_profile.' . $image->getClientOriginalExtension();
+        } else {
+            $imageName = null;
+        }
 
         $account_id = $this->insertRecord('accounts', [
             'username' => $username,
             'email_address' => $email_address,
             'password' => bcrypt($request->input('password')),
+            'image' => $imageName,
             'verification_code' => $verification_code
         ]);
 
@@ -171,6 +179,10 @@ class HomeController extends Controller
                     $full_name = $first_name . ' ' . $last_name;
                 }
 
+                if($image !== null) {
+                    $image->move('uploads', $imageName);
+                }
+                
                 Mail::queue('emails.account_verification', [
                     'first_name' => $first_name,
                     'verification_code' => $verification_code

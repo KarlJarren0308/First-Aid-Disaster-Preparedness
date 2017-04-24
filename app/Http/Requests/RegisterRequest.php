@@ -29,6 +29,7 @@ class RegisterRequest extends Request
             'password_confirmation' => 'required|min:4',
             'firstName' => 'required',
             'lastName' => 'required',
+            'image' => 'image',
             'emailAddress' => 'required|email|unique:accounts,email_address',
             'gender' => 'required',
             'birthDate' => 'required|date'
