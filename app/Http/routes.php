@@ -22,7 +22,7 @@ Route::group(['as' => 'home.'], function() {
     Route::get('login', ['as' => 'login', 'uses' => 'HomeController@login']);
     Route::get('verify_account/{verification_code}', ['as' => 'verify_account', 'uses' => 'HomeController@verifyAccount']);
     Route::get('change_password/{password_reset_code}', ['as' => 'change_password', 'uses' => 'HomeController@changePassword']);
-    Route::get('profile', ['as' => 'profile', 'uses' => 'HomeController@profile']);
+    Route::get('profile/{username}', ['as' => 'profile', 'uses' => 'HomeController@profile']);
 
     Route::post('login', ['as' => 'login', 'uses' => 'HomeController@postLogin']);
     Route::post('register', ['as' => 'register', 'uses' => 'HomeController@postRegister']);
