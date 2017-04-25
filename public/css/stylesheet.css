@@ -318,7 +318,7 @@ canvas {
 }
 
 .block.profile > .image + .content {
-    padding-left: 25px;
+    padding-left: 15px;
 }
 
 .block.profile > .image + .content > .name {
