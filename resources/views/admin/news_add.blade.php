@@ -22,7 +22,7 @@
                 <li>
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->userInfo->first_name . ' ' . Auth::user()->userInfo->last_name }} <span class="caret"></span></a>
                     <ul class="dropdown-menu pull-right">
-                        <li><a href="{{ route('home.profile') }}">Profile</a></li>
+                        <li><a href="{{ route('home.profile', ['username' => Auth::user()->username]) }}">Profile</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="{{ route('home.logout') }}">Logout</a></li>
                      </ul>
