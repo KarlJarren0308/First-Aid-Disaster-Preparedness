@@ -38,6 +38,29 @@
         </div>
     </div>
     <div id="main-container" class="container for-all">
-        <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi incidunt ad magni impedit ratione voluptatum, at ex quidem! Fugit saepe eius, reprehenderit autem consequatur incidunt, necessitatibus doloremque rem itaque quod?</div>
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <div class="profile block shadow">
+                    <div class="image">
+                        <img src="/uploads/{{ $account->image }}">
+                    </div>
+                    <div class="content">
+                        <div class="name">
+                            @if(strlen($account->userInfo->middle_name) > 1)
+                                {{ $account->userInfo->first_name . ' ' . substr($account->userInfo->middle_name, 0, 1) . '. ' . $account->userInfo->last_name }}
+                            @else
+                                {{ $account->userInfo->first_name . ' ' . $account->userInfo->last_name }}
+                            @endif
+                        </div>
+                        <div class="additional-info"><span class="fa fa-{{ strtolower($account->userInfo->gender) }}"></span> {{ $account->userInfo->gender }}</div>
+                    </div>
+                </div>
+                <div class="profile block shadow">
+                    <div class="content">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi, nihil, culpa. Harum, consequuntur. Maiores itaque, consequuntur asperiores repellat, voluptatum ut harum expedita ex animi similique impedit inventore rem, ullam adipisci!
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @stop

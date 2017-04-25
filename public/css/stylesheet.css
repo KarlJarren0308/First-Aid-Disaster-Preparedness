@@ -290,6 +290,48 @@ canvas {
 }
 
 /*
+* Profile Blocks
+*/
+.block.profile {
+    background-color: white;
+    border-radius: 4px;
+    padding: 25px;
+}
+
+.block.profile:not(:last-child) {
+    margin-bottom: 15px;
+}
+
+.block.profile > .image {
+    width: 110px;
+}
+
+.block.profile > .image > img {
+    border-radius: 4px;
+    height: 100px;
+    width: 100px;
+}
+
+.block.profile > .content {
+    font-weight: normal;
+    vertical-align: top;
+}
+
+.block.profile > .image + .content {
+    padding-left: 25px;
+}
+
+.block.profile > .image + .content > .name {
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.block.profile > .image + .content > .additional-info {
+    font-size: 1em;
+    font-weight: bold;
+}
+
+/*
 * Utilities
 */
 .label-mark {
