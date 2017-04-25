@@ -37,7 +37,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="text-center form-group{{ ($errors->has('image') ? ' has-error' : '') }}">
-                                        <input id="image" type="file" class="image-upload" name="image" value="{{ old('image') }}" accept="image/*">
+                                        <input id="image" type="file" class="image-upload" name="image" accept="image/*">
                                         <label class="image-uploader" for="image">
                                             <span class="fa fa-plus"></span>
                                             <img class="image-upload-preview" src="#">
