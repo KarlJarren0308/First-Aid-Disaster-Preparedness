@@ -104,9 +104,32 @@ canvas {
     height: 400px;
 }
 
-.media.carousel > .carousel-inner > .item > img {
+.media.carousel > .carousel-inner > .item > img,
+.media.carousel > .carousel-inner > .item > video {
     display: inline-block;
     height: 100%;
+}
+
+.media.carousel > .carousel-control {
+    background-color: rgba(231, 73, 68, 0.75);
+    background-image: none;
+    border: 1px solid white;
+    border-radius: 50%;
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    margin-top: -25px;
+    line-height: 50px;
+    height: 50px;
+    width: 50px;
+}
+
+.media.carousel > .carousel-control.left {
+    margin-left: 10px;
+}
+
+.media.carousel > .carousel-control.right {
+    margin-right: 10px;
 }
 
 /*
