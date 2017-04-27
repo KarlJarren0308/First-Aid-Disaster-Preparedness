@@ -8,6 +8,7 @@ use App\Http\Controllers\UtilityHelpers;
 use App\Http\Requests\ManageNewsRequest;
 
 use Auth;
+use File;
 use Mail;
 use Validator;
 
@@ -226,9 +227,13 @@ class AdminController extends Controller
         $query = NewsModel::where('id', $news_id)->first();
 
         if($query) {
-            $mediaCount = MediaModel::where('news_id', $news_id)->count();
+            $media = MediaModel::where('news_id', $news_id)->get();
 
-            if($mediaCount > 0) {
+            if($media) {
+                foreach($media as $media_item) {
+                    File::delete('uploads/' . $media_item->filename);
+                }
+
                 $query = MediaModel::where('news_id', $news_id)->delete();
 
                 if($query) {
