@@ -62,7 +62,31 @@
                     <div id="news-block" class="card" data-var-id="{{ $news->id }}">
                         <div class="card-title">{{ $news->headline }}</div>
                         <div class="card-by">Posted by {{ $news->username }}  {{ $news->elapsedCreatedAt() }}</div>
-                        <div class="card-content">{!! nl2br($news->content) !!}</div>
+                        <div class="card-content">
+                            <div>{!! nl2br($news->content) !!}</div>
+                            <div id="media-carousel" class="media carousel">
+                                <ol class="carousel-indicators">
+                                    @foreach($news->media as $key => $media)
+                                        <li data-target="#media-carousel" data-slide-to="{{ $key }}"{!! ($key === 0 ? ' class="active"' : '') !!}></li>
+                                    @endforeach
+                                </ol>
+                                <div class="carousel-inner">
+                                    @foreach($news->media as $key => $media)
+                                        <div class="item{{ ($key === 0 ? ' active' : '') }}">
+                                            <img src="/uploads/{{ $media->filename }}">
+                                        </div>
+                                    @endforeach
+                                </div>
+                                @if(count($news->media) > 1)
+                                    <a class="left carousel-control" href="#media-carousel" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                    </a>
+                                    <a class="right carousel-control" href="#media-carousel" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
                         <div class="card-footer">
                             <ul class="tabs">
                                 <li class="active"><a href="#comment" class="tab">Comment</a></li>

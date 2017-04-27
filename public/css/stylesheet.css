@@ -91,6 +91,25 @@ canvas {
 }
 
 /*
+* Media Carousel
+*/
+.media.carousel,
+.media.carousel > .carousel-inner {
+    height: 400px;
+}
+
+.media.carousel > .carousel-inner > .item {
+    position: relative;
+    text-align: center;
+    height: 400px;
+}
+
+.media.carousel > .carousel-inner > .item > img {
+    display: inline-block;
+    height: 100%;
+}
+
+/*
 * Navbar
 */
 .navbar-brand {

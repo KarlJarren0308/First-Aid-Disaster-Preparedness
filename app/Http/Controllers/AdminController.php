@@ -13,6 +13,7 @@ use Validator;
 
 use App\AccountsModel;
 use App\CommentsModel;
+use App\MediaModel;
 use App\NewsModel;
 
 class AdminController extends Controller
@@ -218,41 +219,55 @@ class AdminController extends Controller
 
     public function postDeleteNews(Request $request)
     {
+        $mediaFlag = false;
+        $commentsFlag = false;
         $news_id = $request->input('newsID');
 
         $query = NewsModel::where('id', $news_id)->first();
 
         if($query) {
-            $flag = false;
+            $mediaCount = MediaModel::where('news_id', $news_id)->count();
 
-            $commentsCount = CommentsModel::where('news_id', $news_id)->count();
-
-            if($commentsCount > 0) {
-                $query = CommentsModel::where('news_id', $news_id)->delete();
+            if($mediaCount > 0) {
+                $query = MediaModel::where('news_id', $news_id)->delete();
 
                 if($query) {
-                    $flag = true;
+                    $mediaFlag = true;
                 }
             } else {
-                $flag = true;
+                $mediaFlag = true;
             }
 
-            if($flag) {
-                $query = $this->deleteRecord('news', $news_id);
+            if($mediaFlag) {
+                $commentsCount = CommentsModel::where('news_id', $news_id)->count();
 
-                if($query) {
-                    $this->setFlash('Success', 'News has been deleted.');
+                if($commentsCount > 0) {
+                    $query = CommentsModel::where('news_id', $news_id)->delete();
 
-                    return redirect()->route('admin.news');
+                    if($query) {
+                        $commentsFlag = true;
+                    }
                 } else {
-                    $this->setFlash('Failed', 'Oops! News was not deleted.');
+                    $commentsFlag = true;
+                }
+
+                if($commentsFlag) {
+                    $query = $this->deleteRecord('news', $news_id);
+
+                    if($query) {
+                        $this->setFlash('Success', 'News has been deleted.');
+
+                        return redirect()->route('admin.news');
+                    } else {
+                        $this->setFlash('Failed', 'Oops! News was not deleted.');
+
+                        return redirect()->route('admin.news');
+                    }
+                } else {
+                    $this->setFlash('Failed', 'Oops! Failed to delete news.');
 
                     return redirect()->route('admin.news');
                 }
-            } else {
-                $this->setFlash('Failed', 'Oops! Failed to delete news.');
-
-                return redirect()->route('admin.news');
             }
         } else {
             $this->setFlash('Failed', 'Oops! News doesn\'t exist.');

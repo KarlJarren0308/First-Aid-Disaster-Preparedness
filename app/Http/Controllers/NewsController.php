@@ -21,9 +21,9 @@ class NewsController extends Controller
         $search = $request->input('search') ? trim($request->input('search')) : '';
 
         if($search != '') {
-            $news = NewsModel::where('headline', 'like', '%' . $search . '%')->simplePaginate(10);
+            $news = NewsModel::where('headline', 'like', '%' . $search . '%')->orderBy('created_at', 'desc')->paginate(10);
         } else {
-            $news = NewsModel::simplePaginate(10);
+            $news = NewsModel::orderBy('created_at', 'desc')->paginate(10);
         }
 
         return view('news.index', [
