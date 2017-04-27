@@ -62,7 +62,7 @@
                     </div>
                     <div class="col-sm-8">
                         @include('partials.flash')
-                        <form data-form="add-news-form" action="{{ route('admin.news.add') }}" method="POST" autocomplete="off">
+                        <form data-form="add-news-form" action="{{ route('admin.news.add') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="form-group{{ ($errors->has('headline') ? ' has-error' : '') }}">
                                 <label for="">Headline:</label>
@@ -73,6 +73,31 @@
                                 <label for="">Content:</label>
                                 <textarea rows="10" maxlength="10000" class="form-control no-resize" name="content">{{ old('content') }}</textarea>
                                 {!! $errors->first('content', '<span class="help-block">:message</span>') !!}
+                            </div>
+                            <?php
+                                $isMediaErrorOccured = false;
+                                $mediaErrors = [];
+
+                                if(count($errors) > 0) {
+                                    foreach($errors->toArray() as $key => $error) {
+                                        $keyArr = explode('.', $key);
+
+                                        if($keyArr[0] === 'media') {
+                                            $isMediaErrorOccured = true;
+
+                                            $mediaErrors[] = $error[0];
+                                        }   
+                                    }
+                                }
+                            ?>
+                            <div class="form-group{{ ($isMediaErrorOccured ? ' has-error' : '') }}">
+                                <label for="">Upload Images and/or Videos:</label>
+                                <input type="file" class="form-control" name="media[]" accept=".jpg,.jpeg,.png,.bmp,.gif,.mp4,.webm,.ogg" multiple>
+                                @if($isMediaErrorOccured && count($mediaErrors) > 0)
+                                    @foreach($mediaErrors as $mediaError)
+                                        <span class="help-block">{{ $mediaError }}</span>
+                                    @endforeach
+                                @endif
                             </div>
                             <div class="form-group text-right">
                                 <button type="submit" class="btn btn-primary"><span class="fa fa-plus"></span> Add</button>

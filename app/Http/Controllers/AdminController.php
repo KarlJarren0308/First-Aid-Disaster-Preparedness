@@ -113,7 +113,10 @@ class AdminController extends Controller
     {
         $result = Validator::make($request->all(), [
             'headline' => 'required|unique:news,headline',
-            'content' => 'required'
+            'content' => 'required',
+            'media.*' => 'mimes:jpg,jpeg,png,bmp,gif,mp4,webm,ogg'
+        ], [
+            'media.*.mimes' => 'The file type must be jpg, jpeg, png, bmp, gif, mp4, webm, or ogg.'
         ]);
 
         if($result->fails()) {
@@ -133,6 +136,23 @@ class AdminController extends Controller
                 $news = NewsModel::where('id', $news_id)->first();
 
                 if($news) {
+                    if(count($request->file('media')) > 0) {
+                        $media = $request->file('media');
+
+                        foreach($media as $key => $file) {
+                            $mediaFilename = date('Y_m_d_H_i_s_') . sprintf('%05d', $key) . '.' . $file->getClientOriginalExtension();
+
+                            $query = $this->insertRecord('media', [
+                                'news_id' => $news_id,
+                                'filename' => $mediaFilename
+                            ]);
+
+                            if($query) {
+                                $file->move('uploads', $mediaFilename);
+                            }
+                        }
+                    }
+
                     if(strlen($authAccount->middle_name) > 1) {
                         $full_name = $authAccount->first_name . ' ' . substr($authAccount->middle_name, 0, 1) . '. ' . $authAccount->last_name;
                     } else {
