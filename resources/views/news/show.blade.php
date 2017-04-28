@@ -64,34 +64,36 @@
                         <div class="card-by">Posted by {{ $news->username }}  {{ $news->elapsedCreatedAt() }}</div>
                         <div class="card-content">
                             <div>{!! nl2br($news->content) !!}</div>
-                            <div id="media-carousel" class="media carousel" data-interval="false">
-                                <ol class="carousel-indicators">
-                                    @foreach($news->media as $key => $media)
-                                        <li data-target="#media-carousel" data-slide-to="{{ $key }}"{!! ($key === 0 ? ' class="active"' : '') !!}></li>
-                                    @endforeach
-                                </ol>
-                                <div class="carousel-inner">
-                                    @foreach($news->media as $key => $media)
-                                        @if(in_array(pathinfo($media->filename, PATHINFO_EXTENSION), ['mp4', 'webm', 'ogg']))
-                                            <div class="item{{ ($key === 0 ? ' active' : '') }}">
-                                                <video src="/uploads/{{ $media->filename }}" controls></video>
-                                            </div>
-                                        @else
-                                            <div class="item{{ ($key === 0 ? ' active' : '') }}">
-                                                <img src="/uploads/{{ $media->filename }}">
-                                            </div>
-                                        @endif
-                                    @endforeach
+                            @if(count($news->media) > 0)
+                                <div id="media-carousel" class="media carousel" data-interval="false">
+                                    <ol class="carousel-indicators">
+                                        @foreach($news->media as $key => $media)
+                                            <li data-target="#media-carousel" data-slide-to="{{ $key }}"{!! ($key === 0 ? ' class="active"' : '') !!}></li>
+                                        @endforeach
+                                    </ol>
+                                    <div class="carousel-inner">
+                                        @foreach($news->media as $key => $media)
+                                            @if(in_array(pathinfo($media->filename, PATHINFO_EXTENSION), ['mp4', 'webm', 'ogg']))
+                                                <div class="item{{ ($key === 0 ? ' active' : '') }}">
+                                                    <video src="/uploads/{{ $media->filename }}" controls></video>
+                                                </div>
+                                            @else
+                                                <div class="item{{ ($key === 0 ? ' active' : '') }}">
+                                                    <img src="/uploads/{{ $media->filename }}">
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                    @if(count($news->media) > 1)
+                                        <a class="left carousel-control" href="#media-carousel" data-slide="prev">
+                                            <span class="fa fa-chevron-left"></span>
+                                        </a>
+                                        <a class="right carousel-control" href="#media-carousel" data-slide="next">
+                                            <span class="fa fa-chevron-right"></span>
+                                        </a>
+                                    @endif
                                 </div>
-                                @if(count($news->media) > 1)
-                                    <a class="left carousel-control" href="#media-carousel" data-slide="prev">
-                                        <span class="fa fa-chevron-left"></span>
-                                    </a>
-                                    <a class="right carousel-control" href="#media-carousel" data-slide="next">
-                                        <span class="fa fa-chevron-right"></span>
-                                    </a>
-                                @endif
-                            </div>
+                            @endif
                         </div>
                         <div class="card-footer">
                             <ul class="tabs">
