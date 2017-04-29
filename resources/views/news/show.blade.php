@@ -2,6 +2,16 @@
 
 @section('meta')
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta property="og:url" content="{{ url('/') }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="{{ $news->headline }}" />
+    <meta property="og:description" content="{{ substr($news->content, 0, 250) . (strlen($news->content) > 250 ? '...' : '') }}" />
+    <meta name="description" content="{{ substr($news->content, 0, 250) . (strlen($news->content) > 250 ? '...' : '') }}" />
+    <meta name="keywords" content="F.A.D.P." />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:url" content="{{ url('/') }}" />
+    <meta name="twitter:title" content="{{ $news->headline }}" />
+    <meta name="twitter:description" content="{{ substr($news->content, 0, 250) . (strlen($news->content) > 250 ? '...' : '') }}" />
 @stop
 
 @section('content')
@@ -75,11 +85,11 @@
                                         @foreach($news->media as $key => $media)
                                             @if(in_array(pathinfo($media->filename, PATHINFO_EXTENSION), ['mp4', 'webm', 'ogg']))
                                                 <div class="item{{ ($key === 0 ? ' active' : '') }}">
-                                                    <video src="/uploads/{{ $media->filename }}" controls></video>
+                                                    <video src="{{ url('/uploads/' . $media->filename) }}" controls></video>
                                                 </div>
                                             @else
                                                 <div class="item{{ ($key === 0 ? ' active' : '') }}">
-                                                    <img src="/uploads/{{ $media->filename }}">
+                                                    <img src="{{ url('/uploads/' . $media->filename) }}">
                                                 </div>
                                             @endif
                                         @endforeach
@@ -108,7 +118,7 @@
                                                 <div class="content">Oops! You have been banned from commenting. Please contact the administrator.</div>
                                             @else
                                                 <div class="image">
-                                                    <img src="/uploads/{{ (Auth::user()->image !== null ? Auth::user()->image : 'fadp_anonymous.png') }}" class="round">
+                                                    <img src="{{ url('/uploads/' . (Auth::user()->image !== null ? Auth::user()->image : 'fadp_anonymous.png')) }}" class="round">
                                                 </div>
                                                 <div class="content">
                                                     <form id="comment-form" data-form="comment-form" autocomplete="off">
@@ -125,7 +135,14 @@
                                     </div>
                                     <div id="comments-block" class="block-list"></div>
                                 </div>
-                                <div class="tab-pane" id="share">2</div>
+                                <div class="tab-pane" id="share">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" value="{{ route('news.show', ['year' => date('Y', strtotime($news->created_at)), 'month' => date('m', strtotime($news->created_at)), 'day' => date('d', strtotime($news->created_at)), 'headline' => str_replace(' ', '_', $news->headline)]) }}">
+                                    </div>
+                                    <div class="share-list">
+                                        <div class="fb-share-button" data-href="{{ route('news.show', ['year' => date('Y', strtotime($news->created_at)), 'month' => date('m', strtotime($news->created_at)), 'day' => date('d', strtotime($news->created_at)), 'headline' => str_replace(' ', '_', $news->headline)]) }}" data-layout="button" data-size="large"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -151,5 +168,6 @@
             </div>
         </div>
     </div>
+    <script src="{{ url('/js/facebook-sdk.js') }}"></script>
     <script src="{{ url('/js/news/show.js') }}"></script>
 @stop
