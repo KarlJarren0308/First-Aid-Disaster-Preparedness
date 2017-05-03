@@ -229,7 +229,7 @@ class AdminController extends Controller
         if($query) {
             $media = MediaModel::where('news_id', $news_id)->get();
 
-            if($media) {
+            if(count($media) > 0) {
                 foreach($media as $media_item) {
                     File::delete('uploads/' . $media_item->filename);
                 }
@@ -244,9 +244,9 @@ class AdminController extends Controller
             }
 
             if($mediaFlag) {
-                $commentsCount = CommentsModel::where('news_id', $news_id)->count();
+                $comments = CommentsModel::where('news_id', $news_id)->get();
 
-                if($commentsCount > 0) {
+                if(count($comments) > 0) {
                     $query = CommentsModel::where('news_id', $news_id)->delete();
 
                     if($query) {
@@ -273,6 +273,10 @@ class AdminController extends Controller
 
                     return redirect()->route('admin.news');
                 }
+            } else {
+                $this->setFlash('Failed', 'Oops! Failed to delete news.');
+
+                return redirect()->route('admin.news');
             }
         } else {
             $this->setFlash('Failed', 'Oops! News doesn\'t exist.');
