@@ -70,7 +70,7 @@ class NewsController extends Controller
             $news_id = $request->input('newsID');
             $comment = $request->input('comment') ? $censor->censorString(trim($request->input('comment')))['clean'] : '';
 
-            $comment_id = $this->insertRecord('comments', [
+            $comment_id = CommentsModel::insertGetId([
                 'comment' => $comment,
                 'news_id' => $news_id,
                 'username' => $username

@@ -128,7 +128,7 @@ class AdminController extends Controller
             $headline = trim($request->input('headline'));
             $content = trim($request->input('content'));
 
-            $news_id = $this->insertRecord('news', [
+            $news_id = NewsModel::insertGetId([
                 'headline' => $headline,
                 'content' => $content,
                 'username' => $authAccount->username
@@ -144,7 +144,7 @@ class AdminController extends Controller
                         foreach($media as $key => $file) {
                             $mediaFilename = date('Y_m_d_H_i_s_') . sprintf('%05d', $key) . '.' . $file->getClientOriginalExtension();
 
-                            $query = $this->insertRecord('media', [
+                            $query = MediaModel::insertGetId([
                                 'news_id' => $news_id,
                                 'filename' => $mediaFilename
                             ]);
@@ -202,7 +202,7 @@ class AdminController extends Controller
         } else {
             $content = trim($request->input('content'));
 
-            $query = $this->updateRecord('news', $id, [
+            $query = NewsModel::where('id', $id)->update([
                 'content' => $content
             ]);
 
@@ -257,7 +257,7 @@ class AdminController extends Controller
                 }
 
                 if($commentsFlag) {
-                    $query = $this->deleteRecord('news', $news_id);
+                    $query = NewsModel::where('id', $news_id)->delete();
 
                     if($query) {
                         $this->setFlash('Success', 'News has been deleted.');
@@ -292,7 +292,7 @@ class AdminController extends Controller
         $query = AccountsModel::where('id', $account_id)->first();
 
         if($query) {
-            $query = $this->updateRecord('accounts', $account_id, [
+            $query = AccountsModel::where('id', $account_id)->update([
                 'is_banned' => true
             ]);
 
@@ -319,7 +319,7 @@ class AdminController extends Controller
         $query = AccountsModel::where('id', $account_id)->first();
 
         if($query) {
-            $query = $this->updateRecord('accounts', $account_id, [
+            $query = AccountsModel::where('id', $account_id)->update([
                 'is_banned' => false
             ]);
 

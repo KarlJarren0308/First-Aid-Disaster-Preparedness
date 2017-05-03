@@ -12,6 +12,7 @@ use Mail;
 use Validator;
 
 use App\AccountsModel;
+use App\UsersModel;
 
 class HomeController extends Controller
 {
@@ -155,7 +156,7 @@ class HomeController extends Controller
             $imageName = null;
         }
 
-        $account_id = $this->insertRecord('accounts', [
+        $account_id = AccountsModel::insertGetId([
             'username' => $username,
             'email_address' => $email_address,
             'password' => bcrypt($request->input('password')),
@@ -164,7 +165,7 @@ class HomeController extends Controller
         ]);
 
         if($account_id) {
-            $user_id = $this->insertRecord('users', [
+            $user_id = UsersModel::insertGetId([
                 'id' => $account_id,
                 'first_name' => $first_name,
                 'middle_name' => $middle_name,
@@ -183,7 +184,7 @@ class HomeController extends Controller
                 if($image !== null) {
                     $image->move('uploads', $imageName);
                 }
-                
+
                 Mail::queue('emails.account_verification', [
                     'first_name' => $first_name,
                     'verification_code' => $verification_code

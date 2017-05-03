@@ -4,10 +4,6 @@ namespace App\Http\Controllers;
 
 use DB;
 
-use App\AccountsModel;
-use App\NewsModel;
-use App\UsersModel;
-
 trait UtilityHelpers
 {
     public function setFlash($status, $message)
