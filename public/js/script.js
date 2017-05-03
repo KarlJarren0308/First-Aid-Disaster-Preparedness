@@ -19,6 +19,10 @@ function ajaxError(xhr, textStatus, errorThrown) {
 }
 
 $(document).ready(function() {
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+
     $('.tabs > li > .tab').click(function() {
         $(this).parent().parent().find('li').removeClass('active');
         $(this).parent().addClass('active');
