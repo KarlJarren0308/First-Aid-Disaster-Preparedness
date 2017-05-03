@@ -16,25 +16,6 @@ trait UtilityHelpers
         session()->flash('flash_message', $message);
     }
 
-    public function insertRecord($table, $record)
-    {
-        $record['created_at'] = date('Y-m-d H:i:s');
-
-        return DB::table($table)->insertGetId($record);
-    }
-
-    public function updateRecord($table, $id, $recordToUpdate)
-    {
-        $record['updated_at'] = date('Y-m-d H:i:s');
-
-        return DB::table($table)->where('id', $id)->update($recordToUpdate);
-    }
-
-    public function deleteRecord($table, $id)
-    {
-        return DB::table($table)->where('id', $id)->delete();
-    }
-
     public function generateCode($text) {
         $salt = substr(md5($text), mt_rand(0, 27), 5);
 
