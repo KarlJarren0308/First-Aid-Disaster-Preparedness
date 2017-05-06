@@ -51,9 +51,7 @@ class WeeklyNewsMailer extends Command
                 $weekly_news[] = [
                     'headline' => $news_item->headline,
                     'username' => $news_item->username,
-                    'year' => date('Y', strtotime($news_item->created_at)),
-                    'month' => date('m', strtotime($news_item->created_at)),
-                    'day' => date('d', strtotime($news_item->created_at)),
+                    'url' => url('/news/' . date('Y', strtotime($news_item->created_at)) . '/' . date('m', strtotime($news_item->created_at)) . '/' . date('d', strtotime($news_item->created_at)) . '/' . str_replace(' ', '_', $news_item->headline)),
                     'elapsedCreatedAt' => $news_item->elapsedCreatedAt()
                 ];
             }
