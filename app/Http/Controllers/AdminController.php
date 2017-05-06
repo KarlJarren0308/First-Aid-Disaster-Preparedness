@@ -173,6 +173,10 @@ class AdminController extends Controller
                         ], function($message) use ($account, $full_name) {
                             $message->to($account->email_address, $full_name)->subject('F.A.D.P. News Alert');
                         });
+
+                        if($account->userInfo->mobile_number !== null) {
+                            $this->send('09068563348', 'F.A.D.P. News Alert. A latest news has been posted.');
+                        }
                     }
 
                     $this->setFlash('Success', 'News has been added.');
