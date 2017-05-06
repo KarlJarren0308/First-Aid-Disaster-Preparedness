@@ -46,6 +46,8 @@
                                         {!! $errors->first('image', '<span class="help-block">:message</span>') !!}
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group{{ ($errors->has('username') ? ' has-error' : '') }}">
                                         <label for="">Username:</label>
@@ -53,6 +55,8 @@
                                         {!! $errors->first('username', '<span class="help-block">:message</span>') !!}
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group{{ ($errors->has('password') ? ' has-error' : '') }}">
                                         <label for="">Password:</label>
@@ -79,12 +83,16 @@
                                         {!! $errors->first('firstName', '<span class="help-block">:message</span>') !!}
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
                                         <label for="">Middle Name:</label>
                                         <input type="text" class="form-control" name="middleName" value="{{ old('middleName') }}">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group{{ ($errors->has('lastName') ? ' has-error' : '') }}">
                                         <label for="">Last Name:</label>
@@ -97,13 +105,23 @@
                                 <br>
                             </div>
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-6">
                                     <div class="form-group{{ ($errors->has('emailAddress') ? ' has-error' : '') }}">
                                         <label for="">E-mail Address:</label>
                                         <input type="email" class="form-control" name="emailAddress" value="{{ old('emailAddress') }}">
                                         {!! $errors->first('emailAddress', '<span class="help-block">:message</span>') !!}
                                     </div>
                                 </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group{{ ($errors->has('mobileNumber') ? ' has-error' : '') }}">
+                                        <label for="">Mobile Number:</label>
+                                        <input type="text" class="form-control" name="mobileNumber" value="{{ old('mobileNumber') }}">
+                                        <span class="input-help">Format: 09xxxxxxxxx or 09xx-xxx-xxxx or 639xxxxxxxxx or 639xx-xxx-xxxx</span>
+                                        {!! $errors->first('mobileNumber', '<span class="help-block">:message</span>') !!}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group{{ ($errors->has('gender') ? ' has-error' : '') }}">
                                         <label for="">Gender:</label>

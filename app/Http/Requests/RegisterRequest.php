@@ -31,6 +31,7 @@ class RegisterRequest extends Request
             'lastName' => 'required',
             'image' => 'image',
             'emailAddress' => 'required|email|unique:accounts,email_address',
+            'mobileNumber' => 'mobile_number',
             'gender' => 'required',
             'birthDate' => 'required|date'
         ];

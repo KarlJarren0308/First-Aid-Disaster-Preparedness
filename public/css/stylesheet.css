@@ -90,6 +90,12 @@ canvas {
     width: 100%;
 }
 
+.input-help {
+    color: #999;
+    font-size: 0.75em;
+    font-weight: bold;
+}
+
 /*
 * Media Carousel
 */

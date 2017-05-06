@@ -161,7 +161,8 @@ class HomeController extends Controller
             'email_address' => $email_address,
             'password' => bcrypt($request->input('password')),
             'image' => $imageName,
-            'verification_code' => $verification_code
+            'verification_code' => $verification_code,
+            'created_at' => date('Y-m-d')
         ]);
 
         if($account_id) {
@@ -171,7 +172,9 @@ class HomeController extends Controller
                 'middle_name' => $middle_name,
                 'last_name' => $last_name,
                 'gender' => $request->input('gender'),
-                'birth_date' => $request->input('birthDate')
+                'mobile_number' => $request->input('mobileNumber'),
+                'birth_date' => $request->input('birthDate'),
+                'created_at' => date('Y-m-d')
             ]);
 
             if($user_id) {

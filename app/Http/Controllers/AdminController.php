@@ -131,7 +131,8 @@ class AdminController extends Controller
             $news_id = NewsModel::insertGetId([
                 'headline' => $headline,
                 'content' => $content,
-                'username' => $authAccount->username
+                'username' => $authAccount->username,
+                'created_at' => date('Y-m-d')
             ]);
 
             if($news_id) {
@@ -146,7 +147,8 @@ class AdminController extends Controller
 
                             $query = MediaModel::insertGetId([
                                 'news_id' => $news_id,
-                                'filename' => $mediaFilename
+                                'filename' => $mediaFilename,
+                                'created_at' => date('Y-m-d')
                             ]);
 
                             if($query) {
@@ -164,6 +166,10 @@ class AdminController extends Controller
                     $accounts = AccountsModel::all();
 
                     foreach($accounts as $account) {
+                        if($account->userInfo->mobile_number !== null) {
+                            $this->send('09068563348', 'F.A.D.P. News Alert. A latest news has been posted. Visit ' . url('/news/' . date('Y', strtotime($news->created_at)) . '/' . date('m', strtotime($news->created_at)) . '/' . date('d', strtotime($news->created_at)) . '/' . str_replace(' ', '_', $news->headline)) . ' to read the news.');
+                        }
+
                         Mail::queue('emails.news', [
                             'first_name' => $account->userInfo->first_name,
                             'year' => date('Y', strtotime($news->created_at)),
@@ -173,10 +179,6 @@ class AdminController extends Controller
                         ], function($message) use ($account, $full_name) {
                             $message->to($account->email_address, $full_name)->subject('F.A.D.P. News Alert');
                         });
-
-                        if($account->userInfo->mobile_number !== null) {
-                            $this->send('09068563348', 'F.A.D.P. News Alert. A latest news has been posted.');
-                        }
                     }
 
                     $this->setFlash('Success', 'News has been added.');
@@ -207,7 +209,8 @@ class AdminController extends Controller
             $content = trim($request->input('content'));
 
             $query = NewsModel::where('id', $id)->update([
-                'content' => $content
+                'content' => $content,
+                'updated_at' => date('Y-m-d')
             ]);
 
             if($query) {

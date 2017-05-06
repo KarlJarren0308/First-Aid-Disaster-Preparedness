@@ -73,7 +73,8 @@ class NewsController extends Controller
             $comment_id = CommentsModel::insertGetId([
                 'comment' => $comment,
                 'news_id' => $news_id,
-                'username' => $username
+                'username' => $username,
+                'created_at' => date('Y-m-d')
             ]);
 
             if($comment_id) {
