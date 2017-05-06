@@ -13,7 +13,7 @@
                 <ul class="list">
                     @foreach($news as $news_item)
                         <li>
-                            <a href="{{ url('/news/' . $news_item['year'] . '/' . $news_item['month'] . '/' . $news_item['day'] . '/' . $news_item['headline']) }}">
+                            <a href="{{ $news_item['url'] }}">
                                 <div class="header">
                                     <div class="title">{{ $news_item['headline'] }}</div>
                                     <div class="mini-title">Posted by {{ $news_item['username'] }} {{ $news_item['elapsedCreatedAt'] }}</div>
