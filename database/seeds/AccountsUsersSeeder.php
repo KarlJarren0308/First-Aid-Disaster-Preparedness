@@ -28,7 +28,8 @@ class AccountsUsersSeeder extends Seeder
             'id' => $id,
             'first_name' => 'Pata',
             'middle_name' => 'Tita',
-            'last_name' => 'Tim'
+            'last_name' => 'Tim',
+            'gender' => 'Male'
         ]);
     }
 }
