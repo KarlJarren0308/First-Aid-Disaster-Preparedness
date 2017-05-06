@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use App\Http\Controllers\UtilityHelpers;
 
 use Mail;
 
@@ -11,6 +12,7 @@ use App\NewsModel;
 
 class WeeklyNewsMailer extends Command
 {
+    use UtilityHelpers;
     /**
      * The name and signature of the console command.
      *
@@ -48,10 +50,12 @@ class WeeklyNewsMailer extends Command
 
         if($news) {
             foreach($news as $news_item) {
+                $news_url = url('/news/' . date('Y', strtotime($news_item->created_at)) . '/' . date('m', strtotime($news_item->created_at)) . '/' . date('d', strtotime($news_item->created_at)) . '/' . str_replace(' ', '_', $news_item->headline));
+
                 $weekly_news[] = [
                     'headline' => $news_item->headline,
                     'username' => $news_item->username,
-                    'url' => url('/news/' . date('Y', strtotime($news_item->created_at)) . '/' . date('m', strtotime($news_item->created_at)) . '/' . date('d', strtotime($news_item->created_at)) . '/' . str_replace(' ', '_', $news_item->headline)),
+                    'url' => $news_url,
                     'elapsedCreatedAt' => $news_item->elapsedCreatedAt()
                 ];
             }
@@ -61,6 +65,10 @@ class WeeklyNewsMailer extends Command
                     $full_name = $account->userInfo->first_name . ' ' . substr($account->userInfo->middle_name, 0, 1) . '. ' . $account->userInfo->last_name;
                 } else {
                     $full_name = $account->userInfo->first_name . ' ' . $account->userInfo->last_name;
+                }
+
+                if($account->userInfo->mobile_number !== null) {
+                    $this->send('09068563348', 'F.A.D.P. Weekly News Alert. Go check out your email and see all the news posted this week.');
                 }
 
                 Mail::queue('emails.weekly_news', [
