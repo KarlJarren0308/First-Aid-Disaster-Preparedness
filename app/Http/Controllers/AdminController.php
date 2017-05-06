@@ -166,16 +166,15 @@ class AdminController extends Controller
                     $accounts = AccountsModel::all();
 
                     foreach($accounts as $account) {
+                        $news_url = url('/news/' . date('Y', strtotime($news->created_at)) . '/' . date('m', strtotime($news->created_at)) . '/' . date('d', strtotime($news->created_at)) . '/' . str_replace(' ', '_', $news->headline));
+
                         if($account->userInfo->mobile_number !== null) {
-                            $this->send('09068563348', 'F.A.D.P. News Alert. A latest news has been posted. Visit ' . url('/news/' . date('Y', strtotime($news->created_at)) . '/' . date('m', strtotime($news->created_at)) . '/' . date('d', strtotime($news->created_at)) . '/' . str_replace(' ', '_', $news->headline)) . ' to read the news.');
+                            $this->send('09068563348', 'F.A.D.P. News Alert. A latest news has been posted. Visit ' . $news_url . ' to read the news.');
                         }
 
                         Mail::queue('emails.news', [
                             'first_name' => $account->userInfo->first_name,
-                            'year' => date('Y', strtotime($news->created_at)),
-                            'month' => date('m', strtotime($news->created_at)),
-                            'day' => date('d', strtotime($news->created_at)),
-                            'headline' => str_replace(' ', '_', $news->headline)
+                            'news_url' => $news_url
                         ], function($message) use ($account, $full_name) {
                             $message->to($account->email_address, $full_name)->subject('F.A.D.P. News Alert');
                         });
