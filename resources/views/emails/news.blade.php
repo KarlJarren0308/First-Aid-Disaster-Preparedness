@@ -10,7 +10,7 @@
             <h2 class="no-margin">Hey {{ $first_name }},</h2>
             <div>
                 <p>We've got some news for you. Be sure to check it out.</p>
-                <p>Click the link below to view the news.<br><a href="{{ url('/news/' . $year . '/' . $month . '/' . $day . '/' . $headline) }}">{{ url('/news/' . $year . '/' . $month . '/' . $day . '/' . $headline) }}</a></p>
+                <p>Click the link below to view the news.<br><a href="{{ $news_url }}">{{ $news_url }}</a></p>
             </div>
         </div>
     </div>
