@@ -53,6 +53,18 @@ canvas {
     font-weight: bold;
 }
 
+.checkbox > label {
+    padding-left: 30px;
+    font-family: 'News Cycle', 'Arial Narrow Bold', sans-serif;
+    font-size: 18px;
+}
+
+.checkbox > label > .mark-control {
+    margin-left: -25px;
+    height: 20px;
+    width: 20px;
+}
+
 .image-upload {
     opacity: 0;
     overflow: hidden;
