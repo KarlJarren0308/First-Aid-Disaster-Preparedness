@@ -214,13 +214,14 @@ class HomeController extends Controller
     {
         $username = $request->input('username');
         $password = $request->input('password');
+        $rememberMe = $request->input('rememberMe') ? $request->input('rememberMe') : false;
 
         $credentials = [
             'username' => $username,
             'password' => $password
         ];
 
-        if(Auth::attempt($credentials)) {
+        if(Auth::attempt($credentials, $rememberMe)) {
             if(Auth::user()->is_verified == true) {
                 if(Auth::user()->type === 'administrator') {
                     return redirect()->route('admin.dashboard');
