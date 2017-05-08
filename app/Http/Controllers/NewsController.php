@@ -18,7 +18,7 @@ class NewsController extends Controller
 
     public function index(Request $request)
     {
-        $search = $request->input('search') ? trim($request->input('search')) : '';
+        $search = trim($request->input('search', ''));
 
         if($search != '') {
             $news = NewsModel::where('headline', 'like', '%' . $search . '%')->orderBy('created_at', 'desc')->paginate(10);
@@ -45,7 +45,7 @@ class NewsController extends Controller
     }
 
     public function postComments(Request $request) {
-        $news_id = $request->input('newsID') ? $request->input('newsID') : '';
+        $news_id = $request->input('newsID', '');
 
         if($news_id !== '') {
             $comments = CommentsModel::where('news_id', $news_id)->orderBy('created_at', 'desc')->with('newsInfo')->with('accountInfo')->get();
@@ -68,7 +68,7 @@ class NewsController extends Controller
             $censor = new CensorWords();
             $username = Auth::user()->username;
             $news_id = $request->input('newsID');
-            $comment = $request->input('comment') ? $censor->censorString(trim($request->input('comment')))['clean'] : '';
+            $comment = $censor->censorString(trim($request->input('comment', '')))['clean'];
 
             $comment_id = CommentsModel::insertGetId([
                 'comment' => $comment,

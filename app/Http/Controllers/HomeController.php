@@ -147,7 +147,7 @@ class HomeController extends Controller
         $first_name = $request->input('firstName');
         $middle_name = $request->input('middleName');
         $last_name = $request->input('lastName');
-        $image = $request->hasFile('image') ? $request->file('image') : null;
+        $image = $request->hasFile('image', null);
         $verification_code = $this->generateCode($username);
 
         if($image !== null) {
@@ -214,7 +214,7 @@ class HomeController extends Controller
     {
         $username = $request->input('username');
         $password = $request->input('password');
-        $rememberMe = $request->input('rememberMe') ? $request->input('rememberMe') : false;
+        $rememberMe = $request->input('rememberMe', false);
 
         $credentials = [
             'username' => $username,
