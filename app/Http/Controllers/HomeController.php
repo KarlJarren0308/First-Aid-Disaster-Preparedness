@@ -214,7 +214,7 @@ class HomeController extends Controller
     {
         $username = $request->input('username');
         $password = $request->input('password');
-        $rememberMe = $request->input('rememberMe', false);
+        $rememberMe = (boolean) $request->input('rememberMe', false);
 
         $credentials = [
             'username' => $username,
