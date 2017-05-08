@@ -147,7 +147,7 @@ class HomeController extends Controller
         $first_name = $request->input('firstName');
         $middle_name = $request->input('middleName');
         $last_name = $request->input('lastName');
-        $image = $request->hasFile('image') ? $request-?file('image') : null;
+        $image = $request->hasFile('image') ? $request->file('image') : null;
         $verification_code = $this->generateCode($username);
 
         if($image !== null) {
