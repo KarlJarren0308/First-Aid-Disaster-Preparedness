@@ -43,7 +43,11 @@
                                 <input type="password" class="form-control" name="password" required>
                             </div>
                             <div class="form-group text-right">
-                                <a href="{{ route('home.password_reset') }}" class="btn btn-link pull-left">Forgot Password</a>
+                                <div class="checkbox pull-left">
+                                    <label for="remember-me">
+                                        <input type="checkbox" id="remember-me" class="mark-control" name="rememberMe" value="true"> Remember Me
+                                    </label>
+                                </div>
                                 <input type="submit" class="btn btn-primary" value="Login">
                             </div>
                         </form>
@@ -51,7 +55,14 @@
                 </div>
                 <div class="panel panel-primary shadow">
                     <div class="panel-body text-center">
-                        Not yet a member? <a href="{{ route('home.register') }}">Register Here</a>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                Not yet a member? <a href="{{ route('home.register') }}">Register Here</a>
+                            </div>
+                            <div class="col-sm-6">
+                                Forgot Password? <a href="{{ route('home.password_reset') }}">Click Here</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
