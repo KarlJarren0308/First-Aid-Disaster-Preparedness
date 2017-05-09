@@ -13,7 +13,7 @@
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{{ route('home.donate') }}">Donate</a></li>
+                <li><a href="{{ route('home.health_and_safety') }}">Health & Safety</a></li>
                 <li><a href="{{ route('news.index') }}">News</a></li>
                 <li><a href="{{ route('home.help') }}">Help</a></li>
                 <li class="active"><a href="{{ route('home.about') }}">About Us</a></li>
