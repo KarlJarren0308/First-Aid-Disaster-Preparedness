@@ -139,7 +139,7 @@ class AdminController extends Controller
                 $news = NewsModel::where('id', $news_id)->first();
 
                 if($news) {
-                    if(count($request->file('media')) > 0) {
+                    if($request->hasFile('media') > 0) {
                         $media = $request->file('media');
 
                         foreach($media as $key => $file) {
