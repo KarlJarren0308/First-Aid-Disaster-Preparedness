@@ -4,13 +4,13 @@ $(document).ready(function() {
     $(function() {
         setInterval(function() {
             $.ajax({
-                url: '/news/comments',
+                url: '/health_and_safety/comments',
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data: {
-                    newsID: $('#news-block').data('var-id')
+                    healthAndSafetyID: $('#health-and-safety-block').data('var-id')
                 },
                 dataType: 'json',
                 success: function(response) {
@@ -64,7 +64,7 @@ $(document).ready(function() {
 
                 if(response['status'] === 'Success') {
                     $.ajax({
-                        url: '/news/comment',
+                        url: '/health_and_safety/comment',
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

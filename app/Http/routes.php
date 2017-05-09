@@ -13,7 +13,6 @@
 
 Route::group(['as' => 'home.'], function() {
     Route::get('/', ['as' => 'index', 'uses' => 'HomeController@index']);
-    Route::get('health_and_safety', ['as' => 'health_and_safety', 'uses' => 'HomeController@healthAndSafety']);
     Route::get('help', ['as' => 'help', 'uses' => 'HomeController@help']);
     Route::get('about', ['as' => 'about', 'uses' => 'HomeController@about']);
     Route::get('logout', ['as' => 'logout', 'uses' => 'HomeController@logout']);
@@ -43,7 +42,17 @@ Route::group(['as' => 'admin.'], function() {
         Route::post('admin/news/delete', ['as' => 'news.delete', 'uses' => 'AdminController@postDeleteNews']);
         Route::post('admin/users/ban', ['as' => 'users.ban', 'uses' => 'AdminController@postBanUsers']);
         Route::post('admin/users/unban', ['as' => 'users.unban', 'uses' => 'AdminController@postUnbanUsers']);
+        Route::post('captcha/comment', ['as' => 'captcha', 'uses' => 'AdminController@postCommentCaptcha']);
     });
+});
+
+Route::group(['as' => 'health_and_safety.'], function() {
+    Route::get('health_and_safety', ['as' => 'index', 'uses' => 'HealthAndSafetyController@index']);
+    Route::get('health_and_safety/{year}/{month}/{day}/{title}', ['as' => 'show', 'uses' => 'HealthAndSafetyController@show']);
+
+    Route::post('health_and_safety', ['as' => 'index', 'uses' => 'HealthAndSafetyController@index']);
+    Route::post('health_and_safety/comment', ['as' => 'comment', 'uses' => 'HealthAndSafetyController@postComment']);
+    Route::post('health_and_safety/comments', ['as' => 'comments', 'uses' => 'HealthAndSafetyController@postComments']);
 });
 
 Route::group(['as' => 'news.'], function() {
@@ -52,6 +61,5 @@ Route::group(['as' => 'news.'], function() {
 
     Route::post('news', ['as' => 'index', 'uses' => 'NewsController@index']);
     Route::post('news/comment', ['as' => 'comment', 'uses' => 'NewsController@postComment']);
-    Route::post('news/comment/captcha', ['as' => 'captcha', 'uses' => 'NewsController@postCommentCaptcha']);
     Route::post('news/comments', ['as' => 'comments', 'uses' => 'NewsController@postComments']);
 });

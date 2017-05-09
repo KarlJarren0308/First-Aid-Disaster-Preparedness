@@ -9,10 +9,10 @@ use Snipe\BanBuilder\CensorWords;
 
 use Auth;
 
-use App\NewsModel;
-use App\CommentsModel;
+use App\HealthAndSafetyModel;
+use App\HealthAndSafetyCommentsModel;
 
-class NewsController extends Controller
+class HealthAndSafetyController extends Controller
 {
     use UtilityHelpers;
 
@@ -21,23 +21,23 @@ class NewsController extends Controller
         $search = trim($request->input('search', ''));
 
         if($search != '') {
-            $news = NewsModel::where('headline', 'like', '%' . $search . '%')->orderBy('created_at', 'desc')->paginate(10);
+            $tips = HealthAndSafetyModel::where('title', 'like', '%' . $search . '%')->orderBy('created_at', 'desc')->paginate(10);
         } else {
-            $news = NewsModel::orderBy('created_at', 'desc')->paginate(10);
+            $tips = HealthAndSafetyModel::orderBy('created_at', 'desc')->paginate(10);
         }
 
-        return view('news.index', [
-            'news' => $news
+        return view('health_and_safety.index', [
+            'tips' => $tips
         ]);
     }
 
-    public function show($year, $month, $day, $headline)
+    public function show($year, $month, $day, $title)
     {
         try {
-            $news = NewsModel::where('created_at', 'like', ($year . '-' . $month . '-' . $day) . '%')->where('headline', str_replace('_', ' ', $headline))->first();
+            $tip = HealthAndSafetyModel::where('created_at', 'like', ($year . '-' . $month . '-' . $day) . '%')->where('title', str_replace('_', ' ', $title))->first();
 
-            return view('news.show', [
-                'news' => $news
+            return view('health_and_safety.show', [
+                'tip' => $tip
             ]);
         } catch(Exception $ex) {
             return view('errors.404');
@@ -45,10 +45,10 @@ class NewsController extends Controller
     }
 
     public function postComments(Request $request) {
-        $news_id = $request->input('newsID', '');
+        $health_and_safety_id = $request->input('healthAndSafetyID', '');
 
-        if($news_id !== '') {
-            $comments = CommentsModel::where('news_id', $news_id)->orderBy('created_at', 'desc')->with('newsInfo')->with('accountInfo')->get();
+        if($health_and_safety_id !== '') {
+            $comments = HealthAndSafetyCommentsModel::where('health_and_safety_id', $health_and_safety_id)->orderBy('created_at', 'desc')->with('healthAndSafetyInfo')->with('accountInfo')->get();
 
             return response()->json([
                 'status' => 'Success',
@@ -67,12 +67,12 @@ class NewsController extends Controller
         if(Auth::check()) {
             $censor = new CensorWords();
             $username = Auth::user()->username;
-            $news_id = $request->input('newsID');
+            $health_and_safety_id = $request->input('healthAndSafetyID');
             $comment = $censor->censorString(trim($request->input('comment', '')))['clean'];
 
-            $comment_id = CommentsModel::insertGetId([
+            $comment_id = HealthAndSafetyCommentsModel::insertGetId([
                 'comment' => $comment,
-                'news_id' => $news_id,
+                'health_and_safety_id' => $health_and_safety_id,
                 'username' => $username,
                 'created_at' => date('Y-m-d H:i:s')
             ]);

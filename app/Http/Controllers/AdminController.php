@@ -344,4 +344,20 @@ class AdminController extends Controller
             return redirect()->route('admin.users');
         }
     }
+
+    public function postCommentCaptcha(Request $request) {
+        // Validating captcha currently not working, so i'll use this instead.
+
+        if($request->input('g-recaptcha-response') !== '') {
+            return response()->json([
+                'status' => 'Success',
+                'message' => 'CAPTCHA has been accepted.'
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'Failed',
+                'message' => 'Failed to accept CAPTCHA.'
+            ]);
+        }
+    }
 }

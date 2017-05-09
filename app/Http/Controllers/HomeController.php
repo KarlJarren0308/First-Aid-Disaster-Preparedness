@@ -23,11 +23,6 @@ class HomeController extends Controller
         return view('home.index');
     }
 
-    public function healthAndSafety()
-    {
-        return view('home.health_and_safety');
-    }
-
     public function help()
     {
         return view('home.help');
