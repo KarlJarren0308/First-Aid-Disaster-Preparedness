@@ -44,11 +44,12 @@ class WeeklyNewsMailer extends Command
      */
     public function handle()
     {
-        $accounts = AccountsModel::all();
         $news = NewsModel::whereBetween('created_at', [date('Y-m-d H:i:s', strtotime('-6 days')), date('Y-m-d H:i:s')])->get();
-        $weekly_news = [];
 
         if(count($news) > 0) {
+            $accounts = AccountsModel::all();
+            $weekly_news = [];
+
             foreach($news as $news_item) {
                 $news_url = url('/news/' . date('Y', strtotime($news_item->created_at)) . '/' . date('m', strtotime($news_item->created_at)) . '/' . date('d', strtotime($news_item->created_at)) . '/' . str_replace(' ', '_', $news_item->headline));
 
