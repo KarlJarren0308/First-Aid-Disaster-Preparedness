@@ -45,7 +45,7 @@ class WeeklyNewsMailer extends Command
     public function handle()
     {
         $accounts = AccountsModel::all();
-        $news = NewsModel::whereBetween('created_at', [date('Y-m-d', strtotime('-6 days')), date('Y-m-d')])->get();
+        $news = NewsModel::whereBetween('created_at', [date('Y-m-d H:i:s', strtotime('-6 days')), date('Y-m-d H:i:s')])->get();
         $weekly_news = [];
 
         if(count($news) > 0) {
