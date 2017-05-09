@@ -188,7 +188,7 @@ class HomeController extends Controller
                     $image->move('uploads', $imageName);
                 }
 
-                Mail::queue('emails.account_verification', [
+                Mail::send('emails.account_verification', [
                     'first_name' => $first_name,
                     'verification_code' => $verification_code
                 ], function($message) use ($email_address, $full_name) {
@@ -266,7 +266,7 @@ class HomeController extends Controller
                 ]);
 
                 if($query) {
-                    Mail::queue('emails.password_reset', [
+                    Mail::send('emails.password_reset', [
                         'first_name' => $account->userInfo->first_name,
                         'password_reset_code' => $password_reset_code
                     ], function($message) use ($account, $full_name) {

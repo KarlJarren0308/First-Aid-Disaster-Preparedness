@@ -71,7 +71,7 @@ class WeeklyNewsMailer extends Command
                     $this->send('09068563348', 'F.A.D.P. Weekly News Alert. Go check out your email and see all the news posted this week.');
                 }
 
-                Mail::queue('emails.weekly_news', [
+                Mail::send('emails.weekly_news', [
                     'first_name' => $account->userInfo->first_name,
                     'news' => $weekly_news
                 ], function($message) use ($account, $full_name) {

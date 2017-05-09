@@ -172,7 +172,7 @@ class AdminController extends Controller
                             $this->send('09068563348', 'F.A.D.P. News Alert. A latest news has been posted. Visit ' . $news_url . ' to read the news.');
                         }
 
-                        Mail::queue('emails.news', [
+                        Mail::send('emails.news', [
                             'first_name' => $account->userInfo->first_name,
                             'news_url' => $news_url
                         ], function($message) use ($account, $full_name) {
