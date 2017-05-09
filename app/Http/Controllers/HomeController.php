@@ -23,9 +23,9 @@ class HomeController extends Controller
         return view('home.index');
     }
 
-    public function donate()
+    public function healthAndSafety()
     {
-        return view('home.donate');
+        return view('home.health_and_safety');
     }
 
     public function help()
