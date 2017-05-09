@@ -19,7 +19,7 @@ class AccountsUsersSeeder extends Seeder
             'email_address' => 'fadp.system@gmail.com',
             'password' => bcrypt('admin'),
             'type' => 'administrator',
-            'image' => 'admin.png',
+            'image' => 'admin.jpg',
             'is_verified' => true,
             'is_banned' => false
         ]);
