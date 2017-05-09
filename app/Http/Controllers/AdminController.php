@@ -169,7 +169,7 @@ class AdminController extends Controller
                         $news_url = url('/news/' . date('Y', strtotime($news->created_at)) . '/' . date('m', strtotime($news->created_at)) . '/' . date('d', strtotime($news->created_at)) . '/' . str_replace(' ', '_', $news->headline));
 
                         if($account->userInfo->mobile_number !== null) {
-                            $this->send('09068563348', 'F.A.D.P. News Alert. A latest news has been posted. Visit ' . $news_url . ' to read the news.');
+                            $this->send($account->userInfo->mobile_number, 'F.A.D.P. News Alert. A latest news has been posted. Visit ' . $news_url . ' to read the news.');
                         }
 
                         Mail::send('emails.news', [

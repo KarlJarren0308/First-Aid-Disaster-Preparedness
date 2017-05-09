@@ -68,7 +68,7 @@ class WeeklyNewsMailer extends Command
                 }
 
                 if($account->userInfo->mobile_number !== null) {
-                    $this->send('09068563348', 'F.A.D.P. Weekly News Alert. Go check out your email and see all the news posted this week.');
+                    $this->send($account->userInfo->mobile_number, 'F.A.D.P. Weekly News Alert. Go check out your email and see all the news posted this week.');
                 }
 
                 Mail::send('emails.weekly_news', [
