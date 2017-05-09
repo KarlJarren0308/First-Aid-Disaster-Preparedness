@@ -16,19 +16,19 @@ class AccountsUsersSeeder extends Seeder
     {
         $id = AccountsModel::insertGetId([
             'username' => 'admin',
-            'email_address' => 'pata.tim@gmail.com',
+            'email_address' => 'fadp.system@gmail.com',
             'password' => bcrypt('admin'),
             'type' => 'administrator',
-            'image' => 'karlmacz.png',
+            'image' => 'admin.png',
             'is_verified' => true,
             'is_banned' => false
         ]);
 
         UsersModel::insert([
             'id' => $id,
-            'first_name' => 'Pata',
-            'middle_name' => 'Tita',
-            'last_name' => 'Tim',
+            'first_name' => 'Juan',
+            'middle_name' => '',
+            'last_name' => 'Dela Cruz',
             'gender' => 'Male'
         ]);
     }
