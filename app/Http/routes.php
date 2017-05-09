@@ -13,7 +13,7 @@
 
 Route::group(['as' => 'home.'], function() {
     Route::get('/', ['as' => 'index', 'uses' => 'HomeController@index']);
-    Route::get('donate', ['as' => 'donate', 'uses' => 'HomeController@donate']);
+    Route::get('health_and_safety', ['as' => 'health_and_safety', 'uses' => 'HomeController@healthAndSafety']);
     Route::get('help', ['as' => 'help', 'uses' => 'HomeController@help']);
     Route::get('about', ['as' => 'about', 'uses' => 'HomeController@about']);
     Route::get('logout', ['as' => 'logout', 'uses' => 'HomeController@logout']);
