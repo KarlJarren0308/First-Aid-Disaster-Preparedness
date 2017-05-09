@@ -48,7 +48,7 @@ class WeeklyNewsMailer extends Command
         $news = NewsModel::whereBetween('created_at', [date('Y-m-d', strtotime('-6 days')), date('Y-m-d')])->get();
         $weekly_news = [];
 
-        if($news) {
+        if(count($news) > 0) {
             foreach($news as $news_item) {
                 $news_url = url('/news/' . date('Y', strtotime($news_item->created_at)) . '/' . date('m', strtotime($news_item->created_at)) . '/' . date('d', strtotime($news_item->created_at)) . '/' . str_replace(' ', '_', $news_item->headline));
 
