@@ -26,9 +26,9 @@ class AccountsUsersSeeder extends Seeder
 
         UsersModel::insert([
             'id' => $id,
-            'first_name' => 'Juan',
+            'first_name' => '보영',
             'middle_name' => '',
-            'last_name' => 'Dela Cruz',
+            'last_name' => '박',
             'gender' => 'Male'
         ]);
     }
