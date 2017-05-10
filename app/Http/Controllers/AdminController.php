@@ -14,6 +14,9 @@ use Validator;
 
 use App\AccountsModel;
 use App\CommentsModel;
+use App\HealthAndSafetyModel;
+use App\HealthAndSafetyMediaModel;
+use App\HealthAndSafetyCommentsModel;
 use App\MediaModel;
 use App\NewsModel;
 
@@ -28,6 +31,63 @@ class AdminController extends Controller
                 return view('admin.dashboard');
             } else {
                 return redirect()->route('news.index');
+            }
+        } else {
+            return redirect()->route('home.login');
+        }
+    }
+
+    public function healthAndSafety()
+    {
+        if(Auth::check()) {
+            if(Auth::user()->type === 'administrator') {
+                try {
+                    $tips = HealthAndSafetyModel::all();
+
+                    return view('admin.health_and_safety', [
+                        'tips' => $tips
+                    ]);
+                } catch(Exception $ex) {
+                    return view('errors.404');
+                }
+            } else {
+                return redirect()->route('health_and_safety.index');
+            }
+        } else {
+            return redirect()->route('home.login');
+        }
+    }
+
+    public function addHealthAndSafety()
+    {
+        if(Auth::check()) {
+            if(Auth::user()->type === 'administrator') {
+                return view('admin.health_and_safety_add');
+            } else {
+                return redirect()->route('health_and_safety.index');
+            }
+        } else {
+            return redirect()->route('home.login');
+        }
+    }
+
+    public function editHealthAndSafety($id)
+    {
+        if(Auth::check()) {
+            if(Auth::user()->type === 'administrator') {
+                $tip = HealthAndSafetyModel::where('id', $id)->first();
+
+                if($tip) {
+                    return view('admin.health_and_safety_edit', [
+                        'id' => $tip->id,
+                        'title' => $tip->title,
+                        'content' => $tip->content
+                    ]);
+                } else {
+                    return redirect()->route('admin.health_and_safety');
+                }
+            } else {
+                return redirect()->route('health_and_safety.index');
             }
         } else {
             return redirect()->route('home.login');
@@ -108,6 +168,186 @@ class AdminController extends Controller
             }
         } else {
             return redirect()->route('home.login');
+        }
+    }
+
+    public function postAddHealthAndSafety(Request $request)
+    {
+        $result = Validator::make($request->all(), [
+            'title' => 'required|unique:health_and_safety,title',
+            'content' => 'required',
+            'media.*' => 'mimes:jpg,jpeg,png,bmp,gif,mp4,webm,ogg'
+        ], [
+            'media.*.mimes' => 'The file type must be jpg, jpeg, png, bmp, gif, mp4, webm, or ogg.'
+        ]);
+
+        if($result->fails()) {
+            return redirect()->route('admin.health_and_safety.add')->withErrors($result)->withInput();
+        } else {
+            $authAccount = Auth::user();
+            $title = trim($request->input('title'));
+            $content = trim($request->input('content'));
+
+            $health_and_safety_id = HealthAndSafetyModel::insertGetId([
+                'title' => $title,
+                'content' => $content,
+                'username' => $authAccount->username,
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+
+            if($health_and_safety_id) {
+                $tip = HealthAndSafetyModel::where('id', $health_and_safety_id)->first();
+
+                if($tip) {
+                    if($request->hasFile('media')) {
+                        $media = $request->file('media');
+
+                        foreach($media as $key => $file) {
+                            $mediaFilename = date('Y_m_d_H_i_s_') . sprintf('%05d', $key) . '_HnS.' . $file->getClientOriginalExtension();
+
+                            $query = HealthAndSafetyMediaModel::insertGetId([
+                                'health_and_safety_id' => $health_and_safety_id,
+                                'filename' => $mediaFilename,
+                                'created_at' => date('Y-m-d')
+                            ]);
+
+                            if($query) {
+                                $file->move('uploads', $mediaFilename);
+                            }
+                        }
+                    }
+
+                    if(strlen($authAccount->middle_name) > 1) {
+                        $full_name = $authAccount->first_name . ' ' . substr($authAccount->middle_name, 0, 1) . '. ' . $authAccount->last_name;
+                    } else {
+                        $full_name = $authAccount->first_name . ' ' . $authAccount->last_name;
+                    }
+
+                    $accounts = AccountsModel::all();
+
+                    foreach($accounts as $account) {
+                        $tip_url = url('/$health_and_safety_id/' . date('Y', strtotime($tip->created_at)) . '/' . date('m', strtotime($tip->created_at)) . '/' . date('d', strtotime($tip->created_at)) . '/' . str_replace(' ', '_', $tip->title));
+
+                        if($account->userInfo->mobile_number !== null) {
+                            $this->send($account->userInfo->mobile_number, 'F.A.D.P. Health & Safety Tips Alert. A new tip has been posted. Visit ' . $tip_url . ' to read the tip.');
+                        }
+
+                        Mail::send('emails.health_and_safety', [
+                            'first_name' => $account->userInfo->first_name,
+                            'tip_url' => $tip_url
+                        ], function($message) use ($account, $full_name) {
+                            $message->to($account->email_address, $full_name)->subject('F.A.D.P. News Alert');
+                        });
+                    }
+
+                    $this->setFlash('Success', 'Tip has been added.');
+
+                    return redirect()->route('admin.health_and_safety');
+                } else {
+                    $this->setFlash('Failed', 'Oops! Tip was not added.');
+
+                    return redirect()->route('admin.health_and_safety');
+                }
+            } else {
+                $this->setFlash('Failed', 'Oops! Failed to add tip.');
+
+                return redirect()->route('admin.health_and_safety');
+            }
+        }
+    }
+
+    public function postEditHealthAndSafety($id, Request $request)
+    {
+        $result = Validator::make($request->all(), [
+            'content' => 'required'
+        ]);
+
+        if($result->fails()) {
+            return redirect()->route('admin.health_and_safety.edit')->withErrors($result)->withInput();
+        } else {
+            $content = trim($request->input('content'));
+
+            $query = HealthAndSafetyModel::where('id', $id)->update([
+                'content' => $content,
+                'updated_at' => date('Y-m-d')
+            ]);
+
+            if($query) {
+                $this->setFlash('Success', 'Tip has been updated.');
+
+                return redirect()->route('admin.health_and_safety');
+            } else {
+                $this->setFlash('Failed', 'No changes has been made.');
+
+                return redirect()->route('admin.health_and_safety');
+            }
+        }
+    }
+
+    public function postDeleteHealthAndSafety(Request $request)
+    {
+        $mediaFlag = false;
+        $commentsFlag = false;
+        $health_and_safety_id = $request->input('healthAndSafetyID');
+
+        $query = HealthAndSafetyModel::where('id', $health_and_safety_id)->first();
+
+        if($query) {
+            $media = HealthAndSafetyMediaModel::where('health_and_safety_id', $health_and_safety_id)->get();
+
+            if(count($media) > 0) {
+                foreach($media as $media_item) {
+                    File::delete('uploads/' . $media_item->filename);
+                }
+
+                $query = HealthAndSafetyMediaModel::where('health_and_safety_id', $health_and_safety_id)->delete();
+
+                if($query) {
+                    $mediaFlag = true;
+                }
+            } else {
+                $mediaFlag = true;
+            }
+
+            if($mediaFlag) {
+                $comments = HealthAndSafetyCommentsModel::where('health_and_safety_id', $health_and_safety_id)->get();
+
+                if(count($comments) > 0) {
+                    $query = HealthAndSafetyCommentsModel::where('health_and_safety_id', $health_and_safety_id)->delete();
+
+                    if($query) {
+                        $commentsFlag = true;
+                    }
+                } else {
+                    $commentsFlag = true;
+                }
+
+                if($commentsFlag) {
+                    $query = HealthAndSafetyModel::where('id', $health_and_safety_id)->delete();
+
+                    if($query) {
+                        $this->setFlash('Success', 'Tip has been deleted.');
+
+                        return redirect()->route('admin.health_and_safety');
+                    } else {
+                        $this->setFlash('Failed', 'Oops! Tip was not deleted.');
+
+                        return redirect()->route('admin.health_and_safety');
+                    }
+                } else {
+                    $this->setFlash('Failed', 'Oops! Failed to delete tip.');
+
+                    return redirect()->route('admin.health_and_safety');
+                }
+            } else {
+                $this->setFlash('Failed', 'Oops! Failed to delete tip.');
+
+                return redirect()->route('admin.health_and_safety');
+            }
+        } else {
+            $this->setFlash('Failed', 'Oops! News doesn\'t exist.');
+
+            return redirect()->route('admin.news');
         }
     }
 

@@ -32,11 +32,17 @@ Route::group(['as' => 'home.'], function() {
 Route::group(['as' => 'admin.'], function() {
     Route::group(['middleware' => 'auth'], function() {
         Route::get('admin/dashboard', ['as' => 'dashboard', 'uses' => 'AdminController@dashboard']);
+        Route::get('admin/health_and_safety', ['as' => 'health_and_safety', 'uses' => 'AdminController@healthAndSafety']);
+        Route::get('admin/health_and_safety/add', ['as' => 'health_and_safety.add', 'uses' => 'AdminController@addHealthAndSafety']);
+        Route::get('admin/health_and_safety/edit/{id}', ['as' => 'health_and_safety.edit', 'uses' => 'AdminController@editHealthAndSafety']);
         Route::get('admin/news', ['as' => 'news', 'uses' => 'AdminController@news']);
         Route::get('admin/news/add', ['as' => 'news.add', 'uses' => 'AdminController@addNews']);
         Route::get('admin/news/edit/{id}', ['as' => 'news.edit', 'uses' => 'AdminController@editNews']);
         Route::get('admin/users', ['as' => 'users', 'uses' => 'AdminController@users']);
 
+        Route::post('admin/health_and_safety/add', ['as' => 'health_and_safety.add', 'uses' => 'AdminController@postAddHealthAndSafety']);
+        Route::post('admin/health_and_safety/edit/{id}', ['as' => 'health_and_safety.edit', 'uses' => 'AdminController@postEditHealthAndSafety']);
+        Route::post('admin/health_and_safety/delete', ['as' => 'health_and_safety.delete', 'uses' => 'AdminController@postDeleteHealthAndSafety']);
         Route::post('admin/news/add', ['as' => 'news.add', 'uses' => 'AdminController@postAddNews']);
         Route::post('admin/news/edit/{id}', ['as' => 'news.edit', 'uses' => 'AdminController@postEditNews']);
         Route::post('admin/news/delete', ['as' => 'news.delete', 'uses' => 'AdminController@postDeleteNews']);

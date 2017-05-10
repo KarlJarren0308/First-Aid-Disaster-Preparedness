@@ -35,8 +35,8 @@
             <div id="sidebar-collapse" class="sidebar-nav navbar-collapse">
                 <ul class="nav">
                     <li><a href="{{ route('admin.dashboard') }}"><span class="fa fa-dashboard"></span> Dashboard</a></li>
-                    <li class="active"><a href="{{ route('admin.news') }}"><span class="fa fa-newspaper-o"></span> Manage News</a></li>
-                    <li><a href="{{ route('admin.health_and_safety') }}"><span class="fa fa-medkit"></span> Manage Health & Safety Tips</a></li>
+                    <li><a href="{{ route('admin.news') }}"><span class="fa fa-newspaper-o"></span> Manage News</a></li>
+                    <li class="active"><a href="{{ route('admin.health_and_safety') }}"><span class="fa fa-medkit"></span> Manage Health & Safety Tips</a></li>
                     <li><a href="{{ route('admin.users') }}"><span class="fa fa-users"></span> Manage Users</a></li>
                 </ul>
             </div>
@@ -49,12 +49,12 @@
                 </button>
             </div>
             <div id="admin-container">
-                <h3 class="no-margin"><span class="fa fa-newspaper-o"></span> Add News</h3>
+                <h3 class="no-margin"><span class="fa fa-medkit"></span> Edit Health & Safety Tips</h3>
                 <hr>
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="cards">
-                            <a href="{{ route('admin.news') }}" class="card">
+                            <a href="{{ route('admin.health_and_safety') }}" class="card">
                                 <div class="card-content">
                                     <span class="fa fa-arrow-left"></span> Go Back
                                 </div>
@@ -63,45 +63,19 @@
                     </div>
                     <div class="col-sm-8">
                         @include('partials.flash')
-                        <form data-form="add-news-form" action="{{ route('admin.news.add') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
+                        <form data-form="edit-health-and-safety-form" action="{{ route('admin.health_and_safety.edit', ['id' => $id]) }}" method="POST" autocomplete="off">
                             {{ csrf_field() }}
-                            <div class="form-group{{ ($errors->has('headline') ? ' has-error' : '') }}">
-                                <label for="">Headline:</label>
-                                <input type="text" class="form-control" name="headline" maxlength="255" value="{{ old('headline') }}" autofocus>
-                                {!! $errors->first('headline', '<span class="help-block">:message</span>') !!}
+                            <div class="form-group">
+                                <label for="">Title:</label>
+                                <input type="text" class="form-control" maxlength="255" value="{{ $title }}" readonly>
                             </div>
                             <div class="form-group{{ ($errors->has('content') ? ' has-error' : '') }}">
                                 <label for="">Content:</label>
-                                <textarea rows="10" maxlength="10000" class="form-control no-resize" name="content">{{ old('content') }}</textarea>
+                                <textarea rows="10" maxlength="10000" class="form-control no-resize" name="content" autofocus>{{ (old('content') ? old('content') : $content) }}</textarea>
                                 {!! $errors->first('content', '<span class="help-block">:message</span>') !!}
                             </div>
-                            <?php
-                                $isMediaErrorOccured = false;
-                                $mediaErrors = [];
-
-                                if(count($errors) > 0) {
-                                    foreach($errors->toArray() as $key => $error) {
-                                        $keyArr = explode('.', $key);
-
-                                        if($keyArr[0] === 'media') {
-                                            $isMediaErrorOccured = true;
-
-                                            $mediaErrors[] = $error[0];
-                                        }
-                                    }
-                                }
-                            ?>
-                            <div class="form-group{{ ($isMediaErrorOccured ? ' has-error' : '') }}">
-                                <label for="">Upload Images and/or Videos:</label>
-                                <input type="file" class="form-control" name="media[]" accept=".jpg,.jpeg,.png,.bmp,.gif,.mp4,.webm,.ogg" multiple>
-                                @if($isMediaErrorOccured && count($mediaErrors) > 0)
-                                    @foreach($mediaErrors as $mediaError)
-                                        <span class="help-block">{{ $mediaError }}</span>
-                                    @endforeach
-                                @endif
-                            </div>
                             <div class="form-group text-right">
-                                <button type="submit" class="btn btn-primary"><span class="fa fa-plus"></span> Add</button>
+                                <button type="submit" class="btn btn-primary"><span class="fa fa-pencil"></span> Edit</button>
                             </div>
                         </form>
                     </div>

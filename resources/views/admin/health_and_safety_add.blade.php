@@ -35,8 +35,8 @@
             <div id="sidebar-collapse" class="sidebar-nav navbar-collapse">
                 <ul class="nav">
                     <li><a href="{{ route('admin.dashboard') }}"><span class="fa fa-dashboard"></span> Dashboard</a></li>
-                    <li class="active"><a href="{{ route('admin.news') }}"><span class="fa fa-newspaper-o"></span> Manage News</a></li>
-                    <li><a href="{{ route('admin.health_and_safety') }}"><span class="fa fa-medkit"></span> Manage Health & Safety Tips</a></li>
+                    <li><a href="{{ route('admin.news') }}"><span class="fa fa-newspaper-o"></span> Manage News</a></li>
+                    <li class="active"><a href="{{ route('admin.health_and_safety') }}"><span class="fa fa-medkit"></span> Manage Health & Safety Tips</a></li>
                     <li><a href="{{ route('admin.users') }}"><span class="fa fa-users"></span> Manage Users</a></li>
                 </ul>
             </div>
@@ -49,12 +49,12 @@
                 </button>
             </div>
             <div id="admin-container">
-                <h3 class="no-margin"><span class="fa fa-newspaper-o"></span> Add News</h3>
+                <h3 class="no-margin"><span class="fa fa-medkit"></span> Add Health & Safety Tips</h3>
                 <hr>
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="cards">
-                            <a href="{{ route('admin.news') }}" class="card">
+                            <a href="{{ route('admin.health_and_safety') }}" class="card">
                                 <div class="card-content">
                                     <span class="fa fa-arrow-left"></span> Go Back
                                 </div>
@@ -63,12 +63,12 @@
                     </div>
                     <div class="col-sm-8">
                         @include('partials.flash')
-                        <form data-form="add-news-form" action="{{ route('admin.news.add') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
+                        <form data-form="add-health-and-safety-form" action="{{ route('admin.health_and_safety.add') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
                             {{ csrf_field() }}
-                            <div class="form-group{{ ($errors->has('headline') ? ' has-error' : '') }}">
-                                <label for="">Headline:</label>
-                                <input type="text" class="form-control" name="headline" maxlength="255" value="{{ old('headline') }}" autofocus>
-                                {!! $errors->first('headline', '<span class="help-block">:message</span>') !!}
+                            <div class="form-group{{ ($errors->has('title') ? ' has-error' : '') }}">
+                                <label for="">Title:</label>
+                                <input type="text" class="form-control" name="title" maxlength="255" value="{{ old('title') }}" autofocus>
+                                {!! $errors->first('title', '<span class="help-block">:message</span>') !!}
                             </div>
                             <div class="form-group{{ ($errors->has('content') ? ' has-error' : '') }}">
                                 <label for="">Content:</label>
