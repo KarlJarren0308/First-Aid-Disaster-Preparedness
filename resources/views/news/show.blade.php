@@ -141,6 +141,7 @@
                                     </div>
                                     <div class="share-list">
                                         <div class="fb-share-button" data-href="{{ route('news.show', ['year' => date('Y', strtotime($news->created_at)), 'month' => date('m', strtotime($news->created_at)), 'day' => date('d', strtotime($news->created_at)), 'headline' => str_replace(' ', '_', $news->headline)]) }}" data-layout="button" data-size="large"></div>
+                                        <div id="fb-shares"></div>
                                     </div>
                                 </div>
                             </div>
@@ -169,5 +170,16 @@
         </div>
     </div>
     <script src="{{ url('/js/facebook-sdk.js') }}"></script>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '777405132427492',
+                xfbml: true,
+                version: 'v2.9'
+            });
+
+            FB.AppEvents.logPageView();
+        };
+    </script>
     <script src="{{ url('/js/news/show.js') }}"></script>
 @stop

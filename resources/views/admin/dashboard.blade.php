@@ -1,5 +1,9 @@
 @extends('layouts.master_main')
 
+@section('meta')
+    <meta name="page_url" content="{{ url('/') }}">
+@stop
+
 @section('content')
     <div class="navbar navbar-inverse navbar-fixed-top shadow no-margin">
         <div class="navbar-header">
@@ -51,8 +55,10 @@
             <div id="admin-container">
                 <h3 class="no-margin"><span class="fa fa-dashboard"></span> Dashboard</h3>
                 <hr>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem mollitia hic doloribus autem ex. Odit rem, quo adipisci pariatur! Deserunt vel, voluptatum totam mollitia deleniti aliquid nisi sapiente eos explicabo.</p>
+                <div id="fb-shares"></div>
             </div>
         </div>
     </div>
+    <script src="{{ url('/js/facebook-sdk.js') }}"></script>
+    <script src="{{ url('/js/admin/dashboard.js') }}"></script>
 @stop
