@@ -39,6 +39,7 @@ Route::group(['as' => 'admin.'], function() {
         Route::get('admin/news/add', ['as' => 'news.add', 'uses' => 'AdminController@addNews']);
         Route::get('admin/news/edit/{id}', ['as' => 'news.edit', 'uses' => 'AdminController@editNews']);
         Route::get('admin/users', ['as' => 'users', 'uses' => 'AdminController@users']);
+        Route::get('admin/graphs/news/facebook_shares', ['as' => 'graphs.news.facebook_shares', 'uses' => 'AdminController@graphNewsFacebookShares']);
 
         Route::post('admin/health_and_safety/add', ['as' => 'health_and_safety.add', 'uses' => 'AdminController@postAddHealthAndSafety']);
         Route::post('admin/health_and_safety/edit/{id}', ['as' => 'health_and_safety.edit', 'uses' => 'AdminController@postEditHealthAndSafety']);

@@ -585,6 +585,25 @@ class AdminController extends Controller
         }
     }
 
+    public function graphNewsFacebookShares() {
+        $news = NewsModel::all();
+        $data = [];
+
+        if($news) {
+            foreach($news as $news_item) {
+                $news_url = url('/news/' . date('Y', strtotime($news_item->created_at)) . '/' . date('m', strtotime($news_item->created_at)) . '/' . date('d', strtotime($news_item->created_at)) . '/' . str_replace(' ', '_', $news_item->headline));
+
+                $data[] = [
+                    'id' => $news_item->id,
+                    'headline' => $news_item->headline,
+                    'url' => $news_url
+                ];
+            }
+        }
+
+        return response()->json($data);
+    }
+
     public function postCommentCaptcha(Request $request) {
         // Validating captcha currently not working, so i'll use this instead.
 
