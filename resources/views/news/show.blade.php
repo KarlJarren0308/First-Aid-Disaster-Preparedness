@@ -136,9 +136,9 @@
                                     <div id="comments-block" class="block-list"></div>
                                 </div>
                                 <div class="tab-pane" id="share">
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <input type="text" class="form-control" value="{{ route('news.show', ['year' => date('Y', strtotime($news->created_at)), 'month' => date('m', strtotime($news->created_at)), 'day' => date('d', strtotime($news->created_at)), 'headline' => str_replace(' ', '_', $news->headline)]) }}">
-                                    </div>
+                                    </div> -->
                                     <div class="share-list">
                                         <div class="fb-share-button" data-href="{{ route('news.show', ['year' => date('Y', strtotime($news->created_at)), 'month' => date('m', strtotime($news->created_at)), 'day' => date('d', strtotime($news->created_at)), 'headline' => str_replace(' ', '_', $news->headline)]) }}" data-layout="button" data-size="large"></div>
                                         <div id="fb-shares"></div>

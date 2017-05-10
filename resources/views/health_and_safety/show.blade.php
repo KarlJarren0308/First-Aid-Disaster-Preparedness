@@ -136,9 +136,9 @@
                                     <div id="comments-block" class="block-list"></div>
                                 </div>
                                 <div class="tab-pane" id="share">
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <input type="text" class="form-control" value="{{ route('health_and_safety.show', ['year' => date('Y', strtotime($tip->created_at)), 'month' => date('m', strtotime($tip->created_at)), 'day' => date('d', strtotime($tip->created_at)), 'title' => str_replace(' ', '_', $tip->title)]) }}">
-                                    </div>
+                                    </div> -->
                                     <div class="share-list">
                                         <div class="fb-share-button" data-href="{{ route('health_and_safety.show', ['year' => date('Y', strtotime($tip->created_at)), 'month' => date('m', strtotime($tip->created_at)), 'day' => date('d', strtotime($tip->created_at)), 'title' => str_replace(' ', '_', $tip->title)]) }}" data-layout="button" data-size="large"></div>
                                     </div>
