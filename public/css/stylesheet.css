@@ -212,6 +212,7 @@ canvas {
 }
 
 .cards > .card > .card-title {
+    color: #e74944;
     font-size: 1.75em;
     font-weight: bold;
     padding: 15px 20px 0 20px;
@@ -220,6 +221,14 @@ canvas {
 .cards > .card > .card-by {
     font-size: 0.75em;
     font-weight: bold;
+    padding: 0 20px;
+}
+
+.cards > .card > .card-category {
+    color: #e74944;
+    font-size: 0.75em;
+    font-weight: bold;
+    margin-top: 5px;
     padding: 0 20px;
 }
 

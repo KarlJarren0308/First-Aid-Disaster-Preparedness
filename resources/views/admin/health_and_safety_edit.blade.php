@@ -69,6 +69,15 @@
                                 <label for="">Title:</label>
                                 <input type="text" class="form-control" maxlength="255" value="{{ $title }}" readonly>
                             </div>
+                            <div class="form-group{{ ($errors->has('category') ? ' has-error' : '') }}">
+                                <label for="">Category:</label>
+                                <select name="category" class="form-control">
+                                    <option value="" selected disabled>Select an option...</option>
+                                    <option value="First Aid"{{ ((old('category') && old('category') == 'First Aid') || $category == 'First Aid' ? ' selected' : '') }}>First Aid</option>
+                                    <option value="Disaster Preparedness"{{ ((old('category') && old('category') == 'Disaster Preparedness') || $category == 'Disaster Preparedness' ? ' selected' : '') }}>Disaster Preparedness</option>
+                                </select>
+                                {!! $errors->first('category', '<span class="help-block">:message</span>') !!}
+                            </div>
                             <div class="form-group{{ ($errors->has('content') ? ' has-error' : '') }}">
                                 <label for="">Content:</label>
                                 <textarea rows="10" maxlength="10000" class="form-control no-resize" name="content" autofocus>{{ (old('content') ? old('content') : $content) }}</textarea>

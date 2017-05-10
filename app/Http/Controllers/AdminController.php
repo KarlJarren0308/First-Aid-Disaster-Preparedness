@@ -81,6 +81,7 @@ class AdminController extends Controller
                     return view('admin.health_and_safety_edit', [
                         'id' => $tip->id,
                         'title' => $tip->title,
+                        'category' => $tip->category,
                         'content' => $tip->content
                     ]);
                 } else {
@@ -175,6 +176,7 @@ class AdminController extends Controller
     {
         $result = Validator::make($request->all(), [
             'title' => 'required|unique:health_and_safety,title',
+            'category' => 'required',
             'content' => 'required',
             'media.*' => 'mimes:jpg,jpeg,png,bmp,gif,mp4,webm,ogg'
         ], [
@@ -186,10 +188,12 @@ class AdminController extends Controller
         } else {
             $authAccount = Auth::user();
             $title = trim($request->input('title'));
+            $category = $request->input('category');
             $content = trim($request->input('content'));
 
             $health_and_safety_id = HealthAndSafetyModel::insertGetId([
                 'title' => $title,
+                'category' => $category,
                 'content' => $content,
                 'username' => $authAccount->username,
                 'created_at' => date('Y-m-d H:i:s')
@@ -259,15 +263,18 @@ class AdminController extends Controller
     public function postEditHealthAndSafety($id, Request $request)
     {
         $result = Validator::make($request->all(), [
+            'category' => 'required',
             'content' => 'required'
         ]);
 
         if($result->fails()) {
             return redirect()->route('admin.health_and_safety.edit')->withErrors($result)->withInput();
         } else {
+            $category = $request->input('category');
             $content = trim($request->input('content'));
 
             $query = HealthAndSafetyModel::where('id', $id)->update([
+                'category' => $category,
                 'content' => $content,
                 'updated_at' => date('Y-m-d H:i:s')
             ]);

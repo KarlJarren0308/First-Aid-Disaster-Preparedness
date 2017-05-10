@@ -53,8 +53,9 @@
                     @if(count($tips) > 0)
                         @foreach($tips as $tip)
                             <a href="{{ route('health_and_safety.show', ['year' => date('Y', strtotime($tip->created_at)), 'month' => date('m', strtotime($tip->created_at)), 'day' => date('d', strtotime($tip->created_at)), 'title' => str_replace(' ', '_', $tip->title)]) }}" class="card">
-                                <div class="card-title">{{ $tip->title }}</div>
+                                <div class="card-title">{!! ($tip->category == 'First Aid' ? '<span class="fa fa-medkit"></span>' : '<span class="fa fa-ambulance"></span>' ) !!} {{ $tip->title }}</div>
                                 <div class="card-by">Posted by {{ $tip->username }} {{ $tip->elapsedCreatedAt() }}</div>
+                                <div class="card-category">{{ $tip->category }}</div>
                                 <div class="card-content">{!! nl2br(substr($tip->content, 0, 250) . (strlen($tip->content) > 250 ? '<span class="fa fa-ellipsis-h" style="color: #e74944; margin: 0 10px;" data-toggle="tooltip" data-placement="top" title="Read More..."></span>' : '')) !!}</div>
                             </a>
                         @endforeach
