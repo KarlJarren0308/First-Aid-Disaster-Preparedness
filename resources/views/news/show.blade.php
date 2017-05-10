@@ -83,7 +83,7 @@
                                     </ol>
                                     <div class="carousel-inner">
                                         @foreach($news->media as $key => $media)
-                                            @if(in_array(pathinfo($media->filename, PATHINFO_EXTENSION), ['mp4', 'webm', 'ogg']))
+                                            @if(in_array(strtolower(pathinfo($media->filename, PATHINFO_EXTENSION)), ['mp4', 'webm', 'ogg']))
                                                 <div class="item{{ ($key === 0 ? ' active' : '') }}">
                                                     <video src="{{ url('/uploads/' . $media->filename) }}" controls></video>
                                                 </div>
