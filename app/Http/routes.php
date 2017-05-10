@@ -39,7 +39,7 @@ Route::group(['as' => 'admin.'], function() {
         Route::get('admin/news/add', ['as' => 'news.add', 'uses' => 'AdminController@addNews']);
         Route::get('admin/news/edit/{id}', ['as' => 'news.edit', 'uses' => 'AdminController@editNews']);
         Route::get('admin/users', ['as' => 'users', 'uses' => 'AdminController@users']);
-        Route::get('admin/graphs/news/facebook_shares', ['as' => 'graphs.news.facebook_shares', 'uses' => 'AdminController@graphNewsFacebookShares']);
+        Route::get('admin/graphs/news/views', ['as' => 'graphs.news.views', 'uses' => 'AdminController@graphNewsViews']);
 
         Route::post('admin/health_and_safety/add', ['as' => 'health_and_safety.add', 'uses' => 'AdminController@postAddHealthAndSafety']);
         Route::post('admin/health_and_safety/edit/{id}', ['as' => 'health_and_safety.edit', 'uses' => 'AdminController@postEditHealthAndSafety']);
@@ -50,6 +50,7 @@ Route::group(['as' => 'admin.'], function() {
         Route::post('admin/users/ban', ['as' => 'users.ban', 'uses' => 'AdminController@postBanUsers']);
         Route::post('admin/users/unban', ['as' => 'users.unban', 'uses' => 'AdminController@postUnbanUsers']);
         Route::post('captcha/comment', ['as' => 'captcha', 'uses' => 'AdminController@postCommentCaptcha']);
+        Route::post('admin/graphs/news/views', ['as' => 'graphs.news.views', 'uses' => 'AdminController@postGraphNewsViews']);
     });
 });
 

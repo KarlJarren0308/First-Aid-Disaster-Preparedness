@@ -2,6 +2,17 @@ $(document).ready(function() {
     var commentsLength = 0;
 
     $(function() {
+        $.ajax({
+            url: '/admin/graphs/news/views',
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: {
+                id: $('#news-block').data('var-id')
+            }
+        });
+
         setInterval(function() {
             $.ajax({
                 url: '/news/comments',

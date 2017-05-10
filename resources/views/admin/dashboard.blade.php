@@ -51,9 +51,11 @@
             <div id="admin-container">
                 <h3 class="no-margin"><span class="fa fa-dashboard"></span> Dashboard</h3>
                 <hr>
-                <div id="shares"></div>
+                <canvas id="news-views"></canvas>
+                <div id="asd"></div>
             </div>
         </div>
     </div>
+    <script src="{{ url('/js/Chart.min.js') }}"></script>
     <script src="{{ url('/js/admin/dashboard.js') }}"></script>
 @stop

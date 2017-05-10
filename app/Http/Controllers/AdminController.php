@@ -585,25 +585,6 @@ class AdminController extends Controller
         }
     }
 
-    public function graphNewsFacebookShares() {
-        $news = NewsModel::all();
-        $data = [];
-
-        if($news) {
-            foreach($news as $news_item) {
-                $news_url = url('/news/' . date('Y', strtotime($news_item->created_at)) . '/' . date('m', strtotime($news_item->created_at)) . '/' . date('d', strtotime($news_item->created_at)) . '/' . str_replace(' ', '_', $news_item->headline));
-
-                $data[] = [
-                    'id' => $news_item->id,
-                    'headline' => $news_item->headline,
-                    'url' => $news_url
-                ];
-            }
-        }
-
-        return response()->json($data);
-    }
-
     public function postCommentCaptcha(Request $request) {
         // Validating captcha currently not working, so i'll use this instead.
 
@@ -617,6 +598,32 @@ class AdminController extends Controller
                 'status' => 'Failed',
                 'message' => 'Failed to accept CAPTCHA.'
             ]);
+        }
+    }
+
+    public function graphNewsViews() {
+        $news = NewsModel::orderBy('views', 'desc')->take(10)->get();
+        $data = [];
+
+        if($news) {
+            $data['labels'] = [];
+            $data['data'] = [];
+
+            foreach($news as $news_item) {
+                $news_url = url('/news/' . date('Y', strtotime($news_item->created_at)) . '/' . date('m', strtotime($news_item->created_at)) . '/' . date('d', strtotime($news_item->created_at)) . '/' . str_replace(' ', '_', $news_item->headline));
+                $data['labels'][] = $news_item->headline;
+                $data['data'][] = $news_item->views;
+            }
+        }
+
+        return response()->json($data);
+    }
+
+    public function postGraphNewsViews(Request $request) {
+        if($request->has('id')) {
+            $id = $request->input('id');
+
+            NewsModel::where('id', $id)->increment('views');
         }
     }
 }
