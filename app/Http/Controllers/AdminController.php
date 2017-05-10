@@ -230,7 +230,7 @@ class AdminController extends Controller
                     $accounts = AccountsModel::all();
 
                     foreach($accounts as $account) {
-                        $tip_url = url('/$health_and_safety_id/' . date('Y', strtotime($tip->created_at)) . '/' . date('m', strtotime($tip->created_at)) . '/' . date('d', strtotime($tip->created_at)) . '/' . str_replace(' ', '_', $tip->title));
+                        $tip_url = url('/health_and_safety/' . date('Y', strtotime($tip->created_at)) . '/' . date('m', strtotime($tip->created_at)) . '/' . date('d', strtotime($tip->created_at)) . '/' . str_replace(' ', '_', $tip->title));
 
                         if($account->userInfo->mobile_number !== null) {
                             $this->send($account->userInfo->mobile_number, 'F.A.D.P. Health & Safety Tips Alert. A new tip has been posted. Visit ' . $tip_url . ' to read the tip.');
