@@ -51,8 +51,7 @@
             <div id="admin-container">
                 <h3 class="no-margin"><span class="fa fa-dashboard"></span> Dashboard</h3>
                 <hr>
-                <canvas id="news-views"></canvas>
-                <div id="asd"></div>
+                <canvas id="news-views" height="100"></canvas>
             </div>
         </div>
     </div>
