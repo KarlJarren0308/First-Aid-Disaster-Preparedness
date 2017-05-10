@@ -17,6 +17,7 @@ class CreateNewsTable extends Migration
             $table->string('headline')->unique();
             $table->string('content', 10000);
             $table->string('username');
+            $table->integer('views')->default(0);
             $table->foreign('username')->references('username')->on('accounts');
             $table->timestamps();
         });
