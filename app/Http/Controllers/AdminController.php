@@ -208,7 +208,7 @@ class AdminController extends Controller
                             $query = HealthAndSafetyMediaModel::insertGetId([
                                 'health_and_safety_id' => $health_and_safety_id,
                                 'filename' => $mediaFilename,
-                                'created_at' => date('Y-m-d')
+                                'created_at' => date('Y-m-d H:i:s')
                             ]);
 
                             if($query) {
@@ -269,7 +269,7 @@ class AdminController extends Controller
 
             $query = HealthAndSafetyModel::where('id', $id)->update([
                 'content' => $content,
-                'updated_at' => date('Y-m-d')
+                'updated_at' => date('Y-m-d H:i:s')
             ]);
 
             if($query) {
@@ -372,7 +372,7 @@ class AdminController extends Controller
                 'headline' => $headline,
                 'content' => $content,
                 'username' => $authAccount->username,
-                'created_at' => date('Y-m-d')
+                'created_at' => date('Y-m-d H:i:s')
             ]);
 
             if($news_id) {
@@ -388,7 +388,7 @@ class AdminController extends Controller
                             $query = MediaModel::insertGetId([
                                 'news_id' => $news_id,
                                 'filename' => $mediaFilename,
-                                'created_at' => date('Y-m-d')
+                                'created_at' => date('Y-m-d H:i:s')
                             ]);
 
                             if($query) {
@@ -449,7 +449,7 @@ class AdminController extends Controller
 
             $query = NewsModel::where('id', $id)->update([
                 'content' => $content,
-                'updated_at' => date('Y-m-d')
+                'updated_at' => date('Y-m-d H:i:s')
             ]);
 
             if($query) {
