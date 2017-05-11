@@ -46,6 +46,40 @@
         </div>
     </div>
     <div id="main-container" class="container">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis ratione doloremque atque pariatur similique voluptate! Incidunt officiis ad perspiciatis rem eligendi, reiciendis est quasi optio exercitationem earum iure deserunt accusamus.
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-primary text-center">
+                    <div class="panel-body">
+                        <span class="fa fa-medkit fa-5x text-danger"></span>
+                        <h3 class="no-margin">Health & Safety</h3>
+                    </div>
+                    <div class="panel-footer">
+                        <strong>Know all the health & safety tips, from giving first aid to disaster preparedness.</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-primary text-center">
+                    <div class="panel-body">
+                        <span class="fa fa-bullhorn fa-5x text-danger"></span>
+                        <h3 class="no-margin">News</h3>
+                    </div>
+                    <div class="panel-footer">
+                        <strong>Be informed by latest news & events.</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-primary text-center">
+                    <div class="panel-body">
+                        <span class="fa fa-question-circle fa-5x text-danger"></span>
+                        <h3 class="no-margin">Help</h3>
+                    </div>
+                    <div class="panel-footer">
+                        <strong>Don't know who to call in case of emergency? We got their contact information.</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @stop
