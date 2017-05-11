@@ -143,6 +143,7 @@ class HomeController extends Controller
         $middle_name = $request->input('middleName');
         $last_name = $request->input('lastName');
         $image = $request->hasFile('image') ? $request->file('image') : null;
+        $mobile_number = $request->has('mobileNumber') ? $request->input('mobileNumber') : null;
         $verification_code = $this->generateCode($username);
 
         if($image !== null) {
@@ -167,7 +168,7 @@ class HomeController extends Controller
                 'middle_name' => $middle_name,
                 'last_name' => $last_name,
                 'gender' => $request->input('gender'),
-                'mobile_number' => $request->input('mobileNumber'),
+                'mobile_number' => $mobile_number,
                 'birth_date' => $request->input('birthDate'),
                 'created_at' => date('Y-m-d H:i:s')
             ]);
@@ -181,6 +182,12 @@ class HomeController extends Controller
 
                 if($image !== null) {
                     $image->move('uploads', $imageName);
+                }
+
+                if($mobile_number !== null) {
+                    $verify_url = url('/verify_account/' . $verification_code);
+
+                    $this->send($mobile_number, 'F.A.D.P. Account Verification. Visit ' . $verify_url . ' to verify account.');
                 }
 
                 Mail::send('emails.account_verification', [
