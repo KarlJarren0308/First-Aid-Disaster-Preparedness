@@ -38,6 +38,7 @@
                     <li><a href="{{ route('admin.news') }}"><span class="fa fa-newspaper-o"></span> Manage News</a></li>
                     <li><a href="{{ route('admin.health_and_safety') }}"><span class="fa fa-medkit"></span> Manage Health & Safety Tips</a></li>
                     <li class="active"><a href="{{ route('admin.users') }}"><span class="fa fa-users"></span> Manage Users</a></li>
+                    <li><a href="{{ route('admin.self_test') }}"><span class="fa fa-stethoscope"></span> Manage Self Tests</a></li>
                 </ul>
             </div>
         </div>

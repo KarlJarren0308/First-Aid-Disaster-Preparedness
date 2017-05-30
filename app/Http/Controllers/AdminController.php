@@ -172,6 +172,24 @@ class AdminController extends Controller
         }
     }
 
+    public function selfTest() {
+        if(Auth::check()) {
+            if(Auth::user()->type === 'administrator') {
+                try {
+                    $accounts = AccountsModel::all();
+
+                    return view('admin.self_test');
+                } catch(Exception $ex) {
+                    return view('errors.404');
+                }
+            } else {
+                return redirect()->route('health_and_safety.index');
+            }
+        } else {
+            return redirect()->route('home.login');
+        }
+    }
+
     public function postAddHealthAndSafety(Request $request)
     {
         $result = Validator::make($request->all(), [

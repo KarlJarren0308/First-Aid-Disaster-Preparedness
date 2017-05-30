@@ -39,6 +39,8 @@ Route::group(['as' => 'admin.'], function() {
         Route::get('admin/news/add', ['as' => 'news.add', 'uses' => 'AdminController@addNews']);
         Route::get('admin/news/edit/{id}', ['as' => 'news.edit', 'uses' => 'AdminController@editNews']);
         Route::get('admin/users', ['as' => 'users', 'uses' => 'AdminController@users']);
+        Route::get('admin/self_test', ['as' => 'self_test', 'uses' => 'AdminController@selfTest']);
+        Route::get('admin/self_test/add', ['as' => 'self_test.add', 'uses' => 'AdminController@addSelfTest']);
         Route::get('admin/graphs/news/views', ['as' => 'graphs.news.views', 'uses' => 'AdminController@graphNewsViews']);
 
         Route::post('admin/health_and_safety/add', ['as' => 'health_and_safety.add', 'uses' => 'AdminController@postAddHealthAndSafety']);
