@@ -64,7 +64,7 @@
                     </div>
                     <div class="col-sm-8">
                         @include('partials.flash')
-                        <form data-form="add-news-form" action="{{ route('admin.news.add') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
+                        <form data-form="add-self-test-form" action="{{ route('admin.self_test.add') }}" method="POST" autocomplete="off" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="form-group{{ ($errors->has('self_test_for') ? ' has-error' : '') }}">
                                 <label for="">Self Test For:</label>
@@ -77,62 +77,32 @@
                                 {!! $errors->first('self_test_for', '<span class="help-block">:message</span>') !!}
                             </div>
                             <div class="well">
-                                <div class="panel shadow">
-                                    <div class="panel-body">
-                                        <div class="row">
-                                            <div class="col-sm-6">
+                                <div class="form-group text-right">
+                                    <button id="add-question-button" type="button" class="btn btn-primary"><span class="fa fa-plus"></span> Add Question</button>
+                                </div>
+                                <h5>Note: Questions must be a Polar Question (Yes-No Question) in positive form.</h5>
+                                <div id="questionnairre" style="padding-right: 10px; overflow-y: scroll; max-height: 300px;">
+                                    @if(old('questions') != null)
+                                        @foreach(old('questions') as $question)
+                                            <div class="panel shadow">
+                                                <div class="panel-body">
+                                                    <div class="form-group">
+                                                        <label for="">Question:</label>
+                                                        <input type="text" name="questions[]" class="form-control" value="{{ $question }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <div class="panel shadow">
+                                            <div class="panel-body">
                                                 <div class="form-group">
-                                                    <label for="">Question ID:</label>
-                                                    <input type="text" class="form-control" class="question_id" readonly>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="form-group{{ ($errors->has('question_type') ? ' has-error' : '') }}">
-                                                    <label for="">Question Type:</label>
-                                                    <select name="question_type" class="form-control">
-                                                        <option value="" selected disabled>Select an option...</option>
-                                                        <option value="Yes or No">Yes or No</option>
-                                                        <option value="Multiple Choice">Multiple Choice</option>
-                                                        <option value="Responses">Responses</option>
-                                                    </select>
-                                                    {!! $errors->first('question_type', '<span class="help-block">:message</span>') !!}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <div class="form-group{{ ($errors->has('question') ? ' has-error' : '') }}">
                                                     <label for="">Question:</label>
-                                                    <input type="text" class="form-control" name="question" maxlength="255" value="{{ old('question') }}" autofocus>
-                                                    {!! $errors->first('question', '<span class="help-block">:message</span>') !!}
+                                                    <input type="text" name="questions[]" class="form-control">
                                                 </div>
                                             </div>
                                         </div>
-                                        <table class="table table-striped">
-                                            <thead>
-                                                <tr>
-                                                    <th>Answer</th>
-                                                    <th>Link Answer To</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-group{{ ($errors->has('question') ? ' has-error' : '') }}">
-                                                            <input type="text" class="form-control" name="question" maxlength="255" value="{{ old('question') }}" autofocus>
-                                                            {!! $errors->first('question', '<span class="help-block">:message</span>') !!}
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group{{ ($errors->has('question') ? ' has-error' : '') }}">
-                                                            <input type="text" class="form-control" name="question" maxlength="255" value="{{ old('question') }}" autofocus>
-                                                            {!! $errors->first('question', '<span class="help-block">:message</span>') !!}
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                    @endif
                                 </div>
                             </div>
                             <div class="form-group text-right">
@@ -144,4 +114,5 @@
             </div>
         </div>
     </div>
+    <script src="{{ url('/js/admin/self_test.js') }}"></script>
 @stop

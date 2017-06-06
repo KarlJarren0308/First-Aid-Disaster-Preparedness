@@ -11,6 +11,7 @@ use Auth;
 
 use App\HealthAndSafetyModel;
 use App\HealthAndSafetyCommentsModel;
+use App\SelfTestModel;
 
 class HealthAndSafetyController extends Controller
 {
@@ -35,9 +36,11 @@ class HealthAndSafetyController extends Controller
     {
         try {
             $tip = HealthAndSafetyModel::where('created_at', 'like', ($year . '-' . $month . '-' . $day) . '%')->where('title', str_replace('_', ' ', $title))->first();
+            $self_test = SelfTestModel::where('for', $tip->id)->first();
 
             return view('health_and_safety.show', [
-                'tip' => $tip
+                'tip' => $tip,
+                'self_test' => $self_test
             ]);
         } catch(Exception $ex) {
             return view('errors.404');

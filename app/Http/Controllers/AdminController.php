@@ -19,6 +19,7 @@ use App\HealthAndSafetyMediaModel;
 use App\HealthAndSafetyCommentsModel;
 use App\MediaModel;
 use App\NewsModel;
+use App\SelfTestModel;
 
 class AdminController extends Controller
 {
@@ -176,7 +177,11 @@ class AdminController extends Controller
         if(Auth::check()) {
             if(Auth::user()->type === 'administrator') {
                 try {
-                    return view('admin.self_test');
+                    $self_tests = SelfTestModel::all();
+
+                    return view('admin.self_test', [
+                        'self_tests' => $self_tests
+                    ]);
                 } catch(Exception $ex) {
                     return view('errors.404');
                 }
@@ -192,7 +197,7 @@ class AdminController extends Controller
         if(Auth::check()) {
             if(Auth::user()->type === 'administrator') {
                 $tips = HealthAndSafetyModel::all();
-                
+
                 return view('admin.self_test_add', [
                     'tips' => $tips
                 ]);
@@ -567,6 +572,42 @@ class AdminController extends Controller
             $this->setFlash('Failed', 'Oops! News doesn\'t exist.');
 
             return redirect()->route('admin.news');
+        }
+    }
+
+    public function postAddSelfTest(Request $request) {
+        $result = Validator::make($request->all(), [
+            'self_test_for' => 'required|unique:self_test,for'
+        ]);
+
+        if($result->fails()) {
+            return redirect()->route('admin.self_test.add')->withErrors($result)->withInput();
+        } else {
+            $username = Auth::user()->username;
+            $self_test_for = $request->input('self_test_for');
+            $questions = $request->input('questions');
+            $qs = [];
+
+            foreach($questions as $question) {
+                $qs[] = $question;
+            }
+
+            $query = SelfTestModel::insertGetId([
+                'for' => $self_test_for,
+                'questions' => json_encode($qs),
+                'username' => $username,
+                'created_at' => date('Y-m-d H:i:s')
+            ]);
+
+            if($query) {
+                $this->setFlash('Success', 'Self Test has been added.');
+
+                return redirect()->route('admin.self_test');
+            } else {
+                $this->setFlash('Failed', 'Oops! Self Test was not added.');
+
+                return redirect()->route('admin.self_test');
+            }
         }
     }
 

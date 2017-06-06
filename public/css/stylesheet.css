@@ -401,6 +401,26 @@ canvas {
 }
 
 /*
+* Self Test Pages
+*/
+.self-tests > .self-test-page {
+    display: none;
+    padding: 25px;
+}
+
+.self-tests > .self-test-page.active {
+    display: inline-block;
+}
+
+.self-tests > .self-test-page > .self-test-question {
+    margin-bottom: 10px;
+}
+
+.self-tests > .self-test-page > .self-test-answer {
+    padding: 0 10%;
+}
+
+/*
 * Utilities
 */
 .label-mark {

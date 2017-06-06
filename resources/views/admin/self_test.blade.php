@@ -67,6 +67,15 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach($self_tests as $self_test)
+                            <tr>
+                                <td>{{ $self_test->id }}</td>
+                                <td>{{ $self_test->for }}</td>
+                                <td class="hidden-xs">{{ $self_test->username }}</td>
+                                <td>{{ date('F d, Y (h:iA)', strtotime($self_test->created_at)) }}</td>
+                                <td></td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

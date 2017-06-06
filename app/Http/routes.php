@@ -51,6 +51,7 @@ Route::group(['as' => 'admin.'], function() {
         Route::post('admin/news/delete', ['as' => 'news.delete', 'uses' => 'AdminController@postDeleteNews']);
         Route::post('admin/users/ban', ['as' => 'users.ban', 'uses' => 'AdminController@postBanUsers']);
         Route::post('admin/users/unban', ['as' => 'users.unban', 'uses' => 'AdminController@postUnbanUsers']);
+        Route::post('admin/self_test/add', ['as' => 'self_test.add', 'uses' => 'AdminController@postAddSelfTest']);
         Route::post('captcha/comment', ['as' => 'captcha', 'uses' => 'AdminController@postCommentCaptcha']);
         Route::post('admin/graphs/news/views', ['as' => 'graphs.news.views', 'uses' => 'AdminController@postGraphNewsViews']);
     });

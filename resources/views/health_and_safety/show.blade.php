@@ -104,6 +104,31 @@
                                     @endif
                                 </div>
                             @endif
+                            @if($self_test !== null)
+                                <div class="text-center" style="margin-top: 25px;">
+                                    <button class="btn btn-primary start-self-test-button">Start Self Test</button>
+                                    <div class="self-tests">
+                                        @foreach(json_decode($self_test->questions) as $question)
+                                            <div class="self-test-page">
+                                                <div class="self-test-question">{{ $question }}</div>
+                                                <div class="self-test-answer">
+                                                    <div class="btn-group btn-group-justified">
+                                                        <div class="btn-group btn-group-lg">
+                                                            <button class="btn btn-primary yes-button">Yes</button>
+                                                        </div>
+                                                        <div class="btn-group btn-group-lg">
+                                                            <button class="btn btn-default no-button">No</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                        <div class="self-test-page">
+                                            <h2 class="self-test-result"></h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         <div class="card-footer">
                             <ul class="tabs">
